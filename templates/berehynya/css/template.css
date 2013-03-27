@@ -1,3 +1,27 @@
 @charset "UTF-8";
 
+.menutop ul {
+    display: block;
+    text-align: left;
+    color:#2a6bb2;
+}
+.menutop  ul li {
+    display: inline;
+    margin: 0 !important;
+    padding: 0;
+}
+
+
+.menutop ul li a:link{
+    font-family:Arial, Tahoma, Geneva, sans-serif;
+    font-size:23px;
+    font-weight:normal;
+    color:#2a6bb2;
+    padding:0px 20px;
+    text-decoration:none;
+    display: inline;
+}
+
+
+
 

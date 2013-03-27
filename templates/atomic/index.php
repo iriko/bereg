@@ -1,7 +1,8 @@
 <?php
 /**
+ * @version		$Id: index.php 21720 2011-07-01 08:31:15Z chdemko $
  * @package		Joomla.Site
- * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -23,9 +24,9 @@ $app = JFactory::getApplication();
 		<!-- The following five lines load the Blueprint CSS Framework (http://blueprintcss.org). If you don't want to use this framework, delete these lines. -->
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/blueprint/screen.css" type="text/css" media="screen, projection" />
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/blueprint/print.css" type="text/css" media="print" />
-		<!--[if lt IE 8]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />
-		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/blueprint/plugins/joomla-nav/screen.css" type="text/css" media="screen" />
+    	<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/blueprint/plugins/joomla-nav/screen.css" type="text/css" media="screen" />
 
 		<!-- The following line loads the template CSS file located in the template folder. -->
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
@@ -37,75 +38,59 @@ $app = JFactory::getApplication();
 		<?php endif; ?>
 
 		<!-- The following line loads the template JavaScript file located in the template folder. It's blank by default. -->
-		<script type="text/javascript" src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/js/template.js"></script>
+        
 	</head>
 	<body>
 		<div class="container">
-			<hr class="space" />
 			<div class="joomla-header span-16 append-1">
-				<h1><?php echo htmlspecialchars($app->getCfg('sitename')); ?></h1>
+				<h1><?php echo $app->getCfg('sitename'); ?></h1>
 			</div>
-			<?php if($this->countModules('atomic-search') or $this->countModules('position-0')) : ?>
+			<?php if($this->countModules('atomic-search')) : ?>
 				<div class="joomla-search span-7 last">
 	  	 			<jdoc:include type="modules" name="atomic-search" style="none" />
-	  	 			<jdoc:include type="modules" name="position-0" style="none" />
 				</div>
 			<?php endif; ?>
 		</div>
-		<?php if($this->countModules('atomic-topmenu') or $this->countModules('position-2') ) : ?>
-			<jdoc:include type="modules" name="atomic-topmenu" style="container" />
-			<jdoc:include type="modules" name="position-1" style="container" />
+		<?php if($this->countModules('position-0')) : ?>
+		   <div class="levy">
+            <img alt="" src="/templates/atomic/images/levy.png" />
+            </div>
+			<jdoc:include type="modules" name="position-0" style="container" />
+            <div class="pravy">
+            <img alt="" src="/templates/atomic/images/pravy.png" />
+            </div>
 		<?php endif; ?>
 
 		<div class="container">
 			<div class="span-16 append-1">
-			<?php if($this->countModules('atomic-topquote') or $this->countModules('position-15') ) : ?>
+			<?php if($this->countModules('atomic-topquote')) : ?>
 				<jdoc:include type="modules" name="atomic-topquote" style="none" />
-				<jdoc:include type="modules" name="position-15" style="none" />
-
 			<?php endif; ?>
 				<jdoc:include type="message" />
 				<jdoc:include type="component" />
 				<hr />
-			<?php if($this->countModules('atomic-bottomleft') or $this->countModules('position-11')) : ?>
+			<?php if($this->countModules('atomic-bottomleft')) : ?>
 			 	<div class="span-7 colborder">
 					<jdoc:include type="modules" name="atomic-bottomleft" style="bottommodule" />
-					<jdoc:include type="modules" name="position-11" style="bottommodule" />
-
 	        	</div>
 	        <?php endif; ?>
 
-	        <?php if($this->countModules('atomic-bottommiddle') or $this->countModules('position-9')
-				or $this->countModules('position-10')) : ?>
+	        <?php if($this->countModules('atomic-bottommiddle')) : ?>
 				<div class="span-7 last">
 	        		<jdoc:include type="modules" name="atomic-bottommiddle" style="bottommodule" />
-					<jdoc:include type="modules" name="position-9" style="bottommodule" />
-					<jdoc:include type="modules" name="position-10" style="bottommodule" />
-
 				</div>
 			<?php endif; ?>
 			</div>
-			<?php if($this->countModules('atomic-sidebar') || $this->countModules('position-7')
-			|| $this->countModules('position-4') || $this->countModules('position-5')
-			|| $this->countModules('position-3') || $this->countModules('position-6') || $this->countModules('position-8'))
-			: ?>
+			<?php if($this->countModules('atomic-sidebar')) : ?>
 				<div class="span-7 last">
-					<jdoc:include type="modules" name="atomic-sidebar" style="sidebar" />
-					<jdoc:include type="modules" name="position-7" style="sidebar" />
-					<jdoc:include type="modules" name="position-4" style="sidebar" />
-					<jdoc:include type="modules" name="position-5" style="sidebar" />
-					<jdoc:include type="modules" name="position-6" style="sidebar" />
-					<jdoc:include type="modules" name="position-8" style="sidebar" />
-					<jdoc:include type="modules" name="position-3" style="sidebar" />
+	        		<jdoc:include type="modules" name="atomic-sidebar" style="sidebar" />
 				</div>
-
 			<?php endif; ?>
 
 			<div class="joomla-footer span-16 append-1">
 				<hr />
-				&copy;<?php echo date('Y'); ?> <?php echo htmlspecialchars($app->getCfg('sitename')); ?>
+				&copy;<?php echo date('Y'); ?> <?php echo $app->getCfg('sitename'); ?>
 			</div>
 		</div>
-		<jdoc:include type="modules" name="debug" />
 	</body>
 </html>

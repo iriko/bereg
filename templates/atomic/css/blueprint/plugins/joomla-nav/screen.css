@@ -8,46 +8,163 @@
    * For credits and origins, see AUTHORS.
 
 ----------------------------------------------------------------------- */
-
 .joomla-nav {
-  background-color:#c3d9ff;
-  border-top:1px solid #b3c9e4;
-  border-bottom:1px solid #b3c9ef;
-  height:1%; /* fixing IE 6 */
-  margin:0 0 1.5em 0;
-  min-height:auto;
-  overflow:auto;
-  padding:0.67em 0 0.67em 0;
+  background: url(/templates/atomic/images/fon.png) top repeat-x #88250e;
+  box-shadow: 0 4px 4px #000;
+  margin:0;
+  top:auto;
+  height:54px;
+  z-index:100;
+  position:relative;
 }
-.joomla-nav li {
-  float:left;
-  line-height:1.5;
-  list-style-type:none;
-  margin:0 0.5em 0 0.5em;
-  padding:0;
+.joomla-nav ul {
+	float: left;
+    list-style-type:none;
+	padding: 0;
+	margin: 0;
+	list-style: none;
 }
-.joomla-nav li a {
-  color:#222;
+
+.joomla-nav a {
+  font-size: 16px;
+  color: #FFF;
+  font-weight:bold;
+  line-height: 30px;
+  padding: 0 20px;
   cursor:pointer;
   display:block;
   float:left;
-  font-weight:bold;
-  padding:0 .33em 0 .33em;
+  text-decoration: none;
+
 }
-.joomla-nav li a.selected {
-  color:#555;
-  cursor:default;
-}
-.joomla-nav li a, .joomla-nav li a:focus, .joomla-nav li a:hover {
-  text-decoration:none;
-}
-.joomla-nav li a:focus, .joomla-nav li a:hover {
-  color:#555;
+
+.joomla-nav a:hover,
+.joomla-nav li.active a {
+  color: #cccc66;
+  background: #741d09;
+  border: solid 1px #a63414;
+  border-radius: 5px;
+  box-shadow: rgba(0,0,0,0.4) 0px 5px 5px inset;
   outline:none;
+  text-decoration: none;
 }
-.joomla-nav li.label {
-  font-weight:normal;
-  line-height:1.5;
-  margin-right:1em;
-  padding:.15em .33em .15em .33em;
+
+
+
+.joomla-nav li {
+	float:left;
+    line-height:1.5;
+    list-style-type:none;
+    margin: 0.9em 0.5em 0 0.5em;
+    padding:0;
+	list-style-type:none;
 }
+
+
+
+/** Second-level lists **/
+
+.joomla-nav li ul {
+	position: absolute;
+	font-family: 'Droid Sans', sans-serif, Helvetica, Arial;
+	font-size: 12px;
+	width: 170px;
+	left: -999em; /* "display: none" not seen by screen readers */
+	background-color: #81220c;
+	border: solid 1px #a63414;
+    border-radius: 5px;
+    margin-top: 30px;
+    margin-left: -108px;
+    display: inline;
+}
+
+.joomla-nav li li,
+.joomla-nav li li:last-child {
+	border: 0;
+	margin-bottom: -1px; /* iPhone/iPad fix */
+}
+
+.joomla-nav li li a {
+	width: 280px;
+	background-color: #81220c;
+	border: 0;
+    padding: 0;
+}
+
+
+.joomla-nav li ul a {
+	width: 150px;
+    margin: 0px;
+    padding-left: 7px;
+}
+
+.joomla-nav li.active ul a:hover {
+	color: #fff;
+	text-decoration: none;
+	background-color: #90c140;
+}
+
+.joomla-nav li.active ul a {
+	text-decoration: none;
+	background-color: #741d09;
+}
+
+
+/** Level third and above **/
+
+.joomla-nav li ul ul {
+	margin-left: -5px;
+    margin-top: 0px;
+    position: absolute;
+    display: inline;
+}
+
+.joomla-nav li:hover ul ul, .joomla-nav li:hover ul ul ul, .joomla-nav li.sfhover ul ul, .joomla-nav li.sfhover ul ul ul {
+	left: -999em;
+}
+
+.joomla-nav li:hover ul, .joomla-nav li li:hover ul, .joomla-nav li li li:hover ul, .joomla-nav li.sfhover ul, .joomla-nav li li.sfhover ul, .joomla-nav li li li.sfhover ul { /* nested under hovered items */
+	left: auto;
+}
+
+li#current a{
+  color: #cccc66;
+  background: #993300;
+  border: solid 1px #a63414;
+  border-radius: 5px;
+  box-shadow: rgba(0,0,0,0.4) 0px 5px 5px inset;
+  outline:none;
+  text-decoration: none;
+}
+li#current ul ul{
+  color: #cccc66;
+  background: #993300;
+  border: solid 1px #a63414;
+  box-shadow: rgba(0,0,0,0.4) 0px 5px 5px inset;
+  outline:none;
+  text-decoration: none;
+}
+/** Переход на 2-уровень **/
+.joomla-nav li.parent a{
+background: url(../../../../images/arrow.png) 90% no-repeat;
+}
+.joomla-nav li.parent li a{
+background: #81220c;
+}
+/** Переход на 3-уровень **/
+.joomla-nav ul li.parent a{
+background: url(../../../../images/arrow.png) 90% no-repeat;
+}
+.joomla-nav ul li.parent ul a{
+background: #81220c;
+}
+/** Выделение  на 3-уровень **/
+.joomla-nav li.selected {
+  color: #cccc66;
+  background: #993300;
+  border: solid 1px #a63414;
+  border-radius: 5px;
+  box-shadow: rgba(0,0,0,0.4) 0px 5px 5px inset;
+  outline:none;
+  text-decoration: none;
+  }

@@ -32,6 +32,6 @@ $app = JFactory::getApplication();
         </div>
 
         <jdoc:include type="modules" name="position-12" style="container" />
-
+        <jdoc:include type="modules" name="position-1" />
     </body>
 </html>
