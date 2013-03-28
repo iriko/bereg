@@ -169,7 +169,7 @@ $doc->addScript($this->baseurl.'/templates/'.$this->template.'/javascript/hide.j
                                                 <?php endif; ?>
 
                                                         <jdoc:include type="message" />
-                                                        <jdoc:include type="component" />
+                                                            <jdoc:include type="component" />
 
                                                 </div><!-- end main -->
 

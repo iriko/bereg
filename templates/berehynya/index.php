@@ -18,6 +18,7 @@ $app = JFactory::getApplication();
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
 	<head>
 
+
 		<!-- The following line loads the template CSS file located in the template folder. -->
 		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
         <!-- The following JDOC Head tag loads all the header and meta information from your site config and content. -->
@@ -32,12 +33,15 @@ $app = JFactory::getApplication();
             <jdoc:include type="modules" name="position-0" />
         </div>
     </div>
+
+    <jdoc:include type="component" />
+
     <div class="text">
         <jdoc:include type="modules" name="position-12"/>
     </div>
         <div class="slider">
             <jdoc:include type="modules" name="position-1"/>
         </div>
-
+    <jdoc:include type="modules" name="position-2"/>
     </body>
 </html>
