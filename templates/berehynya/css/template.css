@@ -2,8 +2,9 @@
 
 .menutop ul {
     display: block;
-    text-align: left;
+    text-align: right;
     color:#2a6bb2;
+    background: #f2f4f2; /* Цвет фона */
 }
 .menutop  ul li {
     display: inline;
@@ -14,14 +15,44 @@
 
 .menutop ul li a:link{
     font-family:Arial, Tahoma, Geneva, sans-serif;
-    font-size:23px;
+    font-size:18px;
     font-weight:normal;
-    color:#2a6bb2;
-    padding:0px 20px;
+    color: #91defc;
+    padding:0px 15px;
     text-decoration:none;
     display: inline;
 }
 
+#header h1 {
+    position:absolute;
+    width:156px;
+    height:141px;
+    background:url("/images/logo.jpg") no-repeat;
+    margin-top: -20px;
+    margin-left: -10px;
+}
+#header h1 a {
+    display:block;
+    width:156px;
+    height:141px;
+    text-indent:-2000px;
+}
 
+.text {
+position: absolute; /* Абсолютное позиционирование */
+left: 26%; /* Положение слоя от левого края */
+top: 40%; /* Положение слоя от верхнего края */
+margin-left: -130px; /* Отступ слева */
+margin-right: 20px; /* Отступ слева */
+margin-top: -200px;	/* Отступ сверху */
+padding: 10px; /* Поля вокруг текста */
+overflow: auto; /* Добавление полосы прокрутки */
+}
 
+.slider  {
+    position: absolute;
+    left: 20%; /* Положение слоя от левого края */
+    top: 40%; /* Положение слоя от верхнего края */
+;
 
+}

@@ -26,12 +26,18 @@ $app = JFactory::getApplication();
     </head>
 
 	<body>
-
+    <div id="header">
+        <h1><a href="http://berehynya.loc" tppabs="http://berehynya.loc/">Берегиня</a></h1>
         <div class="menutop">
             <jdoc:include type="modules" name="position-0" />
         </div>
+    </div>
+    <div class="text">
+        <jdoc:include type="modules" name="position-12"/>
+    </div>
+        <div class="slider">
+            <jdoc:include type="modules" name="position-1"/>
+        </div>
 
-        <jdoc:include type="modules" name="position-12" style="container" />
-        <jdoc:include type="modules" name="position-1" />
     </body>
 </html>
