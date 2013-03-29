@@ -42,6 +42,9 @@ $app = JFactory::getApplication();
         <div class="slider">
             <jdoc:include type="modules" name="position-1"/>
         </div>
+    <div class="news">
     <jdoc:include type="modules" name="position-2"/>
+    </div>
+    <jdoc:include type="modules" name="position-3"/>
     </body>
 </html>

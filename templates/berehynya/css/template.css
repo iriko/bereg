@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.news {
+    display: block;
+    margin-top: 450px;
+}
+
 .menutop ul {
     display: block;
     text-align: right;
