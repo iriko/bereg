@@ -46,5 +46,13 @@ $app = JFactory::getApplication();
     <jdoc:include type="modules" name="position-2"/>
     </div>
     <jdoc:include type="modules" name="position-3"/>
-    </body>
+
+
+    <div class="footer">
+        <jdoc:include type="modules" name="position-11" />
+    </div>
+ </body>
+
+
+
 </html>

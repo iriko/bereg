@@ -5,12 +5,13 @@
     margin-top: 450px;
 }
 
+
 .menutop ul {
     display: block;
     text-align: right;
-
-    background: #f2f4f2; /* Цвет фона */
+    background: #eeeeee;
 }
+
 .menutop  ul li {
     display: inline;
     margin: 0 !important;
@@ -18,16 +19,20 @@
     background-position:right;
 }
 
-
 .menutop ul li a:link{
     font-family:Arial, Tahoma, Geneva, sans-serif;
     font-size:18px;
     font-weight:normal;
-    color: #a2d3fc;
+    color: #5c5c5c;
     padding:0px 15px;
     text-decoration:none;
     display: inline;
 }
+
+.menutop a:visited {
+    color:#499cbb;
+}
+
 
 #header h1 {
     position:absolute;
@@ -45,20 +50,45 @@
 }
 
 .text {
-position: absolute; /* Абсолютное позиционирование */
-left: 26%; /* Положение слоя от левого края */
-top: 40%; /* Положение слоя от верхнего края */
-margin-left: -130px; /* Отступ слева */
-margin-right: 20px; /* Отступ слева */
-margin-top: -200px;	/* Отступ сверху */
-padding: 10px; /* Поля вокруг текста */
-overflow: auto; /* Добавление полосы прокрутки */
+position: absolute;
+left: 26%;
+top: 40%;
+margin-left: -130px;
+margin-right: 20px;
+margin-top: -200px;
+padding: 10px;
+overflow: auto;
 }
 
 .slider  {
     position: absolute;
-    left: 20%; /* Положение слоя от левого края */
-    top: 40%; /* Положение слоя от верхнего края */
-;
+    left: 20%;
+    top: 40%;
+}
 
+.footer ul {
+    display: block;
+    text-align: right;
+    background: #383838;
+}
+
+.footer  ul li {
+    display: inline;
+    margin: 0 !important;
+    padding: 0;
+    background-position:right;
+}
+
+.footer ul li a:link{
+    font-family:Arial, Tahoma, Geneva, sans-serif;
+    font-size:14px;
+    font-weight:normal;
+    color: #e2e2e2;
+    padding:0px 15px;
+    text-decoration:none;
+    display: inline;
+}
+
+.footer a:visited {
+    color:#e2e2e2;
 }
