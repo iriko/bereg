@@ -6,13 +6,11 @@
 	client="site">
 	<name>Berehynya</name>
 	<creationDate>25/03/13</creationDate>
-	<author>Vlad|Yarik</author>
-	<authorEmail>contact@kontentdesign.com</authorEmail>
-	<authorUrl>http://www.kontentdesign.com</authorUrl>
+	<author>Vlad Smirnov | Yaroslav Kuzmenko</author>
 	<copyright>Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>2.5.0</version>
-	<description>TPL_ATOMIC_XML_DESCRIPTION</description>
+	<description>TPL_BEREGYNYA_XML_DESCRIPTION</description>
 	<files>
 		<folder>css</folder>
 		<folder>images</folder>
@@ -25,8 +23,8 @@
 	</files>
 
 	<positions>
-		<position>position-0</position>
         <position>position-1</position>
-		<position>position-12</position>
+        <position>position-2</position>
+        <position>position-3</position>
 	</positions>
 </extension>
