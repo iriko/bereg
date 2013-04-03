@@ -8,8 +8,10 @@
 
 .menutop ul {
     display: block;
+    height: 45px;
     text-align: right;
     background: #eeeeee;
+
 }
 
 .menutop  ul li {

@@ -49,7 +49,11 @@ $app = JFactory::getApplication();
 
 
     <div class="footer">
+
         <jdoc:include type="modules" name="position-11" />
+
+
+
     </div>
  </body>
 
