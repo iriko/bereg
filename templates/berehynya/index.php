@@ -11,52 +11,44 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.framework', true);
 
 /* The following line gets the application object for things like displaying the site name */
-$app = JFactory::getApplication();
+$doc = JFactory::getDocument();
+$doc->addStyleSheet($this->baseurl.'/templates/'.$this->template.'/css/template.css', $type = 'text/css', $media = 'screen,projection');
 ?>
-<?php echo '<?'; ?>xml version="1.0" encoding="<?php echo $this->_charset ?>"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
 	<head>
-
-
-		<!-- The following line loads the template CSS file located in the template folder. -->
-		<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template ?>/css/template.css" type="text/css" />
-        <!-- The following JDOC Head tag loads all the header and meta information from your site config and content. -->
         <jdoc:include type="head" />
-
     </head>
 
 	<body>
-    <div id="header">
-        <h1><a href="http://berehynya.loc" tppabs="http://berehynya.loc/">Берегиня</a></h1>
-        <div class="menutop">
-            <jdoc:include type="modules" name="position-0" />
-        </div>
-    </div>
+        <div class="page-holder">
 
-    <jdoc:include type="component" />
+            <div class="header-holder">
+                <div class="header">
+                    <div class="logo"><a href="<?php echo $this->baseurl ?>/"><img src="<?php echo $this->baseurl.'/templates/'.$this->template.'/images/logo.jpg'?>" alt="Бегериня"></a></div>
+                    <div class="header-menu">
+                        <jdoc:include type="modules" name="position-1" />
+                    </div>
+                </div>
+            </div><!--header-holder-->
 
-    <div class="text">
-        <jdoc:include type="modules" name="position-12"/>
-    </div>
-        <div class="slider">
-            <jdoc:include type="modules" name="position-1"/>
-        </div>
-    <div class="news">
-    <jdoc:include type="modules" name="position-2"/>
-    </div>
-    <jdoc:include type="modules" name="position-3"/>
+            <div class="content-holder">
 
+                <jdoc:include type="modules" name="position-2"/>
 
-    <div class="footer">
+                <div class="content-area">
+                    <jdoc:include type="message" />
+                    <jdoc:include type="component" />
+                </div>
 
-        <jdoc:include type="modules" name="position-11" />
+            </div><!--content-holder-->
 
+            <div class="footer-holder">
+                <div class="footer-menu">
+                    <jdoc:include type="modules" name="position-3" />
+                </div>
+            </div><!--footer-holder-->
 
-
-    </div>
- </body>
-
-
-
+        </div><!--page-holder-->
+    </body>
 </html>

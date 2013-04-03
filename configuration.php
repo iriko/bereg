@@ -5,7 +5,7 @@ class JConfig {
 	public $display_offline_message = '1';
 	public $offline_image = '';
 	public $sitename = 'Берегиня';
-	public $editor = 'tinymce';
+	public $editor = 'jce';
 	public $captcha = '0';
 	public $list_limit = '20';
 	public $access = '1';
@@ -47,7 +47,7 @@ class JConfig {
 	public $MetaTitle = '1';
 	public $MetaAuthor = '1';
 	public $MetaVersion = '0';
-	public $robots = '';
+	public $robots = 'noindex, nofollow';
 	public $sef = '1';
 	public $sef_rewrite = '1';
 	public $sef_suffix = '0';
@@ -55,7 +55,7 @@ class JConfig {
 	public $feed_limit = '10';
 	public $log_path = '/logs';
 	public $tmp_path = '/tmp';
-	public $lifetime = '15';
+	public $lifetime = '300';
 	public $session_handler = 'database';
 	public $MetaRights = '';
 	public $sitename_pagetitles = '0';
