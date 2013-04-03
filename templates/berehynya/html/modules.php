@@ -28,30 +28,16 @@ defined('_JEXEC') or die;
  * function uses the "sidebar" style to change the header on the sidebar to H3.
  */
 
-function modChrome_container($module, &$params, &$attribs)
+function modChrome_home($module, &$params, &$attribs)
 {
 	if (!empty ($module->content)) : ?>
-		<div class="container">
-			<?php echo $module->content; ?>
+		<div class="home-module<?php echo $params->get( 'moduleclass_sfx' ); ?>">
+            <?php if ($module->showtitle) : ?>
+                <div class="home-module-title"><?php echo $module->title; ?></div>
+            <?php endif; ?>
+            <div class="home-module-content">
+			    <?php echo $module->content; ?>
+            </div>
 		</div>
 	<?php endif;
 }
-function modChrome_bottommodule($module, &$params, &$attribs)
-{
-	if (!empty ($module->content)) : ?>
-		<?php if ($module->showtitle) : ?>
-			<h6><?php echo $module->title; ?></h6>
-		<?php endif; ?>
-		<?php echo $module->content; ?>
-	<?php endif;
-}
-function modChrome_sidebar($module, &$params, &$attribs)
-{
-	if (!empty ($module->content)) : ?>
-		<?php if ($module->showtitle) : ?>
-			<h3><?php echo $module->title; ?></h3>
-		<?php endif; ?>
-		<?php echo $module->content; ?>
-	<?php endif;
-}
-?>

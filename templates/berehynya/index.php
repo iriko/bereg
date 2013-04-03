@@ -34,7 +34,7 @@ $doc->addStyleSheet($this->baseurl.'/templates/'.$this->template.'/css/template.
 
             <div class="content-holder">
 
-                <jdoc:include type="modules" name="position-2"/>
+                <jdoc:include type="modules" name="position-2" style="home"/>
 
                 <div class="content-area">
                     <jdoc:include type="message" />
