@@ -25,12 +25,6 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	<?php echo $this->item->event->K2BeforeDisplay; ?>
 
 	<div class="catItemHeader">
-		<?php if($this->item->params->get('catItemDateCreated')): ?>
-		<!-- Date created -->
-		<span class="catItemDateCreated">
-			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
-		</span>
-		<?php endif; ?>
 
 	  <?php if($this->item->params->get('catItemTitle')): ?>
 	  <!-- Item title -->
@@ -62,6 +56,15 @@ K2HelperUtilities::setDefaultImage($this->item, 'itemlist', $this->params);
 	  	<?php endif; ?>
 	  </h3>
 	  <?php endif; ?>
+
+
+        <?php if($this->item->params->get('catItemDateCreated')): ?>
+        <!-- Date created -->
+        <span class="catItemDateCreated">
+			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
+		</span>
+        <?php endif; ?>
+
 
 		<?php if($this->item->params->get('catItemAuthor')): ?>
 		<!-- Item Author -->

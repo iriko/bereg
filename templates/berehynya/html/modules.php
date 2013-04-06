@@ -41,3 +41,12 @@ function modChrome_home($module, &$params, &$attribs)
 		</div>
 	<?php endif;
 }
+
+function modChrome_submenu($module, &$params, &$attribs)
+{
+    if (!empty ($module->content)) : ?>
+    <div class="content-sub-menu">
+        <?php echo $module->content; ?>
+    </div>
+    <?php endif;
+}

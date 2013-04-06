@@ -69,7 +69,7 @@ body {
     background-color: #EEE;
     border: 1px solid white;
 }
-.header-menu .deeper:hover .sub-menu {
+.header-menu > .deeper:hover > .sub-menu {
     display: block;
 }
 .sub-menu li {
@@ -128,6 +128,30 @@ body {
 }
 .itemBackToTop {
     display: none;
+}
+.content-sub-menu {
+    overflow: hidden;
+    margin: 20px auto;
+}
+.content-sub-menu ul li {
+    float: left;
+    margin-right: 5px;
+}
+.content-sub-menu ul li:after {
+    content: '/';
+}
+.content-sub-menu ul li:last-child:after {
+    content: '';
+}
+.content-sub-menu ul li a {
+    margin-right: 5px;
+}
+
+.content-area .catItemImageBlock,
+.content-area .itemImageBlock {
+    float: left;
+    margin: 0 20px 0 0;
+    padding: 0;
 }
 /***********************************************************************/
 

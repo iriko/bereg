@@ -32,13 +32,6 @@ defined('_JEXEC') or die;
 
 	<div class="itemHeader">
 
-		<?php if($this->item->params->get('itemDateCreated')): ?>
-		<!-- Date created -->
-		<span class="itemDateCreated">
-			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
-		</span>
-		<?php endif; ?>
-
 	  <?php if($this->item->params->get('itemTitle')): ?>
 	  <!-- Item title -->
 	  <h2 class="itemTitle">
@@ -64,6 +57,13 @@ defined('_JEXEC') or die;
 
 	  </h2>
 	  <?php endif; ?>
+
+        <?php if($this->item->params->get('itemDateCreated')): ?>
+        <!-- Date created -->
+        <span class="itemDateCreated">
+			<?php echo JHTML::_('date', $this->item->created , JText::_('K2_DATE_FORMAT_LC2')); ?>
+		</span>
+        <?php endif; ?>
 
 		<?php if($this->item->params->get('itemAuthor')): ?>
 		<!-- Item Author -->
@@ -174,26 +174,6 @@ defined('_JEXEC') or die;
   </div>
 	<?php endif; ?>
 
-	<?php if($this->item->params->get('itemRating')): ?>
-	<!-- Item Rating -->
-	<div class="itemRatingBlock">
-		<span><?php echo JText::_('K2_RATE_THIS_ITEM'); ?></span>
-		<div class="itemRatingForm">
-			<ul class="itemRatingList">
-				<li class="itemCurrentRating" id="itemCurrentRating<?php echo $this->item->id; ?>" style="width:<?php echo $this->item->votingPercentage; ?>%;"></li>
-				<li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_1_STAR_OUT_OF_5'); ?>" class="one-star">1</a></li>
-				<li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_2_STARS_OUT_OF_5'); ?>" class="two-stars">2</a></li>
-				<li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_3_STARS_OUT_OF_5'); ?>" class="three-stars">3</a></li>
-				<li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_4_STARS_OUT_OF_5'); ?>" class="four-stars">4</a></li>
-				<li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_5_STARS_OUT_OF_5'); ?>" class="five-stars">5</a></li>
-			</ul>
-			<div id="itemRatingLog<?php echo $this->item->id; ?>" class="itemRatingLog"><?php echo $this->item->numOfvotes; ?></div>
-			<div class="clr"></div>
-		</div>
-		<div class="clr"></div>
-	</div>
-	<?php endif; ?>
-
   <div class="itemBody">
 
 	  <!-- Plugins: BeforeDisplayContent -->
@@ -297,6 +277,27 @@ defined('_JEXEC') or die;
 	  <?php echo $this->item->event->K2AfterDisplayContent; ?>
 
 	  <div class="clr"></div>
+
+      <?php if($this->item->params->get('itemRating')): ?>
+      <!-- Item Rating -->
+      <div class="itemRatingBlock">
+          <span><?php echo JText::_('K2_RATE_THIS_ITEM'); ?></span>
+          <div class="itemRatingForm">
+              <ul class="itemRatingList">
+                  <li class="itemCurrentRating" id="itemCurrentRating<?php echo $this->item->id; ?>" style="width:<?php echo $this->item->votingPercentage; ?>%;"></li>
+                  <li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_1_STAR_OUT_OF_5'); ?>" class="one-star">1</a></li>
+                  <li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_2_STARS_OUT_OF_5'); ?>" class="two-stars">2</a></li>
+                  <li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_3_STARS_OUT_OF_5'); ?>" class="three-stars">3</a></li>
+                  <li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_4_STARS_OUT_OF_5'); ?>" class="four-stars">4</a></li>
+                  <li><a href="#" rel="<?php echo $this->item->id; ?>" title="<?php echo JText::_('K2_5_STARS_OUT_OF_5'); ?>" class="five-stars">5</a></li>
+              </ul>
+              <div id="itemRatingLog<?php echo $this->item->id; ?>" class="itemRatingLog"><?php echo $this->item->numOfvotes; ?></div>
+              <div class="clr"></div>
+          </div>
+          <div class="clr"></div>
+      </div>
+      <?php endif; ?>
+
   </div>
 
 	<?php if($this->item->params->get('itemTwitterButton',1) || $this->item->params->get('itemFacebookButton',1) || $this->item->params->get('itemGooglePlusOneButton',1)): ?>

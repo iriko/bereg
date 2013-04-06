@@ -49,7 +49,7 @@ $this->setGenerator('Beregynya site');
                         <jdoc:include type="modules" name="position-2" style="home"/>
                     <?php endif; ?>
 
-                    <jdoc:include type="modules" name="position-4"/>
+                    <jdoc:include type="modules" name="position-4" style="submenu"/>
 
                     <div class="content-area">
                         <jdoc:include type="message" />
