@@ -90,6 +90,14 @@ body {
     width: 990px;
     margin: 0 auto;
 }
+.reason {
+    float: left;
+    width: 330px;
+}
+.home-last-news .nspArt {
+    clear: none;
+    float: left;
+}
 /***********************************************************************/
 
 

@@ -15,12 +15,8 @@ class NSP_GK4_K2_Source {
 	function getSources($config) {
 		//
 		$db = JFactory::getDBO();
-		$user = JFactory::getUser();		
-		if( $config['unauthorized'] == 0 ) {
-			$aid = max ($user->getAuthorisedViewLevels());		
-		} else {				
-			$aid = 999; 		
-		}
+		$user = JFactory::getUser();		if( $config['unauthorized'] == 0 ) {
+			$aid = max ($user->getAuthorisedViewLevels());		} else {			$aid = 999; 		}
 		// if source type is section / sections
 		$source = false;
 		$where1 = '';
@@ -31,11 +27,11 @@ class NSP_GK4_K2_Source {
 		//
 		if($config['data_source'] == 'k2_categories'){
 			$source = $config['k2_categories'];
-
+			
 			if(!is_array($source)) {
 				$source = array($source);
 			}
-
+			
 			$where1 = ' c.id = ';
 			$where2 = ' OR c.id = ';
 		} else if($config['data_source'] == 'k2_tags') {
@@ -48,11 +44,11 @@ class NSP_GK4_K2_Source {
             }
 		} else {
 			$source = strpos($config['k2_articles'],',') !== false ? explode(',', $config['k2_articles']) : $config['k2_articles'];
-
+			
 			if(!is_array($source)) {
 				$source = array($source);
 			}
-
+			
 			$where1 = ' content.id = ';
 			$where2 = ' OR content.id = ';	
 		}
@@ -84,7 +80,7 @@ class NSP_GK4_K2_Source {
 				c.access <= ' .(int) $aid : '').';
 		';
 		// Executing SQL Query
-		$db->setQuery($query_name);		
+		$db->setQuery($query_name);
 		//
 		return $db->loadObjectList();
 	}
@@ -104,7 +100,6 @@ class NSP_GK4_K2_Source {
 		}
 		// Arrays for content
 		$content_id = array();
-		$content_iid = array();
 		$content_alias = array();
 		$content_cid = array();
 		$content_title = array();
@@ -149,7 +144,6 @@ class NSP_GK4_K2_Source {
 		}		
 		// if some data are available
 		if(count($categories) > 0){
-
 			// when showing only frontpage articles is disabled
 			$featured_con = ($config['only_frontpage'] == 0) ? (($config['news_frontpage'] == 0) ? ' AND content.featured = 0 ' : '' ) :  ' AND content.featured = 1 ';
 			$since_con = '';
@@ -163,29 +157,47 @@ class NSP_GK4_K2_Source {
 				if($config['news_sort_value'] != 'fordering') $order_options = ' content.'.$config['news_sort_value'].' '.$config['news_sort_order'].' ';
 				else $order_options = ' content.featured_ordering '.$config['news_sort_order'].' ';
 			}	
-
+			
 			if($config['data_source'] != 'all_k2_articles') {
 				$sql_where = ' AND ( ' . $sql_where . ' ) ';
 			}
-			// creating SQL query			
+			// creating SQL query
 			$query_news = '
-			SELECT
-				content.id AS IID,
+			SELECT DISTINCT
+				cats.name AS cat_name,
+				cats.alias AS cat_alias,
 				content.catid AS cat_id,
+				'.((($config['username'] != 2) ? 'users.'.(($config['username'] == 1) ? 'username':'name') : 'content.created_by_alias')) .' AS author, 
+				users.email AS author_email,
+				users.id AS author_id,
 				'.($config['use_title_alias'] ? 'content.alias' : 'content.title').' AS title, 
 				content.introtext AS text, 
 				content.created AS date, 
 				content.publish_up AS date_publish,
+				content.id AS ID,
 				content.alias AS alias,
 				content.hits AS hits,
-			    content.plugins AS plugins		
+                content_rating.rating_sum AS rating_sum,
+                content_rating.rating_count AS rating_count,
+                content.plugins AS plugins		
 			FROM 
-				#__k2_items AS content 	
-				'.$tag_join.' 
+				#__k2_items AS content 
+				LEFT JOIN 
+					#__k2_categories AS cats
+					ON cats.id = content.catid 
+				LEFT JOIN 
+					#__users AS users 
+					ON users.id = content.created_by
+                 '.$tag_join.' 	
+                LEFT JOIN
+                    #__k2_rating AS content_rating
+                    ON content.id = content_rating.itemID	
 			WHERE 
 				content.trash = 0'.(($config['unauthorized'] == 0) ? ' 
+					AND cats.access <= ' .(int) $aid . ' 
 					AND content.access <= '.(int) $aid : '').'
 					AND content.published = 1 
+				 	AND cats.published = 1  
 			 		AND ( content.publish_up = '.$db->Quote($nullDate).' OR content.publish_up <= '.$db->Quote($now).' )
 					AND ( content.publish_down = '.$db->Quote($nullDate).' OR content.publish_down >= '.$db->Quote($now).' )
 				'.$sql_where.'
@@ -195,85 +207,32 @@ class NSP_GK4_K2_Source {
 				'.$order_options.'
 			LIMIT
 				'.($config['startposition']).','.$amount.';
-			';
-
+			';			
 			// run SQL query
 			$db->setQuery($query_news);
 			// when exist some results
 			if($news = $db->loadObjectList()) {
 				// generating tables of news data
 				foreach($news as $item) {
-					$content_iid[] = $item->IID; // news IDs
+					$content_id[] = $item->ID; // news IDs
 					$content_alias[] = $item->alias; // news aliases
 					$content_cid[] = $item->cat_id; // news CIDs
 					$content_title[] = $item->title; // news titles
 					$content_text[] = $item->text; // news text
-					$content_hits[] = $item->hits; // news text
 					$content_date[] = $item->date; // news dates
 					$content_date_publish[] = $item->date_publish; // news dates
+					$content_author[] = $item->author; // news author
+					$content_cat_name[] = $item->cat_name; // news category name
+					$content_cat_alias[] = $item->cat_alias; // news category alias
+					$content_hits[] = $item->hits; // news hits
+					$content_email[] = $item->author_email; // news author email
+					$content_authorid[] = $item->author_id; // news author id
+					$content_rating_sum[] = $item->rating_sum; // news rating sum
+					$content_rating_count[] = $item->rating_count; // news rating count
 					$content_plugins[] = $item->plugins; // news K2Store values
 					$news_amount++;	// news amount
 				}
 			}
-
-
-			// generate SQL WHERE condition
-			$second_sql_where = '';
-			for($i = 0; $i < count($content_iid); $i++) {
-				$second_sql_where .= (($i != 0) ? ' OR ' : '') . ' content.id = '.$content_iid[$i];
-			}	
-			// second SQL query to get rest of the data and avoid the DISTINCT
-			$second_query_news = '
-			SELECT
-				content.id AS ID,
-				cats.name AS cat_name,
-				cats.alias AS cat_alias,
-				content.catid AS cat_id,
-				'.$config['username'].' AS author,
-				users.email AS author_email,
-				users.id AS author_id,
-			    content_rating.rating_sum AS rating_sum,
-			    content_rating.rating_count AS rating_count	
-			FROM 
-				#__k2_items AS content 
-				LEFT JOIN 
-					#__k2_categories AS cats
-					ON cats.id = content.catid 
-				LEFT JOIN 
-					#__users AS users 
-					ON users.id = content.created_by
-			     '.$tag_join.' 	
-			    LEFT JOIN
-			        #__k2_rating AS content_rating
-			        ON content.id = content_rating.itemID	
-			WHERE 
-				'.$second_sql_where.'
-			ORDER BY 
-				'.$order_options.'
-			';	
-
-			// run the query
-			$db->setQuery($second_query_news);
-			// when exist some results
-			if($news2 = $db->loadObjectList()) {
-				// generating tables of news data
-				foreach($news2 as $item) {						
-				    $pos = array_search($item->ID, $content_iid);
-				    $id = $item->ID;
-			        $content_id[$pos] = $item->ID; // news IDs
-					$content_author[$pos] = $item->author; // news author
-					$content_cat_name[$pos] = $item->cat_name; // news category name
-					$content_cat_alias[$pos] = $item->cat_alias; // news category alias
-					$content_email[$pos] = $item->author_email; // news author email
-					$content_authorid[$pos] = $item->author_id; // news author id
-					$content_rating_sum[$pos] = $item->rating_sum; // news rating sum
-					$content_rating_count[$pos] = $item->rating_count; // news rating count
-					$news_amount++;	// news amount
-				}
-			}
-
-			// second SQL query to get rest of the data and avoid the DISTINCT
-
 		}
 		// Returning data in hash table
 		return array(
@@ -339,7 +298,7 @@ class NSP_GK4_K2_Source {
 		       }
 		   }
 		}
-
+		
        	return $counters_tab;
    	}
 	// Method to get articles in standard mode 

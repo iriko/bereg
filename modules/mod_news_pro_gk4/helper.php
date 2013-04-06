@@ -153,7 +153,7 @@ class NSP_GK4_Helper {
         
         // new GK4 v.2.1 options
 		$this->config['img_auto_scale'] = $params->get('img_auto_scale', 1); // image auto-scale
-
+		
         // RedSHOP Component options (new GK4 v.2.4 options)
         $this->config['news_content_rs_pos'] = $params->get('news_content_rs_pos', 'left');         
         $this->config['news_content_rs_float'] = $params->get('news_content_rs_float', 'none');
@@ -187,7 +187,7 @@ class NSP_GK4_Helper {
         
 		// image thumbnails options (in Joomla version > 2.5)
 		$this->config['thumb_image_type'] = $params->get('thumb_image_type', 'full');
-
+		
 		// GK4 v3.1 options 
 		$this->config['k2store_support'] = $params->get('k2store_support', 0); // enable K2Store support
 		$this->config['k2store_show_cart'] = $params->get('k2store_show_cart', 1); // enable showing K2Store "show cart" button
@@ -195,7 +195,7 @@ class NSP_GK4_Helper {
 		$this->config['k2store_price'] = $params->get('k2store_price', 1); // enable showing K2Store item price
 		$this->config['k2store_price_text'] = $params->get('k2store_price_text', 1); // enable showing text "Item price" with the item price
         $this->config['k2store_currency_place'] = $params->get('k2store_currency_place', 'before'); // specify a currency place
-
+		
         // small validation
 		if($this->config['list_title_limit'] == 0 && $this->config['list_text_limit'] == 0){
 			$this->config['news_short_pages'] = 0;
@@ -213,7 +213,7 @@ class NSP_GK4_Helper {
 		if($this->config['k2store_support'] && file_exists(JPATH_ROOT.DS.'components'.DS.'com_k2store')) {
             $this->k2store_params = JComponentHelper::getParams('com_k2store');
         }
-
+		
         // parse the crop rules
 		$temp_crop_rules = explode(';', $this->config['crop_rules']);
 		$final_crop_rules = array();
@@ -326,15 +326,15 @@ class NSP_GK4_Helper {
 				require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_redshop'.DS.'helpers'.DS.'configuration.php');
 				$Redconfiguration = new Redconfiguration();
 				$Redconfiguration->defineDynamicVars();
-
+			
 				require_once(JPATH_SITE. DS .'components'.DS.'com_redshop'.DS.'helpers'.DS.'currency.php');
 				$session = JFactory::getSession('product_currency');
-
+			
 				$post = JRequest::get('POST');
 				$Itemid= JRequest::getVar('Itemid');
 				if(isset($post['product_currency']))
 					$session->set('product_currency',$post['product_currency']);
-
+			
 				$currency_symbol = 	REDCURRENCY_SYMBOL;
 				$currency_convert = 1;
 				if($session->get('product_currency')){
@@ -342,8 +342,8 @@ class NSP_GK4_Helper {
 					$convertPrice = new convertPrice();
 					$currency_convert = $convertPrice->convert(1);
 				}
-
-
+				
+				
 				$script = "window.site_url ='".JURI::root()."';
 					window.AJAX_CART_BOX ='".AJAX_CART_BOX."';
 					window.REDSHOP_VIEW ='".$view."';
@@ -419,7 +419,7 @@ class NSP_GK4_Helper {
 					window.SHOW_QUOTATION_PRICE ='".SHOW_QUOTATION_PRICE."';";
 					$document = JFactory::getDocument();
 					$document->addScriptDeclaration($script);
-
+							
 			        // Getting list of categories
 			        $categories = $newsClass->getSources($this->config);
 			        // getting content
@@ -449,7 +449,7 @@ class NSP_GK4_Helper {
 			$k2_mode = false;
             $rs_mode = false;
             $vm_mode = false;
-
+			
             $producthelper = '';
        	    $redhelper = '';
 			//check the source
@@ -509,7 +509,7 @@ class NSP_GK4_Helper {
 				}
 			} elseif($this->config["data_source"] == 'vm_categories' || 
 	                $this->config["data_source"] == 'vm_products') {
-
+	            
 	            if($this->config['vm_categories'] != -1){
 					$vm_mode = true;
 				}else{ // exception when VirtueMart is not installed
@@ -574,7 +574,7 @@ class NSP_GK4_Helper {
 						$news_infoo2 = $renderer->info_k2($this->config, $this->content['cat_name'][$i], $this->content['CID'][$i], $this->content['cat_alias'][$i], $this->content['author'][$i], $this->content['author_id'][$i], $this->content['email'][$i], ($this->config['date_publish'] == TRUE) ? $this->content['date_publish'][$i] : $this->content['date'][$i], $this->content['hits'][$i], $this->content['ID'][$i], $this->content['alias'][$i], $this->content['comments'], $this->content['rating_count'][$i], $this->content['rating_sum'][$i], 2);
 						// GENERATE STORE BLOCK
 						$news_k2_store = $renderer->store_k2($this->config, $this->content['ID'][$i], $this->content['plugins'][$i], $this->k2store_params);
-
+						
 	                }
                     else if ($rs_mode == TRUE && $vm_mode== FALSE && $k2_mode == FALSE){
                         $ItemData = $producthelper->getMenuInformation(0,0,'','product&pid='.$this->content['ID'][$i]);
@@ -676,7 +676,7 @@ class NSP_GK4_Helper {
 				}                    
 			}
 			/** GENERATING FINAL XHTML CODE START **/
-
+			
 			// create instances of basic Joomla! classes
 			$document = JFactory::getDocument();
 			$uri = JURI::getInstance();

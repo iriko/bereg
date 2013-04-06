@@ -2,12 +2,12 @@
 <extension version="2.5" client="site" type="language" method="upgrade">
 	<name>Українська (Україна)</name>
     <tag>uk-UA</tag>
-	<version>2.5.7.2</version>
-	<creationDate>23.09.2012</creationDate>
+	<version>2.5.10.6</version>
+	<creationDate>20.03.2013</creationDate>
 	<author>Joomla! Ukraine</author>
 	<authorUrl>joomla-ua.org</authorUrl>
 	<authorEmail>denys@joomla-ua.org</authorEmail>
-	<copyright>Copyright (C) 2005 - 2012 Open Source Matters. All rights reserved. Copyright (C) 2006 - 2012 Joomla! Ukraine. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved. Copyright (C) 2006 - 2012 Joomla! Ukraine. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>Український переклад фронтальної частини Joomla 2.5.</description>
     <files>

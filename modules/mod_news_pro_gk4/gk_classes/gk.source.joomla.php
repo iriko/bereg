@@ -102,12 +102,7 @@ class NSP_GK4_Joomla_Source {
 		$db = JFactory::getDBO();
 		$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
 		$access = JComponentHelper::getParams( 'com_content' )->get('show_noauth');
-		
-		if($config['unauthorized'] == 1) {
-			$access_con = '';
-		} else {
-			$access_con = ' AND content.access IN ('. implode(',', JFactory::getUser()->authorisedLevels()) .') ';
-		}
+		$access_con = ' AND content.access IN ('. implode(',', JFactory::getUser()->authorisedLevels()) .') ';
 		$date = JFactory::getDate("now", $config['time_offset']);
 		$now  = $date->toMySQL();
 		$nullDate = $db->getNullDate();
@@ -135,22 +130,46 @@ class NSP_GK4_Joomla_Source {
 			if($config['data_source'] != 'com_all_articles') {
 				$sql_where = ' AND ( ' . $sql_where . ' ) ';
 			}
-			// creating SQL query			
+			// creating SQL query
 			$query_news = '
-			SELECT
-				content.id AS IID,
-				'.($config['use_title_alias'] ? 'content.alias' : 'content.title').' AS title,
+			SELECT DISTINCT
+				categories.title AS cat, 
+				'.$config['username'].' AS author,
+				users.email AS author_email,
+				'.($config['use_title_alias'] ? 'content.alias' : 'content.title').' AS title, 
 				content.introtext AS text, 
 				content.created AS date, 
 				content.publish_up AS date_publish,
+				content.id AS IID,
 				content.hits AS hits,
+				content.access AS access,
 				content.images AS images,
-				content.featured AS frontpage				
+                content_rating.rating_sum AS rating_sum,
+				content_rating.rating_count AS rating_count,
+				CASE WHEN CHAR_LENGTH(content.alias) 
+					THEN CONCAT_WS(":", content.id, content.alias) 
+						ELSE content.id END as ID, 
+				CASE WHEN CHAR_LENGTH(categories.alias) 
+					THEN CONCAT_WS(":", categories.id, categories.alias) 
+						ELSE categories.id END as CID 					
 			FROM 
 				#__content AS content 
-			WHERE
+				LEFT JOIN 
+					#__categories AS categories 
+					ON categories.id = content.catid 
+				LEFT JOIN 
+					#__users AS users 
+					ON users.id = content.created_by
+				LEFT JOIN 
+					#__content_frontpage AS frontpage 
+					ON content.id = frontpage.content_id  			
+				LEFT JOIN 
+					#__content_rating AS content_rating 
+					ON content_rating.content_id = content.id
+			WHERE 
 				content.state = 1
-	                '. $access_con .'   
+                    '. $access_con .' 
+				 	AND categories.published = 1  
 			 		AND ( content.publish_up = '.$db->Quote($nullDate).' OR content.publish_up <= '.$db->Quote($now).' )
 					AND ( content.publish_down = '.$db->Quote($nullDate).' OR content.publish_down >= '.$db->Quote($now).' )
 				'.$sql_where.'
@@ -162,9 +181,6 @@ class NSP_GK4_Joomla_Source {
 			LIMIT
 				'.($config['startposition']).','.($amount + (int)$config['startposition']).';
 			';
-				 
-				 
-				 
 			// run SQL query
 			$db->setQuery($query_news);
 			// when exist some results
@@ -172,77 +188,24 @@ class NSP_GK4_Joomla_Source {
 				// generating tables of news data
 				foreach($news as $item) {						
 				    $id = $item->ID;
-					if($config['unauthorized'] == 0) {
-						if (!($access || in_array($item->access, $authorised))) { 
-							$id = 0; 
-						}
-					}
+					if (!($access || in_array($item->access, $authorised))) { $id = 0; }
+                    $content_id[] = $id; // news IDs
 					$content_iid[] = $item->IID; // news IDs
+					$content_cid[] = $item->CID; // news CIDs
 					$content_title[] = $item->title; // news titles
 					$content_text[] = $item->text; // news text;
 					$content_date[] = $item->date; // news dates
 					$content_date_publish[] = $item->date_publish; // news dates
+					$content_author[] = $item->author; // news author
+					$content_catname[] = $item->cat; // news category name
 					$content_hits[] = $item->hits; // news hits
+					$content_email[] = $item->author_email; // news author emails
+					$content_rating_sum[] = $item->rating_sum; // news rating sum
+					$content_rating_count[] = $item->rating_count; // news rating count
 					$content_images[] = $item->images; // news images
  					$news_amount++;	// news amount
 				}
 			}
-			
-			// generate SQL WHERE condition
-			$second_sql_where = '';
-			for($i = 0; $i < count($content_iid); $i++) {
-				$second_sql_where .= (($i != 0) ? ' OR ' : '') . ' content.id = '.$content_iid[$i];
-			}	
-			// second SQL query to get rest of the data and avoid the DISTINCT
-			$second_query_news = '
-			SELECT
-				content.id AS IID,
-				content.access AS access,
-				categories.title AS cat, 
-				users.email AS author_email,
-				'.$config['username'].' AS author,
-				content_rating.rating_sum AS rating_sum,
-				content_rating.rating_count AS rating_count,
-				CASE WHEN CHAR_LENGTH(content.alias) 
-					THEN CONCAT_WS(":", content.id, content.alias) 
-						ELSE content.id END as ID, 
-				CASE WHEN CHAR_LENGTH(categories.alias) 
-					THEN CONCAT_WS(":", categories.id, categories.alias) 
-						ELSE categories.id END as CID			
-			FROM 
-				#__content AS content 
-				LEFT JOIN 
-					#__categories AS categories 
-					ON categories.id = content.catid 
-				LEFT JOIN 
-					#__users AS users 
-					ON users.id = content.created_by 			
-				LEFT JOIN 
-					#__content_rating AS content_rating 
-					ON content_rating.content_id = content.id
-			WHERE 
-				'.$second_sql_where.'
-			ORDER BY 
-				'.$order_options.'
-			';
-			// run the query
-			$db->setQuery($second_query_news);
-			// when exist some results
-			if($news2 = $db->loadObjectList()) {
-				// generating tables of news data
-				foreach($news2 as $item) {						
-				    $pos = array_search($item->IID, $content_iid);
-				    $id = $item->ID;
-					if (!($access || in_array($item->access, $authorised))) { $id = 0; }
-			        $content_id[$pos] = $id; // news IDs
-					$content_cid[$pos] = $item->CID; // news CIDs
-					$content_author[$pos] = $item->author; // news author
-					$content_catname[$pos] = $item->cat; // news category name
-					$content_email[$pos] = $item->author_email; // news author emails
-					$content_rating_sum[$pos] = $item->rating_sum; // news rating sum
-					$content_rating_count[$pos] = $item->rating_count; // news rating count
-				}
-			}		
 		}
 		// Returning data in hash table
 		return array(
