@@ -75,7 +75,7 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
                         print_r($object->info($info_category));*/
                     ?>
 				<?php endfor; ?>
-                <a class="link-test" href="/component/k2/itemlist/category/16-news">Архів новин</a>
+                <a class="link-test" href="/tsikavo-znati/news">Архів новин</a>
 			</div>
 		<?php endif; ?>
 		<?php if($this->config['news_short_pages'] > 0 && count($news_list_tab) > 0 ) : ?>
