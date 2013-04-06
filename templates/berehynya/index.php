@@ -58,7 +58,7 @@ $this->setGenerator('Beregynya site');
             <div class="footer-holder">
                 <div class="footer">
 
-                    <div class="copyright">Черкаський колегіум "Бегериня" <?php echo date('Y') ?></div>
+                    <div class="copyright">Черкаський колегіум "Берегиня" <?php echo date('Y') ?></div>
 
                     <jdoc:include type="modules" name="position-3" />
 

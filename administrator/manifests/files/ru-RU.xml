@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="file" version="2.5" method="upgrade">
+	<tag>ru-RU</tag>
+	<name>jfusion Language Package ru-RU</name>
+	<packagename>jfusion ru-RU</packagename>
+	<version>1.8</version>
+	<creationDate>230313</creationDate>
+	<author>JFusion Team</author>
+	<authorEmail>webmaster@jfusion.org</authorEmail>
+	<authorUrl>www.jfusion.org</authorUrl>
+	<copyright>Copyright (C) 2012 JFusion. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<description>Russian (Russia)</description>
+	<progress><![CDATA[72]]></progress>
+	<translateurl><![CDATA[https://www.transifex.com/projects/p/jfusion2/language/ru_RU/]]></translateurl>
+	<fileset>
+		<files folder="admin" target="administrator/components/com_jfusion/language/ru-RU">
+				<filename>ru-RU.com_jfusion.menu.ini</filename>
+				<filename>ru-RU.com_jfusion.sys.ini</filename>
+				<filename>ru-RU.plg_search_jfusion.ini</filename>
+				<filename>ru-RU.com_jfusion.ini</filename>
+				<filename>ru-RU.plg_content_jfusion.ini</filename>
+				<filename>ru-RU.plg_system_jfusion.ini</filename>
+				<filename>index.html</filename>
+		</files>
+		<files folder="site" target="components/com_jfusion/language/ru-RU">
+				<filename>ru-RU.mod_jfusion_activity.ini</filename>
+				<filename>ru-RU.mod_jfusion_whosonline.ini</filename>
+				<filename>ru-RU.mod_jfusion_user_activity.ini</filename>
+				<filename>ru-RU.mod_jfusion_login.ini</filename>
+				<filename>ru-RU.com_jfusion.ini</filename>
+				<filename>index.html</filename>
+		</files>
+	  <files target="administrator/components/com_jfusion/language/ru-RU">
+	  	<filename>ru-RU.xml</filename>
+	  </files>
+	</fileset>
+</extension>
