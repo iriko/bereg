@@ -90,13 +90,44 @@ body {
     width: 990px;
     margin: 0 auto;
 }
+.announcement {
+    overflow: hidden;
+    margin: 20px auto;
+}
+.three-reasons {
+    overflow: hidden;
+    margin-bottom: 25px;
+}
 .reason {
     float: left;
     width: 330px;
 }
+.home-last-news {
+    overflow: hidden;
+}
 .home-last-news .nspArt {
     clear: none;
     float: left;
+}
+
+.content-area .itemListCategory,
+.content-area .subCategory {
+    background: #FFF;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.category-name,
+.componentheading {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+.children-subcategories-name {
+    display: none;
+}
+.itemBackToTop {
+    display: none;
 }
 /***********************************************************************/
 

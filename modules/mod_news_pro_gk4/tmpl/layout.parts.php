@@ -162,7 +162,7 @@ class NSP_GK4_Layout_Parts {
             $news_info = str_replace('%RATE', $info_rate, $news_info);
         }
 		//
-		return $news_info;		
+		return $news_info;
 	}
 	// rest link list generator	
 	function lists($config, $news_id, $news_cid, $news_title, $news_text, $odd, $num) {

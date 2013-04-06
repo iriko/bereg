@@ -45,7 +45,11 @@ $this->setGenerator('Beregynya site');
             <div class="page-holder">
                 <div class="content-holder">
 
-                    <jdoc:include type="modules" name="position-2" style="home"/>
+                    <?php if (JURI::current() == JURI::base()) : ?>
+                        <jdoc:include type="modules" name="position-2" style="home"/>
+                    <?php endif; ?>
+
+                    <jdoc:include type="modules" name="position-4"/>
 
                     <div class="content-area">
                         <jdoc:include type="message" />

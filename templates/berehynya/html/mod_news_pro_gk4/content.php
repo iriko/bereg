@@ -69,7 +69,13 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
 						if(($i+1) % ($this->config['news_column']) == 1) $style .= 'clear:both;';
 					?>
 					<div class="nspArt<?php echo $class; ?>" style="width:<?php echo 100 / $this->config['news_column']; ?>%!important;<?php echo $style; ?>"><div style="padding:<?php echo $this->config['art_padding']; ?>"><?php echo $news_html_tab[$i];?></div></div>
-				<?php endfor; ?>	
+                    <?php
+                        /*$info_category = '<a class="test" href="'.JRoute::_(ContentHelperRoute::getCategoryRoute($news_cid)).'" >'.$news_catname.'</a>';*/
+                        /*$object = new NSP_GK4_Layout_Parts;
+                        print_r($object->info($info_category));*/
+                    ?>
+				<?php endfor; ?>
+                <a class="link-test" href="/component/k2/itemlist/category/16-news">Архів новин</a>
 			</div>
 		<?php endif; ?>
 		<?php if($this->config['news_short_pages'] > 0 && count($news_list_tab) > 0 ) : ?>
