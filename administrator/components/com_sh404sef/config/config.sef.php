@@ -1,7 +1,7 @@
 <?php
 // config.sef.php : configuration file for sh404SEF for Joomla 1.5.x
 // 3.7.0.1485
-// saved at: 2013-04-06 16:03:41
+// saved at: 2013-04-07 09:47:07
 // by: iriko (id: 931 )
 // domain: http://bereg.home
 
@@ -50,7 +50,7 @@ $shInsertCategoryId = false;
 $shInsertNumericalId = false;
 $shInsertNumericalIdCatList = '';
 $shRedirectNonSefToSef = '1';
-$shRedirectJoomlaSefToSef = '0';
+$shRedirectJoomlaSefToSef = false;
 $shConfig_live_secure_site = '';
 $shActivateIJoomlaMagInContent = true;
 $shInsertIJoomlaMagIssueId = false;

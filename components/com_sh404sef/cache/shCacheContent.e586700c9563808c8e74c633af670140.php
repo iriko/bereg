@@ -1,7 +1,7 @@
 <?php // shCache : URL cache file for sh404SEF
   // version 3.7.0.1485
   if (!defined('_JEXEC')) die('Direct Access to this location is not allowed.');
-  $shURLCacheCreationDate = 1365267090;
+  $shURLCacheCreationDate = 1365320843;
   
 $this->_urlCache['92e239c80e3ace59830d6c5ec50b2475']='index.php?option=com_content&amp;Itemid=101&amp;format=feed&amp;lang=uk&amp;type=rss&amp;view=featured#feed/rss#0';
 $this->_urlCache['7ce1ebfe9c9a62c084663afe843add84']='index.php?option=com_content&amp;Itemid=101&amp;format=feed&amp;lang=uk&amp;type=atom&amp;view=featured#feed/atom#0';
@@ -32,22 +32,16 @@ $this->_urlCache['7d0cb308cd13124f5c72f1b8717afc76']='index.php?option=com_k2&am
 $this->_urlCache['ae6971d85f818a133302517495dfde43']='index.php?option=com_k2&amp;Itemid=180&amp;id=24&amp;lang=uk&amp;layout=category&amp;task=category&amp;view=itemlist#tsikavo-znati/statti#0';
 $this->_urlCache['49b2dcca7837c7f3c019c176a1b6a22f']='index.php?option=com_k2&amp;Itemid=112&amp;id=13&amp;lang=uk&amp;layout=item&amp;view=item#tsikavo-znati/konsultatsiji-psikhologa#0';
 $this->_urlCache['a9f05e753081586f572cef06fdb18ae4']='index.php?option=com_k2&amp;Itemid=114&amp;id=22&amp;lang=uk&amp;layout=category&amp;task=category&amp;view=itemlist#galereya/photos#0';
-$shURLCacheCreationDate=1365267092;
+$shURLCacheCreationDate=1365320873;
 $this->_urlCache['3a7169cf6cf41cd1be9b3f89994d41c8']='index.php?option=com_k2&amp;Itemid=113&amp;id=22&amp;lang=uk&amp;task=category&amp;view=itemlist#galereya/photos#0';
-$this->_urlCache['6a2676923458a276ae62002ea0ee8b17']='index.php?option=com_k2&amp;Itemid=113&amp;id=41&amp;lang=uk&amp;view=item#galereya/photos/halereia1#0';
-$this->_urlCache['d024decf35ffeeec3b71f3580d02473d']='index.php?option=com_k2&amp;Itemid=113&amp;format=feed&amp;id=22&amp;lang=uk&amp;layout=category&amp;task=category&amp;view=itemlist#galereya/photos/feed#0';
-$shURLCacheCreationDate=1365267094;
-$this->_urlCache['9acba4a9543e357aa36b4e60bd101f9a']='index.php?option=com_k2&amp;Itemid=113&amp;id=931&amp;lang=uk&amp;task=user&amp;view=itemlist#blog/yaroslav#0';
-$this->_urlCache['6758a500d4bc68259269bc65585458ef']='index.php?option=com_jcomments&amp;lang=uk&amp;tmpl=component#jcomments#0';
-$this->_urlCache['bed165ec27f28a79ec69ff3bf98b278f']='index.php?option=com_jcomments&amp;ac=44574&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/44574#0';
-$this->_urlCache['e6caf3aee63716d1569b5a781dc148cc']='index.php?option=com_k2&amp;Itemid=113&amp;id=40&amp;lang=uk&amp;view=item#about/teachers/administratsiia/petrov-petro-petrovych#0';
-$shURLCacheCreationDate=1365267107;
-$this->_urlCache['9190a37ba8e18cef7e6fca958a80440d']='index.php?option=com_jcomments&amp;ac=58124&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/58124#0';
-$shURLCacheCreationDate=1365267218;
 $this->_urlCache['4a001ca7b3f6ec22a3beb2b4c4f084a0']='index.php?option=com_k2&amp;Itemid=113&amp;id=43&amp;lang=uk&amp;view=item#galereya/photos/halereia3#0';
 $this->_urlCache['6a474a3997761c2255909165e0de481e']='index.php?option=com_k2&amp;Itemid=113&amp;id=42&amp;lang=uk&amp;view=item#galereya/photos/halereia2#0';
-<<<<<<< HEAD
-$shURLCacheCreationDate=1365267655;
+$this->_urlCache['6a2676923458a276ae62002ea0ee8b17']='index.php?option=com_k2&amp;Itemid=113&amp;id=41&amp;lang=uk&amp;view=item#galereya/photos/halereia1#0';
+$this->_urlCache['d024decf35ffeeec3b71f3580d02473d']='index.php?option=com_k2&amp;Itemid=113&amp;format=feed&amp;id=22&amp;lang=uk&amp;layout=category&amp;task=category&amp;view=itemlist#galereya/photos/feed#0';
+$shURLCacheCreationDate=1365320934;
+$this->_urlCache['dbd36cd2a1b21673e2e1d36d580833b6']='index.php?option=com_k2&amp;Itemid=102&amp;id=5&amp;lang=uk&amp;task=category&amp;view=itemlist#about#0';
+$this->_urlCache['33ff0dfcd24fa4d3600dc6cd31753dd9']='index.php?option=com_k2&amp;Itemid=102&amp;id=16&amp;lang=uk&amp;view=item#about/about#0';
+$shURLCacheCreationDate=1365321313;
 $this->_urlCache['e2736e4f7577526c42b81c5b79111af3']='index.php?option=com_k2&amp;Itemid=103&amp;id=10&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers#0';
 $this->_urlCache['fa53d572d0f7c0992095510c6dc408b5']='index.php?option=com_k2&amp;Itemid=103&amp;id=18&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/administratsiia#0';
 $this->_urlCache['47d7c88cfbf236f190e42af773025434']='index.php?option=com_k2&amp;Itemid=103&amp;id=20&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/metodychne-ob-iednannia-vchyteliv-inozemnoi-movy#0';
@@ -55,13 +49,33 @@ $this->_urlCache['add5c983c6eae4f17c1255d79daf94dd']='index.php?option=com_k2&am
 $this->_urlCache['2299b8e3c7abba7f41f8e4ee74c61034']='index.php?option=com_k2&amp;Itemid=103&amp;id=21&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/metodychne-ob-iednannia-vchyteliv-pochatkovoi-shkoly#0';
 $this->_urlCache['fe92ede60cebe4223bac8d31495448c6']='index.php?option=com_k2&amp;Itemid=103&amp;id=19&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/metodychne-ob-iednannia-vchyteliv-ukrainskoi-movy-ta-literatury-svitovoi-literatury#0';
 $this->_urlCache['a63189a7ac7d949c7caf64ecf5ae28b2']='index.php?option=com_k2&amp;Itemid=103&amp;format=feed&amp;id=10&amp;lang=uk&amp;layout=category&amp;task=category&amp;view=itemlist#about/teachers/feed#0';
-$shURLCacheCreationDate=1365272300;
+$shURLCacheCreationDate=1365321327;
+$this->_urlCache['498b79fae45d1ef19a1d91576b399441']='index.php?option=com_k2&amp;Itemid=103&amp;id=40&amp;lang=uk&amp;view=item#about/teachers/administratsiia/petrov-petro-petrovych#0';
+$this->_urlCache['770c653cac0e23e93909ddec9a3143f2']='index.php?option=com_k2&amp;Itemid=103&amp;id=17&amp;lang=uk&amp;view=item#about/teachers/administratsiia/administration#0';
+$this->_urlCache['0e8b601c4f9e295a7123ecf6b0f1b42c']='index.php?option=com_k2&amp;Itemid=103&amp;format=feed&amp;id=18&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/administratsiia/feed#0';
+$shURLCacheCreationDate=1365321343;
 $this->_urlCache['db728c17921ff7307796e0a5559f1f4d']='index.php?option=com_k2&amp;Itemid=105&amp;id=3&amp;lang=uk&amp;task=category&amp;view=itemlist#about/rozporyadok#0';
 $this->_urlCache['2f54552e2f69c636a44c1b875db755f4']='index.php?option=com_k2&amp;Itemid=105&amp;id=5&amp;lang=uk&amp;view=item#about/rozporyadok/navchalnij-rik#0';
-$shURLCacheCreationDate=1365272304;
-$this->_urlCache['7feecc2e3b512691bbecea82239c172b']='index.php?option=com_k2&amp;Itemid=106&amp;id=4&amp;lang=uk&amp;task=category&amp;view=itemlist#about/for-parents#0';
-$this->_urlCache['464d5f4da35cf0cddb8fa5525f30c8a5']='index.php?option=com_k2&amp;Itemid=106&amp;id=22&amp;lang=uk&amp;view=item#about/for-parents/pravila-prijomu#0';
-$shURLCacheCreationDate=1365272308;
-=======
-$shURLCacheCreationDate=1365267655;
->>>>>>> f2a884f31295db15e23c343b14d4ae9dfb6c4fa0
+$shURLCacheCreationDate=1365321404;
+$this->_urlCache['2a1c23fa19e378d631e8b58c5493ced8']='index.php?option=com_k2&amp;Itemid=151&amp;id=3&amp;lang=uk&amp;task=category&amp;view=itemlist#about/rozporyadok#0';
+$this->_urlCache['65feb88db5b931891c8851aea7d10b15']='index.php?option=com_k2&amp;Itemid=151&amp;id=20&amp;lang=uk&amp;view=item#about/rozporyadok/lessons#0';
+$shURLCacheCreationDate=1365321417;
+$this->_urlCache['81a6d7f18bac1dc89af33f61afc0b662']='index.php?option=com_k2&amp;Itemid=110&amp;id=16&amp;lang=uk&amp;task=category&amp;view=itemlist#tsikavo-znati/news#0';
+$this->_urlCache['42e0105e00e5df553a48ddef8a6aef8c']='index.php?option=com_k2&amp;Itemid=110&amp;format=feed&amp;id=16&amp;lang=uk&amp;layout=category&amp;task=category&amp;view=itemlist#tsikavo-znati/news/feed#0';
+$shURLCacheCreationDate=1365321433;
+$this->_urlCache['4c55c43c3f0c2db5494a77de0dd33004']='index.php?option=com_k2&amp;Itemid=112&amp;id=7&amp;lang=uk&amp;task=category&amp;view=itemlist#tsikavo-znati#0';
+$this->_urlCache['8a28a0184e655aee0d0c390d00cda1f5']='index.php?option=com_k2&amp;Itemid=112&amp;id=13&amp;lang=uk&amp;view=item#tsikavo-znati/konsultatsiji-psikhologa#0';
+$this->_urlCache['6758a500d4bc68259269bc65585458ef']='index.php?option=com_jcomments&amp;lang=uk&amp;tmpl=component#jcomments#0';
+$this->_urlCache['c4211bd1922a8507bfc9f39a7d5c2232']='index.php?option=com_jcomments&amp;ac=31299&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/31299#0';
+$shURLCacheCreationDate=1365321458;
+$this->_urlCache['c4f503f5439bc20062f0a37fb63c516e']='index.php?option=com_k2&amp;Itemid=116&amp;id=17&amp;lang=uk&amp;task=category&amp;view=itemlist#bez-katehorii#0';
+$this->_urlCache['809523881d337880f14c9a5e8c6adbcd']='index.php?option=com_k2&amp;Itemid=116&amp;id=9&amp;lang=uk&amp;view=item#bez-katehorii/contacts#0';
+$this->_urlCache['fe1a5dfb926a719fa139478191a9bc28']='index.php?option=com_k2&amp;Itemid=116&amp;id=932&amp;lang=uk&amp;task=user&amp;view=itemlist#blog/vlad#0';
+$this->_urlCache['cb17e4beffbffb8ef287f999453dde14']='index.php?option=com_jcomments&amp;ac=29871&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/29871#0';
+$this->_urlCache['2908cd3beac32e6a9a2c0b910ad63f54']='index.php?option=com_k2&amp;Itemid=116&amp;id=38&amp;lang=uk&amp;view=item#about/library/elektronni-materiali/alhebra-10-klas#0';
+$this->_urlCache['499f24d9df64bb49f65121073713c596']='index.php?option=com_k2&amp;Itemid=116&amp;id=37&amp;lang=uk&amp;view=item#about/library/elektronni-materiali/trudove-navchannia-tekhnichni-vydy-pratsi#0';
+$this->_urlCache['c6e26045bf3d2453e8f39af9a3ed1484']='index.php?option=com_k2&amp;Itemid=116&amp;id=36&amp;lang=uk&amp;view=item#about/teachers/metodychne-ob-iednannia-vchyteliv-pochatkovoi-shkoly/taras-shevchenko#0';
+$this->_urlCache['cbaa0f791f621804b69963afde9e9089']='index.php?option=com_k2&amp;Itemid=116&amp;id=35&amp;lang=uk&amp;view=item#about/teachers/metodychne-ob-iednannia-vchyteliv-pochatkovoi-shkoly/robert-enshtein#0';
+$shURLCacheCreationDate=1365321482;
+$this->_urlCache['160721fd032820c37ecbc047116ed051']='index.php?option=com_jcomments&amp;ac=39253&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/39253#0';
+$shURLCacheCreationDate=1365321637;
