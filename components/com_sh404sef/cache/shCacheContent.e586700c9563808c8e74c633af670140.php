@@ -46,6 +46,7 @@ $this->_urlCache['9190a37ba8e18cef7e6fca958a80440d']='index.php?option=com_jcomm
 $shURLCacheCreationDate=1365267218;
 $this->_urlCache['4a001ca7b3f6ec22a3beb2b4c4f084a0']='index.php?option=com_k2&amp;Itemid=113&amp;id=43&amp;lang=uk&amp;view=item#galereya/photos/halereia3#0';
 $this->_urlCache['6a474a3997761c2255909165e0de481e']='index.php?option=com_k2&amp;Itemid=113&amp;id=42&amp;lang=uk&amp;view=item#galereya/photos/halereia2#0';
+<<<<<<< HEAD
 $shURLCacheCreationDate=1365267655;
 $this->_urlCache['e2736e4f7577526c42b81c5b79111af3']='index.php?option=com_k2&amp;Itemid=103&amp;id=10&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers#0';
 $this->_urlCache['fa53d572d0f7c0992095510c6dc408b5']='index.php?option=com_k2&amp;Itemid=103&amp;id=18&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/administratsiia#0';
@@ -61,3 +62,6 @@ $shURLCacheCreationDate=1365272304;
 $this->_urlCache['7feecc2e3b512691bbecea82239c172b']='index.php?option=com_k2&amp;Itemid=106&amp;id=4&amp;lang=uk&amp;task=category&amp;view=itemlist#about/for-parents#0';
 $this->_urlCache['464d5f4da35cf0cddb8fa5525f30c8a5']='index.php?option=com_k2&amp;Itemid=106&amp;id=22&amp;lang=uk&amp;view=item#about/for-parents/pravila-prijomu#0';
 $shURLCacheCreationDate=1365272308;
+=======
+$shURLCacheCreationDate=1365267655;
+>>>>>>> f2a884f31295db15e23c343b14d4ae9dfb6c4fa0
