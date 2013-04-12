@@ -75,19 +75,13 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
                         print_r($object->info($info_category));*/
                     ?>
 				<?php endfor; ?>
-                <a class="link-test" href="/tsikavo-znati/news">Архів новин</a>
+                <a class="news-archive" href="/tsikavo-znati/news">Архів новин</a>
 			</div>
 		<?php endif; ?>
 		<?php if($this->config['news_short_pages'] > 0 && count($news_list_tab) > 0 ) : ?>
 		<div class="nspLinksWrap<?php echo ' '.$this->config['links_position']; ?>" style="width:<?php echo $links_width-0.1; ?>%;">
 			<div class="nspLinks" style="margin:<?php echo $this->config["links_margin"]; ?>;">
-				<?php if(count($news_list_tab) > 0) : ?>
-				<ul class="nspList">
-					<?php for($j = 0; $j < count($news_list_tab); $j++) : ?>
-					<?php echo $news_list_tab[$j]; ?>
-					<?php endfor; ?>
-				</ul>
-				<?php endif; ?>		
+
 				
 				<?php if(
 						count(($news_list_tab) > $this->config['links_amount']) && 

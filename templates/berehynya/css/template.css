@@ -161,6 +161,14 @@ body {
     float: left;
     margin: 0 10px;
 }
+.subCategoryMore {
+    float: right;
+    margin: 20px;
+}
+
+.news-archive {
+    float: right;
+}
 /***********************************************************************/
 
 
