@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Tags
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -51,7 +51,10 @@ class NNTags
 		// loop through splits
 		foreach ($vals as $i => $val) {
 			// spit part into key and val by equal sign
-			$keyval = explode($e, $val, 2);
+			$keyval = explode($e, trim($val), 2);
+			if (isset($keyval['1'])) {
+				$keyval['1'] = str_replace(array($s, $e), array($separator, $equal), trim($keyval['1']));
+			}
 
 			// unprotect tags in key and val
 			foreach ($keyval as $k => $v) {
@@ -59,10 +62,9 @@ class NNTags
 					foreach ($matches as $match) {
 						$v = str_replace($match['0'], base64_decode($match['1']), $v);
 					}
-					$keyval[$k] = $v;
+					$keyval[trim($k)] = trim($v);
 				}
 			}
-
 			if (isset($keys[$i])) {
 				// if value is in the keys array add as defined in keys array
 				// ignore equal sign
@@ -84,7 +86,8 @@ class NNTags
 	public static function setSurroundingTags($pre, $post, $tags = 0)
 	{
 		if ($tags == 0) {
-			$tags = array('div', 'p', 'span', 'pre', 'a',
+			$tags = array(
+				'div', 'p', 'span', 'pre', 'a',
 				'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
 				'strong', 'b', 'em', 'i', 'u', 'big', 'small', 'font'
 			);

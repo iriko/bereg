@@ -4,7 +4,7 @@
  * Displays a line
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 class JFormFieldNN_HR extends JFormField
 {
 	public $type = 'HR';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -26,7 +25,7 @@ class JFormFieldNN_HR extends JFormField
 
 	protected function getInput()
 	{
-		JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/css/style.css?v=' . $this->_version);
+		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
 		return '<div class="nn_panel nn_hr"></div>';
 	}

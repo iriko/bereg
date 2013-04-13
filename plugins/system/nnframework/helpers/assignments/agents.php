@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Agents
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -42,11 +42,6 @@ class NNFrameworkAssignmentsAgents
 				}
 				if ($sel == 'mobile') {
 					if ($this->isMobile()) {
-						$pass = 1;
-						break;
-					}
-				} else if ($sel == 'searchbots' || $sel == 'crawlers') {
-					if ($this->isSearchBot()) {
 						$pass = 1;
 						break;
 					}
@@ -315,22 +310,6 @@ class NNFrameworkAssignmentsAgents
 			'zte\-'
 		);
 		if (preg_match('#(' . implode('|', $mobiles) . ')#i', $a)) {
-			return 1;
-		}
-
-		return 0;
-	}
-
-	/**
-	 * isMobile
-	 */
-	function isSearchBot()
-	{
-		$browser = JBrowser::getInstance();
-		$a = $browser->getAgentString();
-		$crawlers = '(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves/Teoma|ia_archiver)';
-
-		if (preg_match('#' . $crawlers . '#i', $a)) {
 			return 1;
 		}
 

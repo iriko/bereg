@@ -4,7 +4,7 @@
  * Displays a text area with extra options
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,6 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_TextAreaPlus extends JFormField
 {
 	public $type = 'TextAreaPlus';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -42,7 +41,7 @@ class JFormFieldNN_TextAreaPlus extends JFormField
 	{
 		$width = $this->def('width', 600);
 		$height = $this->def('height', 80);
-		$class = trim('nn_textarea '.$this->def('class'));
+		$class = trim('nn_textarea ' . $this->def('class'));
 		$class = 'class="' . $class . '"';
 		$type = $this->def('texttype');
 

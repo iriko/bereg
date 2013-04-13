@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Protect
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -31,7 +31,7 @@ class NNProtect
 				|| JFactory::getApplication()->input->get('format') == 'raw'
 				|| ($hastags
 				&& (
-					JFactory::getApplication()->input->getInt('nn_qp')
+					JFactory::getApplication()->input->getInt('nn_qp', 0)
 						|| in_array(JFactory::getApplication()->input->get('option'), array('com_joomfishplus', 'com_josetta'))
 				))
 		);
@@ -56,13 +56,19 @@ class NNProtect
 	*/
 	public static function isEditPage()
 	{
+		$option = JFactory::getApplication()->input->get('option');
+		// always return false for these components
+		if(in_array($option, array('com_rsevents','com_rseventspro')) ) {
+			return 0;
+		}
+
 		$task = JFactory::getApplication()->input->get('task');
 		$view = JFactory::getApplication()->input->get('view');
-		if(!(strpos($task, '.') === false)) {
+		if (!(strpos($task, '.') === false)) {
 			$task = explode('.', $task);
 			$task = array_pop($task);
 		}
-		if(!(strpos($view, '.') === false)) {
+		if (!(strpos($view, '.') === false)) {
 			$view = explode('.', $view);
 			$view = array_pop($view);
 		}

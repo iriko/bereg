@@ -4,7 +4,7 @@
  * Displays a textfield with a color picker
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -29,8 +29,6 @@ class JFormFieldNN_ColorPicker extends JFormField
 
 class nnFieldColorPicker
 {
-	private $_version = '12.11.6';
-
 	function getInput($name, $id, $value, $params)
 	{
 		$this->name = $name;
@@ -38,9 +36,9 @@ class nnFieldColorPicker
 		$this->value = $value;
 		$this->params = $params;
 
-		JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/fields/colorpicker/js_color_picker_v2.css?v=' . $this->_version);
-		JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/fields/colorpicker/color_functions.js?v=' . $this->_version);
-		JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/fields/colorpicker/js_color_picker_v2.js?v=' . $this->_version);
+		JHtml::stylesheet('nnframework/colorpicker.min.css', false, true);
+		JHtml::script('nnframework/colorpicker/color_functions.js', false, true);
+		JHtml::script('nnframework/colorpicker/js_color_picker_v2.js', false, true);
 
 		$this->value = strtoupper(preg_replace('#[^a-z0-9]#si', '', $this->value));
 		$color = $this->value;

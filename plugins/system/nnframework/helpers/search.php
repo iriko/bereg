@@ -1,7 +1,7 @@
 <?php
 /**
  * @package          NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author           Peter van Westen <peter@nonumber.nl>
  * @link             http://www.nonumber.nl
@@ -15,10 +15,10 @@
  */
 
 /**
- * @package		Joomla.Site
- * @subpackage	com_search
- * @copyright	Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package        Joomla.Site
+ * @subpackage     com_search
+ * @copyright      Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
@@ -70,20 +70,21 @@ class SearchModelSearch extends JModelLegacy
 		parent::__construct();
 
 		//Get configuration
+		$app	= JFactory::getApplication();
 		$config = JFactory::getConfig();
 
 		// Get the pagination request variables
-		$this->setState('limit', JFactory::getApplication()->getUserStateFromRequest('com_search.limit', 'limit', $config->get('list_limit'), 'uint'));
-		$this->setState('limitstart', JFactory::getApplication()->input->getInt('limitstart', 0));
+		$this->setState('limit', $app->getUserStateFromRequest('com_search.limit', 'limit', $config->get('list_limit'), 'uint'));
+		$this->setState('limitstart', $app->input->getInt('limitstart', 0));
 
 		// Set the search parameters
-		$keyword		= urldecode(JFactory::getApplication()->input->getString('searchword'));
-		$match			= JFactory::getApplication()->input->getWord('searchphrase', 'all');
-		$ordering		= JFactory::getApplication()->input->getWord('ordering', 'newest');
+		$keyword		= urldecode($app->input->getString('searchword', ''));
+		$match			= $app->input->getWord('searchphrase', 'all');
+		$ordering		= $app->input->getWord('ordering', 'newest');
 		$this->setSearch($keyword, $match, $ordering);
 
 		//Set the search areas
-		$areas = JFactory::getApplication()->input->get('areas');
+		$areas = $app->input->get('areas');
 		$this->setAreas($areas);
 	}
 

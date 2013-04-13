@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: Menu
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -28,7 +28,7 @@ class NNFrameworkAssignmentsMenu
 			if ($pass && $params->inc_children == 2) {
 				$pass = 0;
 			} else if (!$pass && $params->inc_children) {
-				$parentids = NNFrameworkAssignmentsMenu::getParentIds($parent, $parent->params->Itemid);
+				$parentids = self::getParentIds($parent, $parent->params->Itemid);
 				$parentids = array_diff($parentids, array('1'));
 				foreach ($parentids as $id) {
 					if (in_array($id, $selection)) {

@@ -4,7 +4,7 @@
  * Displays plain text as element
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -26,7 +26,16 @@ class JFormFieldNN_PlainText extends JFormField
 	protected function getLabel()
 	{
 		$this->params = $this->element->attributes();
-		return $this->prepareText($this->def('label'));
+		$label = $this->prepareText($this->def('label'));
+		if ($this->def('description') || $this->value) {
+			if ($this->def('description') && $this->value) {
+				$class = ' class="hasTip"';
+				$title = ' title="' . $label . '::' . str_replace('"', '&quot;', $this->prepareText($this->def('description'))) . '"';
+				return '<label' . $class . $title . '>' . $label . '</label>';
+			}
+			return '<label>' . $label . '</label>';
+		}
+		return $label;
 	}
 
 	protected function getInput()

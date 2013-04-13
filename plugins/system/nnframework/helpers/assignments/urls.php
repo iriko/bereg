@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: URLs
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,25 +20,36 @@ class NNFrameworkAssignmentsURLs
 {
 	function passURLs(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		$url = JFactory::getURI();
+		$url = JURI::getInstance();
 		$url = $url->toString();
+		$regex = isset($params->regex) ? $params->regex : 0;
 
 		if (!is_array($selection)) {
 			$selection = explode("\n", $selection);
 		}
 
 		$pass = 0;
-		foreach ($selection as $url_part) {
-			if ($url_part !== '') {
-				$url_part = trim(str_replace('&amp;', '(&amp;|&)', $url_part));
-				$s = '#' . $url_part . '#si';
-				if (@preg_match($s . 'u', $url)
-					|| @preg_match($s . 'u', html_entity_decode($url, ENT_COMPAT, 'UTF-8'))
-						|| @preg_match($s, $url)
-							|| @preg_match($s, html_entity_decode($url, ENT_COMPAT, 'UTF-8'))
-				) {
-					$pass = 1;
-					break;
+		foreach ($selection as $s) {
+			$s = trim($s);
+			if ($s != '') {
+				if ($regex) {
+					$url_part = str_replace(array('#', '&amp;'), array('\#', '(&amp;|&)'), $s);
+					$s = '#' . $url_part . '#si';
+					if (@preg_match($s . 'u', $url)
+						|| @preg_match($s . 'u', html_entity_decode($url, ENT_COMPAT, 'UTF-8'))
+							|| @preg_match($s, $url)
+								|| @preg_match($s, html_entity_decode($url, ENT_COMPAT, 'UTF-8'))
+					) {
+						$pass = 1;
+						break;
+					}
+				} else {
+					if (!(strpos($url, $s) === false)
+						|| !(strpos(html_entity_decode($url, ENT_COMPAT, 'UTF-8'), $s) === false)
+					) {
+						$pass = 1;
+						break;
+					}
 				}
 			}
 		}

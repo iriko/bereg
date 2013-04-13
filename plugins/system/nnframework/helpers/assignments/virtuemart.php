@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: VirtueMart
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -20,8 +20,8 @@ class NNFrameworkAssignmentsVirtueMart
 {
 	function init(&$parent)
 	{
-		$parent->params->item_id = JFactory::getApplication()->input->getInt('virtuemart_product_id');
-		$parent->params->category_id = JFactory::getApplication()->input->getInt('virtuemart_category_id');
+		$parent->params->item_id = JFactory::getApplication()->input->getInt('virtuemart_product_id', 0);
+		$parent->params->category_id = JFactory::getApplication()->input->getString('virtuemart_category_id', '');
 		$parent->params->id = ($parent->params->item_id) ? $parent->params->item_id : $parent->params->category_id;
 	}
 
@@ -35,12 +35,8 @@ class NNFrameworkAssignmentsVirtueMart
 		if ($parent->params->option != 'com_virtuemart') {
 			return $parent->pass(0, $assignment);
 		}
-
-		$pass = (
-			($params->inc_categories
-				&& ($parent->params->view == 'category')
-			)
-				|| ($params->inc_items && $parent->params->view == 'productdetails')
+		$pass = (($params->inc_categories && in_array($parent->params->view, array('categories', 'category')))
+			|| ($params->inc_items && $parent->params->view == 'productdetails')
 		);
 
 		if (!$pass) {
@@ -48,15 +44,37 @@ class NNFrameworkAssignmentsVirtueMart
 		}
 
 		$cats = array();
-		if ($parent->params->category_id) {
-			$cats = $parent->params->category_id;
-		} else if ($parent->params->item_id) {
+		if ($parent->params->view == 'productdetails' && $parent->params->item_id) {
 			$query = $parent->db->getQuery(true);
-			$query->select('x.virtuemart_category_id');
-			$query->from('#__virtuemart_product_categories AS x');
-			$query->where('x.virtuemart_product_id = ' . (int) $parent->params->item_id);
+			$query->select('x.virtuemart_category_id')
+				->from('#__virtuemart_product_categories AS x')
+				->where('x.virtuemart_product_id = ' . (int) $parent->params->item_id);
 			$parent->db->setQuery($query);
 			$cats = $parent->db->loadColumn();
+		} else if ($parent->params->category_id) {
+			$cats = $parent->params->category_id;
+			if (!is_numeric($cats)) {
+				$query = $parent->db->getQuery(true);
+				$query->select('config')
+					->from('#__virtuemart_configs')
+					->where('virtuemart_config_id = 1');
+				$parent->db->setQuery($query);
+				$config = $parent->db->loadResult();
+				$lang = substr($config, strpos($config, 'vmlang='));
+				$lang = substr($lang, 0, strpos($lang, '|'));
+				if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang)) {
+					$lang = $lang['1'];
+				} else {
+					$lang = 'en_gb';
+				}
+
+				$query = $parent->db->getQuery(true);
+				$query->select('l.virtuemart_category_id')
+					->from('#__virtuemart_categories_' . $lang . ' AS l')
+					->where('l.slug = ' . $parent->db->quote($cats));
+				$parent->db->setQuery($query);
+				$cats = $parent->db->loadResult();
+			}
 		}
 
 		$cats = $parent->makeArray($cats);

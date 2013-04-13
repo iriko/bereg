@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: VersionCheck
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -35,15 +35,13 @@ class NNVersions
 
 class NoNumberVersions
 {
-	var $_version = '12.11.6';
-
-	function getMessage($name = '', $xml = '', $version = '')
+	function getMessage($element = '', $xml = '', $version = '')
 	{
-		if (!$name || (!$xml && !$version)) {
+		if (!$element || (!$xml && !$version)) {
 			return '';
 		}
 
-		$alias = preg_replace('#[^a-z]#', '', strtolower($name));
+		$alias = preg_replace('#[^a-z]#', '', strtolower($element));
 
 		if ($xml) {
 			$xml = JApplicationHelper::parseXMLInstallFile(JPATH_SITE . '/' . $xml);
@@ -57,7 +55,7 @@ class NoNumberVersions
 		}
 
 		JHtml::_('behavior.mootools');
-		JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/js/script.js?v=' . $this->_version);
+		JHtml::script('nnframework/script.min.js', false, true);
 		$url = 'download.nonumber.nl/extensions.php?j=25&e=' . $alias;
 		$script = "
 			window.addEvent( 'domready', function() {
@@ -77,7 +75,6 @@ class NoNumberVersions
 	{
 		jimport('joomla.filesystem.file');
 
-		$is_pro = !(strpos($version, 'PRO') === false);
 		$version = str_replace(array('FREE', 'PRO'), '', $version);
 
 		$has_nnem = 0;
@@ -109,11 +106,11 @@ class NoNumberVersions
 		return $msg;
 	}
 
-	function getCopyright($name, $version)
+	function getCopyright($name, $version, $jedid = 0)
 	{
 		$html = array();
 		$html[] = '<p style="text-align:center;">';
-		$html[] = $name;
+		$html[] = JText::_($name);
 		if ($version) {
 			if (!(strpos($version, 'PRO') === false)) {
 				$version = str_replace('PRO', '', $version);
@@ -124,7 +121,10 @@ class NoNumberVersions
 			}
 			$html[] = ' v' . $version;
 		}
-		$html[] = ' - ' . JText::_('COPYRIGHT') . ' &copy; ' . date('Y') . ' NoNumber ' . JText::_('ALL_RIGHTS_RESERVED');
+		$html[] = '<br />' . JText::_('COPYRIGHT') . ' &copy; ' . date('Y') . ' NoNumber ' . JText::_('ALL_RIGHTS_RESERVED');
+		if ($jedid) {
+			$html[] = '<br />' . html_entity_decode(JText::sprintf('NN_RATE', $jedid));
+		}
 		$html[] = '</p>';
 
 		return implode('', $html);

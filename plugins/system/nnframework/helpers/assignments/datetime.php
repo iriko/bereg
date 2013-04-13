@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: DateTime
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -21,20 +21,15 @@ class NNFrameworkAssignmentsDateTime
 	function passDate(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
 		if ($params->publish_up || $params->publish_down) {
-			$now = strtotime($parent->date->format('Y-m-d H:i:s')) + $parent->date->getOffsetFromGMT();
+			$now = strtotime($parent->date->format('Y-m-d H:i:s', 1));
 			if ((int) $params->publish_up) {
-				$publish_up = JFactory::getDate($params->publish_up);
-				$publish_up = $publish_up->toUnix();
-
-				if ($publish_up > $now) {
+				if (strtotime($params->publish_up) > $now) {
 					// outside date range
 					return $parent->pass(0, $assignment);
 				}
 			}
 			if ((int) $params->publish_down) {
-				$publish_down = JFactory::getDate($params->publish_down);
-				$publish_down = $publish_down->toUnix();
-				if ($publish_down < $now) {
+				if (strtotime($params->publish_down) < $now) {
 					// outside date range
 					return $parent->pass(0, $assignment);
 				}
@@ -46,7 +41,7 @@ class NNFrameworkAssignmentsDateTime
 
 	function passSeasons(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		$season = NNFrameworkAssignmentsDateTime::getSeason($parent->date, $params->hemisphere);
+		$season = self::getSeason($parent->date, $params->hemisphere);
 		return $parent->passSimple($season, $selection, $assignment);
 	}
 
@@ -64,7 +59,7 @@ class NNFrameworkAssignmentsDateTime
 
 	function passTime(&$parent, &$params, $selection = array(), $assignment = 'all')
 	{
-		$date = strtotime($parent->date->format('Y-m-d H:i:s')) + $parent->date->getOffsetFromGMT();
+		$date = strtotime($parent->date->format('Y-m-d H:i:s', 1));
 
 		$publish_up = strtotime($params->publish_up);
 		$publish_down = strtotime($params->publish_down);
@@ -94,7 +89,7 @@ class NNFrameworkAssignmentsDateTime
 	function getSeason(&$d, $hemisphere = 'northern')
 	{
 		// Set $date to today
-		$date = strtotime($d->format('Y-m-d H:i:s')) + $d->getOffsetFromGMT();
+		$date = strtotime($d->format('Y-m-d H:i:s', 1));
 
 		// Get year of date specified
 		$date_year = $d->format('Y', 1); // Four digit representation for the year

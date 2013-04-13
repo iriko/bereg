@@ -4,7 +4,7 @@
  * Displays a multiselectbox of available VirtueMart categories / products
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -37,6 +37,20 @@ class JFormFieldNN_VirtueMart extends JFormField
 			return '<fieldset class="radio">' . JText::_('ERROR') . ': ' . JText::sprintf('NN_TABLE_NOT_FOUND', JText::_('NN_VIRTUEMART')) . '</fieldset>';
 		}
 
+		$query = $this->db->getQuery(true);
+		$query->select('config')
+			->from('#__virtuemart_configs')
+			->where('virtuemart_config_id = 1');
+		$this->db->setQuery($query);
+		$config = $this->db->loadResult();
+		$lang = substr($config, strpos($config, 'vmlang='));
+		$lang = substr($lang, 0, strpos($lang, '|'));
+		if (preg_match('#"([^"]*_[^"]*)"#', $lang, $lang)) {
+			$this->lang = $lang['1'];
+		} else {
+			$this->lang = 'en_gb';
+		}
+
 		if (!is_array($this->value)) {
 			$this->value = explode(',', $this->value);
 		}
@@ -47,15 +61,15 @@ class JFormFieldNN_VirtueMart extends JFormField
 		$multiple = $this->def('multiple');
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
-		return nnHTML::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
+		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
 	function getCategories()
 	{
 		$query = $this->db->getQuery(true);
-		$query->select('COUNT(*)');
-		$query->from('#__virtuemart_categories AS c');
-		$query->where('c.published > -1');
+		$query->select('COUNT(*)')
+			->from('#__virtuemart_categories AS c')
+			->where('c.published > -1');
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
@@ -66,12 +80,12 @@ class JFormFieldNN_VirtueMart extends JFormField
 		$show_ignore = $this->def('show_ignore');
 
 		$query = $this->db->getQuery(true);
-		$query->select('c.virtuemart_category_id as id, cc.category_parent_id AS parent_id, l.category_name AS title, c.published');
-		$query->from('#__virtuemart_categories AS c');
-		$query->join('LEFT', '#__virtuemart_categories_en_gb AS l ON l.virtuemart_category_id = c.virtuemart_category_id');
-		$query->join('LEFT', '#__virtuemart_category_categories AS cc ON cc.category_child_id = c.virtuemart_category_id');
-		$query->where('c.published > -1');
-		$query->order('c.ordering, l.category_name');
+		$query->select('c.virtuemart_category_id as id, cc.category_parent_id AS parent_id, l.category_name AS title, c.published')
+			->from('#__virtuemart_categories_' . $this->lang . ' AS l')
+			->join('', '#__virtuemart_categories AS c using (virtuemart_category_id)')
+			->join('LEFT', '#__virtuemart_category_categories AS cc ON l.virtuemart_category_id = cc.category_child_id')
+			->where('c.published > -1')
+			->order('c.ordering, l.category_name');
 		$this->db->setQuery($query);
 		$items = $this->db->loadObjectList();
 
@@ -112,9 +126,9 @@ class JFormFieldNN_VirtueMart extends JFormField
 	function getProducts()
 	{
 		$query = $this->db->getQuery(true);
-		$query->select('COUNT(*)');
-		$query->from('#__virtuemart_products AS p');
-		$query->where('p.published > -1');
+		$query->select('COUNT(*)')
+			->from('#__virtuemart_products AS p')
+			->where('p.published > -1');
 		$this->db->setQuery($query);
 		$total = $this->db->loadResult();
 
@@ -123,14 +137,14 @@ class JFormFieldNN_VirtueMart extends JFormField
 		}
 
 		$query = $this->db->getQuery(true);
-		$query->select('p.virtuemart_product_id as id, l.product_name AS name, p.product_sku as sku, cl.category_name AS cat, p.published');
-		$query->from('#__virtuemart_products AS p');
-		$query->join('LEFT', '#__virtuemart_products_en_gb AS l ON l.virtuemart_product_id = p.virtuemart_product_id');
-		$query->join('LEFT', '#__virtuemart_product_categories AS x ON x.virtuemart_product_id = p.virtuemart_product_id');
-		$query->join('LEFT', '#__virtuemart_categories AS c ON c.virtuemart_category_id = x.virtuemart_category_id');
-		$query->join('LEFT', '#__virtuemart_categories_en_gb AS cl ON cl.virtuemart_category_id = c.virtuemart_category_id');
-		$query->where('p.published > -1');
-		$query->order('l.product_name, p.product_sku');
+		$query->select('p.virtuemart_product_id as id, l.product_name AS name, p.product_sku as sku, cl.category_name AS cat, p.published')
+			->from('#__virtuemart_products AS p')
+			->join('LEFT', '#__virtuemart_products_' . $this->lang . ' AS l ON l.virtuemart_product_id = p.virtuemart_product_id')
+			->join('LEFT', '#__virtuemart_product_categories AS x ON x.virtuemart_product_id = p.virtuemart_product_id')
+			->join('LEFT', '#__virtuemart_categories AS c ON c.virtuemart_category_id = x.virtuemart_category_id')
+			->join('LEFT', '#__virtuemart_categories_' . $this->lang . ' AS cl ON cl.virtuemart_category_id = c.virtuemart_category_id')
+			->where('p.published > -1')
+			->order('l.product_name, p.product_sku');
 		$this->db->setQuery($query);
 		$list = $this->db->loadObjectList();
 

@@ -1,10 +1,10 @@
 <?php
 /**
- * nnHTML
+ * nnHtml
  * extra JHTML functions
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -26,12 +26,10 @@ $scripts[] = "nn_texts['minimize'] = '" . addslashes(JText::_('NN_MINIMIZE')) . 
 JFactory::getDocument()->addScriptDeclaration(implode('', $scripts));
 
 /**
- * nnHTML
+ * nnHtml
  */
-class nnHTML
+class nnHtml
 {
-	public static $_version = '12.11.6';
-
 	static function selectlist(&$options, $name, $value, $id, $size = 0, $multiple = 0, $attribs = '')
 	{
 		if ($options == -1 || count($options) > 2500) {
@@ -82,8 +80,8 @@ class nnHTML
 
 		$links = array();
 		if ($multiple) {
-			JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/fields/multiselect/script.js?v=' . self::$_version);
-			JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/fields/multiselect/style.css?v=' . self::$_version);
+			JHtml::stylesheet('nnframework/multiselect.min.css', false, true);
+			JHtml::script('nnframework/multiselect.min.js', false, true);
 		} else if ($size && count($options) > $size) {
 			$links[] = '<a href="javascript://" onclick="nnScripts.toggleSelectListSize(\'' . $id . '\');" id="toggle_' . $id . '">'
 				. '<span class="show">' . JText::_('NN_MAXIMIZE') . '</span>'
@@ -92,7 +90,7 @@ class nnHTML
 		}
 		if (!empty($links)) {
 			JHtml::_('behavior.mootools');
-			JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/js/script.js?v=' . self::$_version);
+			JHtml::script('nnframework/script.min.js', false, true);
 			$html = implode(' - ', $links) . '<br />' . $html;
 		}
 

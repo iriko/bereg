@@ -3,7 +3,7 @@
  * NoNumber Framework Helper File: Assignments: PHP
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -29,48 +29,52 @@ class NNFrameworkAssignmentsPHP
 			// replace \n with newline and other fix stuff
 			$php = str_replace('\|', '|', $php);
 			$php = preg_replace('#(?<!\\\)\\\n#', "\n", $php);
-			$php = str_replace('[:REGEX_ENTER:]', '\n', $php);
+			$php = trim(str_replace('[:REGEX_ENTER:]', '\n', $php));
 
-			if (trim($php) == '') {
+			if ($php == '') {
 				$pass = 1;
 				break;
 			}
 
 			if (!$article && !(strpos($php, '$article') === false) && $parent->params->option == 'com_content' && $parent->params->view == 'article') {
 				require_once JPATH_SITE . '/components/com_content/models/article.php';
-				$model = JModel::getInstance('article', 'contentModel');
+				$model = JModelLegacy::getInstance('article', 'contentModel');
 				$article = $model->getItem($parent->params->id);
+			} else {
+				$article = '';
 			}
 			if (!isset($Itemid)) {
-				$Itemid = JFactory::getApplication()->input->getInt('Itemid');
+				$Itemid = JFactory::getApplication()->input->getInt('Itemid', 0);
 			}
 			if (!isset($mainframe)) {
-				$mainframe = (strpos($php, '$mainframe') === false) ? '' : JFactory::getApplication();
+				$mainframe = JFactory::getApplication();
 			}
 			if (!isset($app)) {
-				$app = (strpos($php, '$app') === false) ? '' : JFactory::getApplication();
+				$app = JFactory::getApplication();
 			}
 			if (!isset($document)) {
-				$document = (strpos($php, '$document') === false) ? '' : JFactory::getDocument();
+				$document = JFactory::getDocument();
 			}
 			if (!isset($doc)) {
-				$doc = (strpos($php, '$doc') === false) ? '' : JFactory::getDocument();
+				$doc = JFactory::getDocument();
 			}
 			if (!isset($database)) {
-				$database = (strpos($php, '$database') === false) ? '' : JFactory::getDBO();
+				$database = JFactory::getDBO();
 			}
 			if (!isset($db)) {
-				$db = (strpos($php, '$db') === false) ? '' : JFactory::getDBO();
+				$db = JFactory::getDBO();
 			}
 			if (!isset($user)) {
-				$user = (strpos($php, '$user') === false) ? '' : JFactory::getUser();
+				$user = JFactory::getUser();
 			}
+			$php .= ';return 1;';
+			$temp_PHP_func = create_function('&$article, &$Itemid, &$mainframe, &$app, &$document, &$doc, &$database, &$db, &$user', $php);
 
-			$vars = '$article,$Itemid,$mainframe,$app,$document,$doc,$database,$db,$user';
-
-			$val = '$temp_PHP_Val = create_function( \'' . $vars . '\', $php.\';\' );';
-			$val .= ' $pass = ( $temp_PHP_Val(' . $vars . ') ) ? 1 : 0; unset( $temp_PHP_Val );';
-			@eval($val);
+			// evaluate the script
+			ob_start();
+			$pass = $temp_PHP_func($article, $Itemid, $mainframe, $app, $document, $doc, $database, $db, $user) ? 1 : 0;
+			unset($temp_PHP_func);
+			ob_end_clean();
 
 			if ($pass) {
 				break;

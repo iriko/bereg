@@ -4,7 +4,7 @@
  * Loads the English language file as fallback
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 class JFormFieldNN_LoadLanguage extends JFormField
 {
 	public $type = 'LoadLanguage';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -29,7 +28,7 @@ class JFormFieldNN_LoadLanguage extends JFormField
 		$this->params = $this->element->attributes();
 
 		JHtml::_('behavior.mootools');
-		JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/js/script.js?v=' . $this->_version);
+		JHtml::script('nnframework/script.min.js', false, true);
 
 		$extension = $this->def('extension');
 		$admin = $this->def('admin', 1);

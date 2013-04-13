@@ -4,7 +4,7 @@
  * Does all the magic!
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -36,8 +36,6 @@ if (JFactory::getApplication()->isSite() && JFactory::getApplication()->input->g
  */
 class plgSystemNNFramework extends JPlugin
 {
-	var $_version = '12.11.6';
-
 	function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
@@ -48,15 +46,18 @@ class plgSystemNNFramework extends JPlugin
 
 		$template = JFactory::getApplication()->getTemplate();
 		if ($template == 'adminpraise3') {
-			JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/css/ap3.css?v=' . $this->_version);
+			JHtml::stylesheet('nnframework/ap3.min.css', false, true);
 		}
-		if (in_array(JFactory::getApplication()->input->get('option'), array(
-			'com_advancedmodules',
-			'com_contenttemplater',
-			'com_nonumbermanager',
-			'com_rereplacer',
-			'com_snippets',
-		))
+		if (in_array(
+			JFactory::getApplication()->input->get('option'),
+			array(
+				'com_advancedmodules',
+				'com_contenttemplater',
+				'com_nonumbermanager',
+				'com_rereplacer',
+				'com_snippets',
+			)
+		)
 		) {
 			JFactory::getDocument()->addScriptDeclaration('var is_nn = 1;');
 		}
@@ -64,7 +65,7 @@ class plgSystemNNFramework extends JPlugin
 
 	function onAfterRoute()
 	{
-		if (!JFactory::getApplication()->input->getInt('nn_qp')) {
+		if (!JFactory::getApplication()->input->getInt('nn_qp', 0)) {
 			return;
 		}
 

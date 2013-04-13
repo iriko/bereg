@@ -4,7 +4,7 @@
  * Displays a title with a bunch of extras, like: description, image, versioncheck
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,6 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_Header extends JFormField
 {
 	public $type = 'Header';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -30,7 +29,7 @@ class JFormFieldNN_Header extends JFormField
 	{
 		$this->params = $this->element->attributes();
 
-		JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/css/style.css?v=' . $this->_version);
+		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
 		$title = $this->def('label');
 		$description = $this->def('description');

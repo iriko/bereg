@@ -4,7 +4,7 @@
  * Displays a custom key field (use in combination with customfieldvalue)
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 class JFormFieldNN_CustomFieldKey extends JFormField
 {
 	public $type = 'CustomFieldKey';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -33,7 +32,7 @@ class JFormFieldNN_CustomFieldKey extends JFormField
 		$this->value = htmlspecialchars(html_entity_decode($this->value, ENT_QUOTES), ENT_QUOTES);
 
 		JHtml::_('behavior.mootools');
-		JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/js/script.js?v=' . $this->_version);
+		JHtml::script('nnframework/script.min.js', false, true);
 
 		$html = '<input type="text" name="' . $this->name . '" id="' . $this->id . '" value="' . $this->value . '" ' . $class . ' ' . $size . ' />';
 		$html = '<label for="' . $this->id . '" style="margin: 0;">' . $html . '</label>';

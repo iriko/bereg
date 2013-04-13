@@ -4,7 +4,7 @@
  * Displays an error if given file is not found
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,6 @@ jimport('joomla.form.formfield');
 class JFormFieldNN_Dependency extends JFormField
 {
 	public $type = 'Dependency';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -31,7 +30,7 @@ class JFormFieldNN_Dependency extends JFormField
 		$this->params = $this->element->attributes();
 
 		JHtml::_('behavior.mootools');
-		JFactory::getDocument()->addScript(JURI::root(true) . '/plugins/system/nnframework/js/script.js?v=' . $this->_version);
+		JHtml::script('nnframework/script.min.js', false, true);
 
 		$file = $this->def('file');
 		if (!$file) {

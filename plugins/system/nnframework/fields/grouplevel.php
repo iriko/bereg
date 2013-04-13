@@ -4,7 +4,7 @@
  * Displays a select box of backend group levels
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -55,7 +55,7 @@ class JFormFieldNN_GroupLevel extends JFormField
 		}
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
-		return nnHTML::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple, $attribs);
+		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple, $attribs);
 	}
 
 	protected function getUserGroups()

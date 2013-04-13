@@ -4,7 +4,7 @@
  * Displays a block with optionally a title and description
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -19,7 +19,6 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_Block extends JFormField
 {
 	public $type = 'Block';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -38,7 +37,7 @@ class JFormFieldNN_Block extends JFormField
 
 		$hastitle = ($title || $description);
 
-		JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/css/style.css?v=' . $this->_version);
+		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
 		$html = array();
 

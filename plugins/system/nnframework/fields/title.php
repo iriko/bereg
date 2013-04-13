@@ -4,7 +4,7 @@
  * Displays a title with a bunch of extras, like: description, image, versioncheck
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -35,7 +35,6 @@ require_once JPATH_PLUGINS . '/system/nnframework/helpers/text.php';
 class JFormFieldNN_Title extends JFormField
 {
 	public $type = 'Title';
-	private $_version = '12.11.6';
 
 	protected function getLabel()
 	{
@@ -67,7 +66,7 @@ class JFormFieldNN_Title extends JFormField
 			return '';
 		}
 
-		JFactory::getDocument()->addStyleSheet(JURI::root(true) . '/plugins/system/nnframework/css/style.css?v=' . $this->_version);
+		JHtml::stylesheet('nnframework/style.min.css', false, true);
 
 		if ($end) {
 			$html = '';
@@ -241,7 +240,7 @@ class JFormFieldNN_Title extends JFormField
 				}
 			}
 			if ($onclick) {
-				$html .= '<a href="#" onclick="' . $onclick . '" title="' . JText::_('Apply') . '"><img style="float:right;" border="0" alt="' . JText::_('Apply') . '" src="' . JURI::root() . 'plugins/system/nnframework/images/tick.png"/></a>';
+				$html .= '<a href="#" onclick="' . $onclick . '" title="' . JText::_('Apply') . '"><img style="float:right;" border="0" alt="' . JText::_('Apply') . '" src="' . JURI::root() . 'media/nnframework/images/tick.png"/></a>';
 			}
 		}
 

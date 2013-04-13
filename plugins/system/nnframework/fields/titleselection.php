@@ -4,7 +4,7 @@
  * Displays Title with checkbox
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -44,14 +44,17 @@ class JFormFieldNN_TitleSelection extends JFormField
 			$html[] = '<div style="clear: both;"></div>';
 
 			$class = 'nn_panel nn_panel_title nn_panel_toggle';
+			$checked = '';
 			if ($this->value === 1) {
 				$class .= ' nn_panel_include';
+				$checked = ' checked="checked"';
 			} else if ($this->value === 2) {
 				$class .= ' nn_panel_exclude';
+				$checked = ' checked="checked"';
 			}
 			$html[] = '<div class="' . $class . '"><label class="nn_block nn_title" for="cb_' . $param_name . '">';
-			$html[] = '<input " id="' . $this->id . '" name="' . $this->name . '" value="1" type="checkbox" class="checkbox"
-			 onclick="nnScripts.setToggleTitleClass(this, this.checked, 2);">';
+			$html[] = '<input id="' . $this->id . '" name="' . $this->name . '" value="1" type="checkbox" class="checkbox"'
+				. ' onclick="nnScripts.setToggleTitleClass(this, this.checked, 2);"' . $checked . '>';
 			$html[] = $label;
 			$html[] = '<div style="clear: both;"></div>';
 			$html[] = '</label></div>';

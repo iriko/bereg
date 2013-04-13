@@ -4,7 +4,7 @@
  * Displays a select box of templates
  *
  * @package         NoNumber Framework
- * @version         12.11.6
+ * @version         13.4.3
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -32,7 +32,7 @@ class JFormFieldNN_Templates extends JFormField
 		$options = $this->createList($rows, JPATH_ROOT . '/templates', $subtemplates, $show_system);
 
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/html.php';
-		return nnHTML::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
+		return nnHtml::selectlist($options, $this->name, $this->value, $this->id, $size, $multiple);
 	}
 
 	function createList($rows, $templateBaseDir, $subtemplates = 1, $show_system = 1)
