@@ -1,5 +1,5 @@
 /**
- * @version 	$Id: k2.js 1905 2013-02-08 19:49:05Z joomlaworks $
+ * @version 	$Id: k2.js 1919 2013-02-11 19:02:02Z joomlaworks $
  * @package 	K2
  * @author 		JoomlaWorks http://www.joomlaworks.net
  * @copyright 	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -16,6 +16,26 @@ $K2(document).ready(function() {
     } else {
         selectsInstance = $K2;
     }
+
+    // Generic function to get URL params passed in .js script include
+		function getUrlParams(targetScript, varName) {
+			var scripts = document.getElementsByTagName('script');
+			var scriptCount = scripts.length;
+			for (var a = 0; a < scriptCount; a++) {
+				var scriptSrc = scripts[a].src;
+				if (scriptSrc.indexOf(targetScript) >= 0) {
+					varName = varName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+					var re = new RegExp("[\\?&]" + varName + "=([^&#]*)");
+					var parsedVariables = re.exec(scriptSrc);
+					if (parsedVariables !== null) {
+						return parsedVariables[1];
+					}
+				}
+			}
+		}
+
+		// Set the site root path
+		var K2SitePath = getUrlParams('k2.js', 'sitepath');
 
     // Common functions
     $K2('#jToggler').click(function() {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: usergroups.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: usergroups.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -64,9 +64,9 @@ class K2ModelUserGroups extends K2Model
         $mainframe = JFactory::getApplication();
         $db = JFactory::getDBO();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2UserGroup', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2UserGroup', 'Table');
             $row->load($id);
             $row->delete($id);
         }

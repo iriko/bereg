@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: users.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: users.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -348,9 +348,9 @@ class K2ModelUsers extends K2Model
             JPluginHelper::importPlugin('user');
             $dispatcher = JDispatcher::getInstance();
             $iAmSuperAdmin = $user->authorise('core.admin');
-            $table = JTable::getInstance('user');
             foreach ($cid as $key => $id)
             {
+            	$table = JTable::getInstance('user');
                 $table->load($id);
                 $allow = $user->authorise('core.delete', 'com_users');
                 // Don't allow non-super-admin to delete a super admin

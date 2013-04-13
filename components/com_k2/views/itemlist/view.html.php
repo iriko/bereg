@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 1914 2013-02-08 23:13:29Z joomlaworks $
+ * @version		$Id: view.html.php 1956 2013-04-04 13:40:22Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -128,20 +128,11 @@ class K2ViewItemlist extends K2View
 				$category->text = $category->description;
 				if (K2_JVERSION != '15')
 				{
-					$dispatcher->trigger('onContentPrepare', array(
-						'com_k2.category',
-						&$category,
-						&$params,
-						$limitstart
-					));
+					$dispatcher->trigger('onContentPrepare', array('com_k2.category', &$category, &$params, $limitstart));
 				}
 				else
 				{
-					$dispatcher->trigger('onPrepareContent', array(
-						&$category,
-						&$params,
-						$limitstart
-					));
+					$dispatcher->trigger('onPrepareContent', array(&$category, &$params, $limitstart));
 				}
 
 				$category->description = $category->text;
@@ -149,18 +140,10 @@ class K2ViewItemlist extends K2View
 				// Category K2 plugins
 				$category->event->K2CategoryDisplay = '';
 				JPluginHelper::importPlugin('k2');
-				$results = $dispatcher->trigger('onK2CategoryDisplay', array(
-					&$category,
-					&$params,
-					$limitstart
-				));
+				$results = $dispatcher->trigger('onK2CategoryDisplay', array(&$category, &$params, $limitstart));
 				$category->event->K2CategoryDisplay = trim(implode("\n", $results));
 				$category->text = $category->description;
-				$dispatcher->trigger('onK2PrepareContent', array(
-					&$category,
-					&$params,
-					$limitstart
-				));
+				$dispatcher->trigger('onK2PrepareContent', array(&$category, &$params, $limitstart));
 				$category->description = $category->text;
 
 				$this->assignRef('category', $category);
@@ -236,11 +219,7 @@ class K2ViewItemlist extends K2View
 				{
 					$dispatcher = JDispatcher::getInstance();
 					JPluginHelper::importPlugin('k2');
-					$results = $dispatcher->trigger('onK2UserDisplay', array(
-						&$userObject->profile,
-						&$params,
-						$limitstart
-					));
+					$results = $dispatcher->trigger('onK2UserDisplay', array(&$userObject->profile, &$params, $limitstart));
 					$userObject->event->K2UserDisplay = trim(implode("\n", $results));
 					$userObject->profile->url = htmlspecialchars($userObject->profile->url, ENT_QUOTES, 'UTF-8');
 				}
@@ -425,10 +404,7 @@ class K2ViewItemlist extends K2View
 				$hits = $items[$i]->hits;
 				$items[$i]->hits = 0;
 				JTable::getInstance('K2Category', 'Table');
-				$items[$i] = $cache->call(array(
-					$model,
-					'prepareItem'
-				), $items[$i], $view, $task);
+				$items[$i] = $cache->call(array($model, 'prepareItem'), $items[$i], $view, $task);
 				$items[$i]->hits = $hits;
 			}
 			else
@@ -442,11 +418,7 @@ class K2ViewItemlist extends K2View
 			// Trigger comments counter event
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('k2');
-			$results = $dispatcher->trigger('onK2CommentsCounter', array(
-				&$items[$i],
-				&$params,
-				$limitstart
-			));
+			$results = $dispatcher->trigger('onK2CommentsCounter', array(&$items[$i], &$params, $limitstart));
 			$items[$i]->event->K2CommentsCounter = trim(implode("\n", $results));
 		}
 
@@ -457,7 +429,14 @@ class K2ViewItemlist extends K2View
 		$menu = $menus->getActive();
 		if (is_object($menu))
 		{
-			$menu_params = class_exists('JParameter') ? new JParameter($menu->params) : new JRegistry($menu->params);
+			if (is_string($menu->params))
+			{
+				$menu_params = K2_JVERSION == '15' ? new JParameter($menu->params) : new JRegistry($menu->params);
+			}
+			else
+			{
+				$menu_params = $menu->params;
+			}
 			if (!$menu_params->get('page_title'))
 			{
 				$params->set('page_title', $title);
@@ -487,11 +466,12 @@ class K2ViewItemlist extends K2View
 		}
 		$document->setTitle($params->get('page_title'));
 
-		// Search - Update the Google Search results container (K2 v2.6.5+)
+		// Search - Update the Google Search results container (K2 v2.6.6+)
 		if ($task == 'search')
 		{
 			$googleSearchContainerID = trim($params->get('googleSearchContainer', 'k2GoogleSearchContainer'));
-			if($googleSearchContainerID=='k2Container'){
+			if ($googleSearchContainerID == 'k2Container')
+			{
 				$googleSearchContainerID = 'k2GoogleSearchContainer';
 			}
 			$params->set('googleSearchContainer', $googleSearchContainerID);
@@ -612,15 +592,9 @@ class K2ViewItemlist extends K2View
 		// Add head feed link
 		if ($addHeadFeedLink)
 		{
-			$attribs = array(
-				'type' => 'application/rss+xml',
-				'title' => 'RSS 2.0'
-			);
+			$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 			$document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
-			$attribs = array(
-				'type' => 'application/atom+xml',
-				'title' => 'Atom 1.0'
-			);
+			$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
 			$document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
 		}
 
@@ -659,7 +633,7 @@ class K2ViewItemlist extends K2View
 		$uri = JURI::getInstance();
 		$document->setMetaData('og:url', $uri->toString());
 		$document->setMetaData('og:title', htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8'));
-		$document->setMetaData('og:type', 'Article');
+		$document->setMetaData('og:type', 'website');
 		if ($task == 'category' && $this->category->image && strpos($this->category->image, 'placeholder/category.png') === false)
 		{
 			$image = substr(JURI::root(), 0, -1).str_replace(JURI::root(true), '', $this->category->image);

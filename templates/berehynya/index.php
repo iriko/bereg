@@ -19,14 +19,8 @@ $this->setGenerator('Beregynya site');
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" >
 	<head>
         <jdoc:include type="head" />
-        <script type="text/javascript">
-            jQuery(document).ready(function() {
-                //Для все картинок на сайте
-                jQuery("img").removeAttr("title");
-                //Добавляем клас sub-menu
-                jQuery('.header-menu .deeper > ul').addClass('sub-menu');
-            })
-        </script>
+        <script type="text/javascript" src="<?php echo $this->baseurl.'/templates/'.$this->template.'/js/useful.js'?>"></script>
+        <script type="text/javascript" src="<?php echo $this->baseurl.'/templates/'.$this->template.'/js/contact-message.js'?>"></script>
     </head>
 
 	<body>

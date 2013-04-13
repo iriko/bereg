@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: html.php 1883 2013-02-07 18:18:15Z joomlaworks $
+ * @version		$Id: html.php 1926 2013-02-11 20:23:15Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -50,9 +50,11 @@ class K2HelperHTML
 	public static function loadjQuery($ui = false, $mediaManager = false)
 	{
 		JLoader::register('K2HelperUtilities', JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'helpers'.DS.'utilities.php');
+
 		$application = JFactory::getApplication();
 		$document = JFactory::getDocument();
 		$params = K2HelperUtilities::getParams('com_k2');
+
 		if ($document->getType() == 'html')
 		{
 
@@ -99,12 +101,14 @@ class K2HelperHTML
 				}
 			}
 
-			// No conflict
-			$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.noconflict.js');
-
 			// jQuery UI
 			if ($application->isAdmin() || $ui)
 			{
+
+				// No conflict loaded when $ui requested or in the backend.
+				// No need to reload for $mediaManager as the latter is always called with $ui
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/k2.noconflict.js');
+
 				if ($handling == 'local')
 				{
 					$document->addScript(JURI::root(true).'/media/k2/assets/js/jquery-ui-1.8.24.custom.min.js');
@@ -114,9 +118,10 @@ class K2HelperHTML
 					$document->addScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js');
 				}
 			}
+
 			if ($mediaManager)
 			{
-				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.6.5');
+				$document->addScript(JURI::root(true).'/media/k2/assets/js/elfinder.min.js?v=2.6.6');
 			}
 		}
 	}

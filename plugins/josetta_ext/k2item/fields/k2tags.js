@@ -1,5 +1,5 @@
 /**
- * @version		$Id: k2tags.js 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: k2tags.js 1919 2013-02-11 19:02:02Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -8,13 +8,37 @@
 
 $K2(document).ready(function() {
 
+  // Generic function to get URL params passed in .js script include
+	function getUrlParams(targetScript, varName) {
+		var scripts = document.getElementsByTagName('script');
+		var scriptCount = scripts.length;
+		for (var a = 0; a < scriptCount; a++) {
+			var scriptSrc = scripts[a].src;
+			if (scriptSrc.indexOf(targetScript) >= 0) {
+				varName = varName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+				var re = new RegExp("[\\?&]" + varName + "=([^&#]*)");
+				var parsedVariables = re.exec(scriptSrc);
+				if (parsedVariables !== null) {
+					return parsedVariables[1];
+				}
+			}
+		}
+	}
+
+	// Set the site root path
+	var K2SitePath = getUrlParams('k2.js', 'sitepath');
+
   $K2('.tagRemove').click(function(event) {
     event.preventDefault();
     $K2(this).parent().remove();
   });
+
+  /*
   $K2('ul.tags').click(function() {
     //$K2('#search-field').focus();
   });
+  */
+
   $K2('.k2-search-field').keypress(function(event) {
     if (event.which == '13') {
       if ($K2(this).val() != '') {
@@ -24,6 +48,7 @@ $K2(document).ready(function() {
       }
     }
   });
+
   $K2('.k2-search-field').autocomplete({
     source : function(request, response) {
       var target = this.element[0];

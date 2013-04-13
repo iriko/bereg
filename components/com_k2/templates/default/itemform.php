@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: itemform.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: itemform.php 1959 2013-04-07 19:06:19Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -189,7 +189,7 @@ $document->addScriptDeclaration("
 									<li id="tabPlugins"><a href="#k2Tab7"><?php echo JText::_('K2_PLUGINS'); ?></a></li>
 									<?php endif; ?>
 								</ul>
-								
+
 								<!-- Tab content -->
 								<div class="simpleTabsContent" id="k2Tab1">
 									<?php if($this->params->get('mergeEditors')): ?>
@@ -289,19 +289,20 @@ $document->addScriptDeclaration("
 								<!-- Tab image gallery -->
 								<div class="simpleTabsContent" id="k2Tab3">
 									<?php if ($this->lists['checkSIG']): ?>
-									<table class="admintable" id="item_gallery_content">
+									<table class="admintable table" id="item_gallery_content">
 										<tr>
 											<td align="right" valign="top" class="key">
-												<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_WITH_IMAGES'); ?>
+												<?php echo JText::_('K2_COM_BE_ITEM_ITEM_IMAGE_GALLERY'); ?>
 											</td>
 											<td valign="top">
-												<input type="file" name="gallery" class="fileUpload" />
-												<i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i>
+												<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_WITH_IMAGES'); ?> <input type="file" name="gallery" class="fileUpload" /> <span class="hasTip k2GalleryNotice" title="<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP_HEADER'); ?>::<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP_TEXT'); ?>"><?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP'); ?></span> <i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i>
 												<br />
 												<br />
-												<?php echo JText::_('K2_OR_ENTER_A_FLICKR_SET_URL'); ?>
-												<input type="text" name="flickrGallery" size="50" value="<?php echo ($this->row->galleryType == 'flickr') ? $this->row->galleryValue : ''; ?>" />
+												<?php echo JText::_('K2_OR_ENTER_A_FLICKR_SET_URL'); ?><?php echo JText::_('K2_OR_ENTER_A_FLICKR_SET_URL'); ?>
+												<input type="text" name="flickrGallery" size="50" value="<?php echo ($this->row->galleryType == 'flickr') ? $this->row->galleryValue : ''; ?>" /> <span class="hasTip k2GalleryNotice" title="<?php echo JText::_('K2_VALID_FLICK_API_KEY_HELP_HEADER'); ?>::<?php echo JText::_('K2_VALID_FLICK_API_KEY_HELP_TEXT'); ?>"><?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP'); ?></span>
+
 												<?php if (!empty($this->row->gallery)): ?>
+												<!-- Preview -->
 												<div id="itemGallery">
 													<?php echo $this->row->gallery; ?>
 													<br />
@@ -532,7 +533,7 @@ $document->addScriptDeclaration("
 											<?php if($extraField->type == 'header'): ?>
 											<tr>
 												<td colspan="2" ><h4 class="k2ExtraFieldHeader"><?php echo $extraField->name; ?></h4></td>
-											</tr>												
+											</tr>
 											<?php else: ?>
 											<tr>
 												<td align="right" class="key">
@@ -670,7 +671,7 @@ $document->addScriptDeclaration("
 								<?php endif; ?>
 							</div>
 							<!-- Tabs end here -->
-							
+
 							<input type="hidden" name="isSite" value="<?php echo (int)$this->mainframe->isSite(); ?>" />
 							<?php if($this->mainframe->isSite()): ?>
 							<input type="hidden" name="lang" value="<?php echo JRequest::getCmd('lang'); ?>" />

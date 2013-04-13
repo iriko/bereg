@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: default.php 1950 2013-03-11 17:22:33Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -90,6 +90,9 @@ $document->addScriptDeclaration("
 				<th class="hidden-phone"> <?php echo JHTML::_('grid.sort', 'K2_MODIFIED', 'i.modified', @$this->lists['order_Dir'], @$this->lists['order']); ?> </th>
 				<th class="center hidden-phone"> <?php echo JHTML::_('grid.sort', 'K2_HITS', 'i.hits', @$this->lists['order_Dir'], @$this->lists['order']); ?> </th>
 				<th class="hidden-phone center"> <?php echo JText::_('K2_IMAGE'); ?> </th>
+				<?php if(isset($this->lists['language'])): ?>
+				<th class="hidden-phone"> <?php echo JHTML::_('grid.sort', 'K2_LANGUAGE', 'i.language', @$this->lists['order_Dir'], @$this->lists['order']); ?> </th>
+				<?php endif; ?>
 				<th class="hidden-phone"> <?php echo JHTML::_('grid.sort', 'K2_ID', 'i.id', @$this->lists['order_Dir'], @$this->lists['order']); ?> </th>
 				<?php foreach($this->columns as $column):?>
 				<th> <?php echo JHTML::_('grid.sort', $column->label, $column->property, @$this->lists['order_Dir'], @$this->lists['order']); ?> </th>
@@ -98,7 +101,7 @@ $document->addScriptDeclaration("
 		</thead>
 		<tfoot>
 			<tr>
-				<td colspan="<?php echo 15+sizeof($this->columns); ?>"><?php echo $this->page->getListFooter(); ?></td>
+				<td colspan="<?php echo 16+sizeof($this->columns); ?>"><?php echo $this->page->getListFooter(); ?></td>
 			</tr>
 		</tfoot>
 		<tbody>
@@ -171,6 +174,9 @@ $document->addScriptDeclaration("
 					</a>
 					<?php endif; ?>
 				</td>
+				<?php if(isset($this->lists['language'])): ?>
+				<td class="center hidden-phone"><?php echo $row->language; ?></td>
+				<?php endif; ?>
 				<td class="center hidden-phone"><?php echo $row->id; ?></td>
 				<?php foreach($this->columns as $column):?>
 				<td <?php if($column->class){ echo 'class="'.$column->class.'"';}?>>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: mod_k2_user.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: mod_k2_user.php 1925 2013-02-11 20:14:06Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -25,8 +25,6 @@ $userAvatarWidth = $params->get('userAvatarWidth', 50);
 
 // Legacy params
 $greeting = 0;
-
-JHTML::_('behavior.modal');
 
 $type = modK2UserHelper::getType();
 $return = modK2UserHelper::getReturnURL($params, $type);
@@ -76,6 +74,8 @@ if ($user->guest)
 }
 else
 {
+		JHTML::_('behavior.modal');
+
     $user->profile = modK2UserHelper::getProfile($params);
     $user->numOfComments = modK2UserHelper::countUserComments($user->id);
     $menu = modK2UserHelper::getMenu($params);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 1818 2013-01-18 12:27:21Z lefteris.kavadas $
+ * @version		$Id: view.html.php 1919 2013-02-11 19:02:02Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -43,11 +43,13 @@ class K2ViewCategory extends K2View
 		$this->assignRef('onSave', $onSave);
 
         $document = JFactory::getDocument();
+        /*
         $js = "
-		var K2SitePath = '".JURI::root(true)."/';
-		var K2BasePath = '".JURI::base(true)."/';
-		";
-        $document->addScriptDeclaration($js);
+					var K2SitePath = '".JURI::root(true)."/';
+					var K2BasePath = '".JURI::base(true)."/';
+				";
+				*/
+        $document->addScriptDeclaration("var K2BasePath = '".JURI::base(true)."/';");
 
         $lists = array();
         $lists['published'] = JHTML::_('select.booleanlist', 'published', 'class="inputbox"', $category->published);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: comments.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: comments.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -107,11 +107,12 @@ class K2ModelComments extends K2Model {
 	    if(!count($cid)){
             $cid[]=JRequest::getInt('commentID');
         }
-		$row = JTable::getInstance('K2Comment', 'Table');
-		$item = JTable::getInstance('K2Item', 'Table');
+		
 		foreach ($cid as $id) {
+			$row = JTable::getInstance('K2Comment', 'Table');
 			$row->load($id);
 			if($mainframe->isSite()){
+				$item = JTable::getInstance('K2Item', 'Table');
 				$item->load($row->itemID);
 				if ($item->created_by != $user->id) {
 					JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
@@ -134,11 +135,11 @@ class K2ModelComments extends K2Model {
 		$mainframe = JFactory::getApplication();
 		$user = JFactory::getUser();
 		$cid = JRequest::getVar('cid');
-		$row = JTable::getInstance('K2Comment', 'Table');
-		$item = JTable::getInstance('K2Item', 'Table');
 		foreach ($cid as $id) {
+			$row = JTable::getInstance('K2Comment', 'Table');
 			$row->load($id);
 			if($mainframe->isSite()){
+				$item = JTable::getInstance('K2Item', 'Table');
 				$item->load($row->itemID);
 				if ($item->created_by != $user->id) {
 					JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));
@@ -161,11 +162,11 @@ class K2ModelComments extends K2Model {
 	  	if(!count($cid)){
             $cid[]=JRequest::getInt('commentID');
         }
-		$row = JTable::getInstance('K2Comment', 'Table');
-		$item = JTable::getInstance('K2Item', 'Table');
 		foreach ($cid as $id) {
+			$row = JTable::getInstance('K2Comment', 'Table');
 			$row->load($id);
 			if($mainframe->isSite()){
+				$item = JTable::getInstance('K2Item', 'Table');
 				$item->load($row->itemID);
 				if ($item->created_by != $user->id) {
 					JError::raiseError(403, JText::_('K2_ALERTNOTAUTH'));

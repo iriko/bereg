@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: extrafields.php 1815 2013-01-16 17:56:08Z lefteris.kavadas $
+ * @version		$Id: extrafields.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -124,9 +124,9 @@ class K2ModelExtraFields extends K2Model
 
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2ExtraField', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2ExtraField', 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -140,9 +140,9 @@ class K2ModelExtraFields extends K2Model
 
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2ExtraField', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2ExtraField', 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }
@@ -230,9 +230,9 @@ class K2ModelExtraFields extends K2Model
         $mainframe = JFactory::getApplication();
         $db = JFactory::getDBO();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2ExtraField', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2ExtraField', 'Table');
             $row->load($id);
             $row->delete($id);
         }
@@ -344,9 +344,9 @@ class K2ModelExtraFields extends K2Model
         $db = &JFactory::getDBO();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
-        $row = &JTable::getInstance('K2ExtraFieldsGroup', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2ExtraFieldsGroup', 'Table');
             $row->load($id);
             $query = "DELETE FROM #__k2_extra_fields WHERE `group`={$id}";
             $db->setQuery($query);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 1826 2013-01-25 11:55:03Z lefteris.kavadas $
+ * @version		$Id: view.html.php 1956 2013-04-04 13:40:22Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -59,11 +59,7 @@ class K2ViewItem extends K2View
 		{
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('k2');
-			$results = $dispatcher->trigger('onK2UserDisplay', array(
-				&$item->author->profile,
-				&$params,
-				$limitstart
-			));
+			$results = $dispatcher->trigger('onK2UserDisplay', array(&$item->author->profile, &$params, $limitstart));
 			$item->event->K2UserDisplay = trim(implode("\n", $results));
 			$item->author->profile->url = htmlspecialchars($item->author->profile->url, ENT_QUOTES, 'UTF-8');
 		}
@@ -143,17 +139,9 @@ class K2ViewItem extends K2View
 			// Trigger comments events
 			$dispatcher = JDispatcher::getInstance();
 			JPluginHelper::importPlugin('k2');
-			$results = $dispatcher->trigger('onK2CommentsCounter', array(
-				&$item,
-				&$params,
-				$limitstart
-			));
+			$results = $dispatcher->trigger('onK2CommentsCounter', array(&$item, &$params, $limitstart));
 			$item->event->K2CommentsCounter = trim(implode("\n", $results));
-			$results = $dispatcher->trigger('onK2CommentsBlock', array(
-				&$item,
-				&$params,
-				$limitstart
-			));
+			$results = $dispatcher->trigger('onK2CommentsBlock', array(&$item, &$params, $limitstart));
 			$item->event->K2CommentsBlock = trim(implode("\n", $results));
 
 			// Load K2 native comments system only if there are no plugins overriding it
@@ -336,7 +324,14 @@ class K2ViewItem extends K2View
 		$menu = $menus->getActive();
 		if (is_object($menu) && isset($menu->query['view']) && $menu->query['view'] == 'item' && isset($menu->query['id']) && $menu->query['id'] == $item->id)
 		{
-			$menu_params = class_exists('JParameter') ? new JParameter($menu->params) : new JRegistry($menu->params);
+			if (is_string($menu->params))
+			{
+				$menu_params = K2_JVERSION == '15' ? new JParameter($menu->params) : new JRegistry($menu->params);
+			}
+			else
+			{
+				$menu_params = $menu->params;
+			}
 			if (!$menu_params->get('page_title'))
 			{
 				$params->set('page_title', $item->cleanTitle);
@@ -406,7 +401,7 @@ class K2ViewItem extends K2View
 			}
 		}
 
-		// Menu metadata for Joomla! 1.6/1.7 (Overrides the current metadata if set)
+		// Menu metadata for Joomla! 2.5+ (overrides the current metadata if set)
 		if (K2_JVERSION != '15')
 		{
 
@@ -458,7 +453,7 @@ class K2ViewItem extends K2View
 		$uri = JURI::getInstance();
 		$document->setMetaData('og:url', $uri->toString());
 		$document->setMetaData('og:title', htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8'));
-		$document->setMetaData('og:type', 'Article');
+		$document->setMetaData('og:type', 'article');
 		$facebookImage = 'image'.$params->get('facebookImage', 'Small');
 		if ($item->$facebookImage)
 		{

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: menuitem.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: menuitem.php 1949 2013-03-11 16:59:08Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -114,7 +114,7 @@ class K2ElementMenuItem extends K2Element
                         }
                     }
 
-                    $disable = strpos($node->attributes('disable'), $item->type) !== false ? true : false;
+                    $disable = @strpos($node->attributes('disable'), $item->type) !== false ? true : false;
 
                     if ($item->published == 0)
                         $item->treename .= ' [**'.JText::_('K2_UNPUBLISHED').'**]';

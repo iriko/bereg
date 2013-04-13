@@ -4,7 +4,7 @@
  * Does all the magic!
  *
  * @package         Sourcerer
- * @version         4.0.1
+ * @version         4.1.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl

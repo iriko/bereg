@@ -4,7 +4,7 @@
  * Does all the magic!
  *
  * @package         Sourcerer
- * @version         4.0.1
+ * @version         4.1.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -49,8 +49,8 @@ class plgSystemSourcerer extends JPlugin
 		// return if NoNumber Framework plugin is not installed
 		if (!JFile::exists(JPATH_PLUGINS . '/system/nnframework/nnframework.php')) {
 			if (JFactory::getApplication()->isAdmin() && JFactory::getApplication()->input->get('option') != 'com_login') {
-				$msg = JText::_('SRC_NONUMBER_FRAMEWORK_NOT_INSTALLED');
-				$msg .= ' ' . JText::sprintf('SRC_EXTENSION_CAN_NOT_FUNCTION', JText::_('SOURCERER'));
+				$msg = JText::_('SRC_NONUMBER_FRAMEWORK_NOT_INSTALLED')
+					. ' ' . JText::sprintf('SRC_EXTENSION_CAN_NOT_FUNCTION', JText::_('SOURCERER'));
 				$mq = JFactory::getApplication()->getMessageQueue();
 				foreach ($mq as $m) {
 					if ($m['message'] == $msg) {

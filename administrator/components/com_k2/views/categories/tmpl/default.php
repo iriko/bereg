@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: default.php 1950 2013-03-11 17:22:33Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -87,6 +87,9 @@ $document->addScriptDeclaration("
 				<th class="center hidden-phone">
 					<?php echo JText::_('K2_IMAGE'); ?>
 				</th>
+				<?php if(isset($this->lists['language'])): ?>
+				<th class="hidden-phone"> <?php echo JHTML::_('grid.sort', 'K2_LANGUAGE', 'c.language', @$this->lists['order_Dir'], @$this->lists['order']); ?> </th>
+				<?php endif; ?>
 				<th class="hidden-phone center">
 					<?php echo JHTML::_('grid.sort', 'K2_ID', 'c.id', @$this->lists['order_Dir'], @$this->lists['order'] ); ?>
 				</th>
@@ -94,7 +97,7 @@ $document->addScriptDeclaration("
 		</thead>
 		<tfoot>
 			<tr>
-				<td colspan="10">
+				<td colspan="12">
 					<?php echo $this->page->getListFooter(); ?>
 				</td>
 			</tr>
@@ -167,6 +170,9 @@ $document->addScriptDeclaration("
 					</a>
 					<?php endif; ?>
 				</td>
+				<?php if(isset($this->lists['language'])): ?>
+				<td class="center hidden-phone"><?php echo $row->language; ?></td>
+				<?php endif; ?>
 				<td class="k2Center center hidden-phone">
 					<?php echo $row->id; ?>
 				</td>

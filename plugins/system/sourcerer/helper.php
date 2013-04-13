@@ -3,7 +3,7 @@
  * Plugin Helper File
  *
  * @package         Sourcerer
- * @version         4.0.1
+ * @version         4.1.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -22,6 +22,8 @@ class plgSystemSourcererHelper
 {
 	function __construct(&$params)
 	{
+		$this->option = JFactory::getApplication()->input->get('option');
+
 		// Set plugin parameters
 		$this->src_params = new stdClass;
 		$this->src_params->syntax_word = $params->syntax_word;
@@ -31,20 +33,17 @@ class plgSystemSourcererHelper
 
 		// Matches the start and end tags with everything in between
 		// Also matches any surrounding breaks and paragraph tags, to prevent unwanted empty lines in output.
-		$breaks_start = '(<p(?: [^>]*)?>\s*)?(?:<span [^>]*>\s*)*';
-		$breaks_end = '(?:\s*</span>)*(\s*</p>)?';
+		$breaks_start = '(<p(?: [^>]*)?>\s*)?((?:<span [^>]*>\s*)*)';
+		$breaks_end = '((?:\s*</span>)*)(\s*</p>)?';
 		$this->src_params->regex = '#(' . $breaks_start . '(' . preg_quote($this->src_params->syntax_start, '#') . '|' . preg_quote($this->src_params->syntax_start_0, '#') . ')(.*?)' . preg_quote($this->src_params->syntax_end, '#') . $breaks_end . ')#s';
 
-		// Escape any regex characters!
 		$this->src_params->tags_syntax = array(array('<', '>'), array('\[\[', '\]\]'));
 		$this->src_params->splitter = '<!-- START: SRC_SPLIT -->';
-
-		$this->src_params->debug_php = $params->debug_php;
-		$this->src_params->debug_php_article = $this->src_params->debug_php;
 
 		$user = JFactory::getUser();
 		$this->src_params->user_is_admin = $user->authorise('core.admin', 1);
 
+		// Initialie the different enables
 		$this->src_params->areas = array();
 		$this->src_params->areas['default'] = array();
 		$this->src_params->areas['default']['enable_css'] = $params->enable_css;
@@ -57,15 +56,11 @@ class plgSystemSourcererHelper
 		$this->src_params->currentarea = 'default';
 	}
 
-	////////////////////////////////////////////////////////////////////
-	// onContentPrepare
-	////////////////////////////////////////////////////////////////////
-
+	/**
+	 * onContentPrepare
+	 */
 	function onContentPrepare(&$article, $params = '')
 	{
-		if ($params && $params->get('nn_search')) {
-			$this->src_params->debug_php_article = 0;
-		}
 		if (isset($article->created_by)) {
 			$user = JFactory::getUser($article->created_by);
 			$groups = $user->getAuthorisedGroups();
@@ -91,18 +86,14 @@ class plgSystemSourcererHelper
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////
-	// onAfterDispatch
-	////////////////////////////////////////////////////////////////////
-
+	/**
+	 * onAfterDispatch
+	 */
 	function onAfterDispatch()
 	{
-		$document = JFactory::getDocument();
-		$docType = $document->getType();
-
 		// PDF
-		if ($docType == 'pdf') {
-			$buffer = $document->getBuffer('component');
+		if (JFactory::getDocument()->getType() == 'pdf') {
+			$buffer = JFactory::getDocument()->getBuffer('component');
 			if (is_array($buffer)) {
 				if (isset($buffer['component'], $buffer['component'][''])) {
 					if (isset($buffer['component']['']['component'], $buffer['component']['']['component'][''])) {
@@ -120,18 +111,18 @@ class plgSystemSourcererHelper
 			} else {
 				$this->replaceInTheRest($buffer);
 			}
-			$document->setBuffer($buffer, 'component');
+			JFactory::getDocument()->setBuffer($buffer, 'component');
 			return;
 		}
 
 		// FEED
-		if (($docType == 'feed' || JFactory::getApplication()->input->get('option') == 'com_acymailing') && isset($document->items)) {
-			for ($i = 0; $i < count($document->items); $i++) {
-				$this->onContentPrepare($document->items[$i]);
+		if ((JFactory::getDocument()->getType() == 'feed' || $this->option == 'com_acymailing') && isset(JFactory::getDocument()->items)) {
+			for ($i = 0; $i < count(JFactory::getDocument()->items); $i++) {
+				$this->onContentPrepare(JFactory::getDocument()->items[$i]);
 			}
 		}
 
-		$buffer = $document->getBuffer('component');
+		$buffer = JFactory::getDocument()->getBuffer('component');
 		if (!empty($buffer)) {
 			if (is_array($buffer)) {
 				if (isset($buffer['component']) && isset($buffer['component'][''])) {
@@ -140,23 +131,21 @@ class plgSystemSourcererHelper
 			} else {
 				$this->tagArea($buffer, 'SRC', 'component');
 			}
-			$document->setBuffer($buffer, 'component');
+			JFactory::getDocument()->setBuffer($buffer, 'component');
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////
-	// onAfterRender
-	////////////////////////////////////////////////////////////////////
+	/**
+	 * onAfterRender
+	 */
 	function onAfterRender()
 	{
-		$document = JFactory::getDocument();
-		$docType = $document->getType();
-
 		// not in pdf's
-		if ($docType == 'pdf') {
+		if (JFactory::getDocument()->getType() == 'pdf') {
 			return;
 		}
 
+		// Grab the body (but be gentle)
 		$html = JResponse::getBody();
 
 		$this->protect($html);
@@ -165,6 +154,7 @@ class plgSystemSourcererHelper
 
 		$this->cleanLeftoverJunk($html);
 
+		// Throw the body back (less gentle)
 		JResponse::setBody($html);
 	}
 
@@ -174,11 +164,8 @@ class plgSystemSourcererHelper
 			return;
 		}
 
-		$document = JFactory::getDocument();
-		$docType = $document->getType();
-
 		// COMPONENT
-		if ($docType == 'feed' || JFactory::getApplication()->input->get('option') == 'com_acymailing') {
+		if (JFactory::getDocument()->getType() == 'feed' || $this->option == 'com_acymailing') {
 			$s = '#(<item[^>]*>)#s';
 			$str = preg_replace($s, '\1<!-- START: SRC_COMPONENT -->', $str);
 			$str = str_replace('</item>', '<!-- END: SRC_COMPONENT --></item>', $str);
@@ -233,30 +220,37 @@ class plgSystemSourcererHelper
 			return;
 		}
 
-		$string_array = $this->stringToSplitArray($str, $this->src_params->regex);
-		$string_array_count = count($string_array);
-		if ($string_array_count > 1) {
-			for ($i = 1; $i < $string_array_count - 1; $i++) {
+		$arr = $this->stringToSplitArray($str, $this->src_params->regex);
+		$arr_count = count($arr);
+		if ($arr_count > 1) {
+			for ($i = 1; $i < $arr_count - 1; $i++) {
 				if (fmod($i, 2)) {
-					$sub_string_array = preg_replace($this->src_params->regex, implode($this->src_params->splitter, array('\2', '\3', '\4', '\5')), $string_array[$i]);
-					$sub_string_array = explode($this->src_params->splitter, $sub_string_array);
+					$matches = preg_replace($this->src_params->regex, implode($this->src_params->splitter, array('\2', '\3', '\4', '\5', '\6', '\7')), $arr[$i]);
+					$matches = explode($this->src_params->splitter, $matches);
 
-					$string_array[$i] = $sub_string_array['2'];
+					$html = $matches['3'];
 
-					if ($sub_string_array['1'] == $this->src_params->syntax_start) {
-						$this->cleanText($string_array[$i]);
+					$uses_editor = ($matches['2'] == $this->src_params->syntax_start);
+					if ($uses_editor) {
+						$this->cleanText($html);
 					}
 
-					$this->replaceTags($string_array[$i], $area, $article);
+					$this->replaceTags($html, $area, $article);
 
-					// Restore leading/trailing paragraph tags if not both present
-					if (!($sub_string_array['0'] && $sub_string_array['3'])) {
-						$string_array[$i] = $sub_string_array['0'] . $string_array[$i] . $sub_string_array['3'];
+					if ($uses_editor) {
+						// Restore leading/trailing paragraph tags if not both present
+						if (!($matches['0'] && $matches['5'])) {
+							$html = $matches['0'] . $html . $matches['5'];
+						}
+					} else {
+						$html = $matches['0'] . $matches['1'] . $html . $matches['4'] . $matches['5'];
 					}
+
+					$arr[$i] = $html;
 				}
 			}
 		}
-		$str = implode('', $string_array);
+		$str = implode('', $arr);
 	}
 
 	function replaceTags(&$str, $area = 'articles', $article = '')
@@ -266,11 +260,10 @@ class plgSystemSourcererHelper
 		}
 
 		$this->replaceTagsByType($str, $area, 'php', $article);
-		if (strpos($str, '<!-- SORCERER DEBUGGING -->') === false) {
-			$this->replaceTagsByType($str, $area, 'all', '');
-			$this->replaceTagsByType($str, $area, 'js', '');
-			$this->replaceTagsByType($str, $area, 'css', '');
-		}
+
+		$this->replaceTagsByType($str, $area, 'all');
+		$this->replaceTagsByType($str, $area, 'js');
+		$this->replaceTagsByType($str, $area, 'css');
 	}
 
 	function replaceTagsByType(&$str, $area = 'articles', $type = 'all', $article = '')
@@ -304,9 +297,10 @@ class plgSystemSourcererHelper
 		}
 	}
 
-	// Replace any html style tags by a comment tag if not permitted
-	// Match:
-	// <...>
+	/**
+	 * Replace any html style tags by a comment tag if not permitted
+	 * Match: <...>
+	 */
 	function replaceTagsAll(&$str, $enabled = 1, $security_pass = 1)
 	{
 		if (!is_string($str) || $str == '') {
@@ -363,8 +357,10 @@ class plgSystemSourcererHelper
 		}
 	}
 
-	// Replace the PHP tags with the evaluated PHP scripts
-	// Or replace by a comment tag the PHP tags if not permitted
+	/**
+	 * Replace the PHP tags with the evaluated PHP scripts
+	 * Or replace by a comment tag the PHP tags if not permitted
+	 */
 	function replaceTagsPHP(&$src_str, $src_enabled = 1, $src_security_pass = 1, $article = '')
 	{
 		if (!is_string($src_str) || $src_str == '') {
@@ -376,9 +372,6 @@ class plgSystemSourcererHelper
 		}
 
 		global $src_vars;
-
-		$document = JFactory::getDocument();
-		$docType = $document->getType();
 
 		// Match ( read {} as <> ):
 		// {?php ... ?}
@@ -415,9 +408,6 @@ class plgSystemSourcererHelper
 				$src_script = trim($src_string_array['1']) . '<!-- SRC_SEMICOLON -->';
 				$src_script = preg_replace('#(;\s*)?<\!-- SRC_SEMICOLON -->#s', ';', $src_script);
 
-				$src_errorline = 0;
-				$src_php_succes = 0;
-
 				$a = $this->src_params->areas['default'];
 				$src_forbidden_php_array = explode(',', $a['forbidden_php']);
 				$this->cleanArray($src_forbidden_php_array);
@@ -430,75 +420,60 @@ class plgSystemSourcererHelper
 					}
 					$src_string_array['1'] = JText::_('SRC_PHP_FORBIDDEN') . ':<br /><span style="font-family: monospace;"><ul style="margin:0px;"><li>' . implode('</li><li>', $src_functionsArray) . '</li></ul></span>';
 					$src_comment = JText::_('SRC_PHP_CODE_REMOVED_FORBIDDEN') . ': ( ' . implode(', ', $src_functionsArray) . ' )';
+					if (JFactory::getDocument()->getType() == 'html') {
+						$src_string_array['1'] = '<!-- ' . JText::_('SRC_COMMENT') . ': ' . $src_comment . ' -->';
+					} else {
+						$src_string_array['1'] = '';
+					}
 				} else {
-					// evaluate the script
-					ob_start();
+					if (!isset($Itemid)) {
+						$Itemid = JFactory::getApplication()->input->getInt('Itemid');
+					}
+					if (!isset($mainframe)) {
+						$mainframe = JFactory::getApplication();
+					}
+					if (!isset($app)) {
+						$app = JFactory::getApplication();
+					}
+					if (!isset($document)) {
+						$document = JFactory::getDocument();
+					}
+					if (!isset($doc)) {
+						$doc = JFactory::getDocument();
+					}
+					if (!isset($database)) {
+						$database = JFactory::getDBO();
+					}
+					if (!isset($db)) {
+						$db = JFactory::getDBO();
+					}
+					if (!isset($user)) {
+						$user = JFactory::getUser();
+					}
+					$src_script = '
 					if (is_array($src_vars)) {
 						foreach ($src_vars as $src_key => $src_value) {
 							${$src_key} = $src_value;
 						}
 					}
-					if (!isset($Itemid) && !(strpos($src_script, '$Itemid') === false)) {
-						$Itemid = JFactory::getApplication()->input->getInt('Itemid');
-					}
-					if (!isset($mainframe) && !(strpos($src_script, '$mainframe') === false)) {
-						$mainframe = JFactory::getApplication();
-					}
-					if (!isset($app) && !(strpos($src_script, '$app') === false)) {
-						$app = JFactory::getApplication();
-					}
-					if (!isset($document) && !(strpos($src_script, '$document') === false)) {
-						$document = JFactory::getDocument();
-					}
-					if (!isset($doc) && !(strpos($src_script, '$doc') === false)) {
-						$doc = JFactory::getDocument();
-					}
-					if (!isset($database) && !(strpos($src_script, '$database') === false)) {
-						$database = JFactory::getDBO();
-					}
-					if (!isset($db) && !(strpos($src_script, '$db') === false)) {
-						$db = JFactory::getDBO();
-					}
-					if (!isset($user) && !(strpos($src_script, '$user') === false)) {
-						$user = JFactory::getUser();
-					}
-					$src_script .= "\n" . '$src_php_succes = 1;';
-					eval($src_script);
+					' . $src_script . ';
+					return get_defined_vars();
+					';
+					$temp_PHP_func = create_function('&$src_vars, &$article, &$Itemid, &$mainframe, &$app, &$document, &$doc, &$database, &$db, &$user', $src_script);
+
+					// evaluate the script
+					// but without using the the evil eval
+					ob_start();
+					$src_new_vars = $temp_PHP_func($src_vars, $article, $Itemid, $mainframe, $app, $document, $doc, $database, $db, $user);
+					unset($temp_PHP_func);
 					$src_string_array['1'] = ob_get_contents();
 					ob_end_clean();
-					if (!(strpos($src_string_array['1'], "eval()'d code") === false)) {
-						foreach ($src_backup_REQUEST as $src_key => $src_value) {
-							$_REQUEST[$src_key] = $src_value;
-						}
-						$src_php_succes = 0;
-						preg_match('#on line <b>([0-9]+)#si', $src_string_array['1'], $src_errormatch);
-						if (count($src_errormatch)) {
-							$src_errorline = $src_errormatch['1'];
-						}
-					}
 
-					$src_comment = JText::_('SRC_PHP_CODE_REMOVED_ERRORS');
-				}
-
-				if (!$src_php_succes) {
-					if ($docType == 'html') {
-						if (($this->src_params->debug_php && !$article) || ($this->src_params->debug_php_article && $article)) {
-							if ($this->src_params->user_is_admin) {
-								$this->createDebuggingOutput($src_string_array['1'], $src_script, $src_errorline);
-							} else {
-								$src_string_array['1'] = '<!-- ' . JText::_('SRC_COMMENT') . ': ' . $src_comment . ' ' . JText::_('SRC_LOGIN_TO_SHOW_PHP_DEBUGGING') . ' -->';
-							}
-						} else {
-							$src_string_array['1'] = '<!-- ' . JText::_('SRC_COMMENT') . ': ' . $src_comment . ' -->';
-						}
-					} else {
-						$src_string_array['1'] = '';
-					}
-				} else {
-					$src_new_vars = get_defined_vars();
 					$src_diff_vars = array_diff(array_keys($src_new_vars), $src_backup_vars);
 					foreach ($src_diff_vars as $src_diff_key) {
-						if (substr($src_diff_key, 0, 5) != '_src_' && substr($src_diff_key, 0, 4) != 'src_') {
+						if (!in_array($src_diff_key, array('src_vars', 'article', 'Itemid', 'mainframe', 'app', 'document', 'doc', 'database', 'db', 'user'))
+							&& substr($src_diff_key, 0, 4) != 'src_'
+						) {
 							$src_vars[$src_diff_key] = $src_new_vars[$src_diff_key];
 						}
 					}
@@ -508,7 +483,9 @@ class plgSystemSourcererHelper
 		$src_str = implode('', $src_string_array);
 	}
 
-	// Replace the JavaScript tags by a comment tag if not permitted
+	/**
+	 * Replace the JavaScript tags by a comment tag if not permitted
+	 */
 	function replaceTagsJS(&$str, $enabled = 1, $security_pass = 1)
 	{
 		if (!is_string($str) || $str == '') {
@@ -526,18 +503,18 @@ class plgSystemSourcererHelper
 			'(-start-' . '\s*script\s[^' . '-end-' . ']*?[^/]\s*' . '-end-'
 				. '(.*?)'
 				. '-start-' . '\s*\/\s*script\s*' . '-end-)';
-		$string_array = $this->stringToSplitArray($str, $tag_regex, 1);
-		$string_array_count = count($string_array);
+		$arr = $this->stringToSplitArray($str, $tag_regex, 1);
+		$arr_count = count($arr);
 
 		// Match:
 		// <script ...>
 		// single script tags are not xhtml compliant and should not occur, but just incase they do...
-		if ($string_array_count == 1) {
+		if ($arr_count == 1) {
 			$tag_regex = '(-start-' . '\s*script\s.*?' . '-end-)';
-			$string_array = $this->stringToSplitArray($str, $tag_regex, 1);
-			$string_array_count = count($string_array);
+			$arr = $this->stringToSplitArray($str, $tag_regex, 1);
+			$arr_count = count($arr);
 		}
-		if ($string_array_count > 1) {
+		if ($arr_count > 1) {
 			if (!$enabled) {
 				// replace source block content with HTML comment
 				$str = '<!-- ' . JText::_('SRC_COMMENT') . ': ' . JText::sprintf('SRC_OUTPUT_REMOVED_NOT_ALLOWED', array(JText::_('SRC_JAVASCRIPT')), array(JText::_('SRC_JAVASCRIPT'))) . ' -->';
@@ -548,7 +525,9 @@ class plgSystemSourcererHelper
 		}
 	}
 
-	// Replace the CSS tags by a comment tag if not permitted
+	/**
+	 * Replace the CSS tags by a comment tag if not permitted
+	 */
 	function replaceTagsCSS(&$str, $enabled = 1, $security_pass = 1)
 	{
 		if (!is_string($str) || $str == '') {
@@ -566,19 +545,19 @@ class plgSystemSourcererHelper
 			'(-start-' . '\s*style\s[^' . '-end-' . ']*?[^/]\s*' . '-end-'
 				. '(.*?)'
 				. '-start-' . '\s*\/\s*style\s*' . '-end-)';
-		$string_array = $this->stringToSplitArray($str, $tag_regex, 1);
-		$string_array_count = count($string_array);
+		$arr = $this->stringToSplitArray($str, $tag_regex, 1);
+		$arr_count = count($arr);
 
 		// Match:
 		// <script ...>
 		// single script tags are not xhtml compliant and should not occur, but just in case they do...
-		if ($string_array_count == 1) {
+		if ($arr_count == 1) {
 			$tag_regex = '(-start-' . '\s*link\s[^' . '-end-' . ']*?(rel="stylesheet"|type="text/css").*?' . '-end-)';
-			$string_array = $this->stringToSplitArray($str, $tag_regex, 1);
-			$string_array_count = count($string_array);
+			$arr = $this->stringToSplitArray($str, $tag_regex, 1);
+			$arr_count = count($arr);
 		}
 
-		if ($string_array_count > 1) {
+		if ($arr_count > 1) {
 			if (!$enabled) {
 				// replace source block content with HTML comment
 				$str = '<!-- ' . JText::_('SRC_COMMENT') . ': ' . JText::sprintf('SRC_OUTPUT_REMOVED_NOT_ALLOWED', array(JText::_('SRC_CSS')), array(JText::_('SRC_CSS'))) . ' -->';
@@ -649,77 +628,7 @@ class plgSystemSourcererHelper
 		$str = preg_replace('#&_([a-z0-9\#]+?);#i', '&\1;', $str);
 	}
 
-	function createDebuggingOutput(&$str, $script, $errorlinenr)
-	{
-		$script = str_replace("\n" . '$src_php_succes = 1;', '', $script);
-		$script = htmlentities($script);
-		$scriptLines = explode("\n", $script);
-		$count = count($scriptLines);
-		if ($errorlinenr > $count) {
-			$str = str_replace('on line <b>' . $errorlinenr . '</b>', 'on line <b>' . $count . '</b>', $str);
-			$errorlinenr = $count;
-		}
-		$script = $this->createNumberedTable($scriptLines, $errorlinenr);
-		$this->trimBr($str);
-		$id = rand(1000, 9999);
-		$str =
-			"\n" . '<!-- SORCERER DEBUGGING -->'
-				. "\n" . '<div style="clear: both;border: 3px solid #CC3333;background-color: #FFFFFF;">'
-				. "\n\t" . '<div id="sourcerer_debugging_' . $id . '_collapsed">'
-				. "\n\t\t" . '<div style="float:right;padding: 2px 5px;color:#999999;cursor:pointer;cursor:hand;" onclick="document.getElementById(\'sourcerer_debugging_' . $id . '_expanded\').style.display=\'block\';document.getElementById(\'sourcerer_debugging_' . $id . '_collapsed\').style.display=\'none\';">' . JText::_('SRC_SHOW') . '</div>'
-				. "\n\t\t" . '<div style="float:left;font-size:1.2em;padding: 2px 5px;"><strong>' . JText::_('SRC_PHP_DEBUGGING') . '</strong></div>'
-				. "\n\t" . '</div>'
-				. "\n\t" . '<div style="clear: both;"></div>'
-				. "\n\t" . '<div id="sourcerer_debugging_' . $id . '_expanded" style="display:none;">'
-				. "\n\t\t" . '<div style="float:right;padding: 2px 5px;color:#999999;cursor:pointer;cursor:hand;" onclick="document.getElementById(\'sourcerer_debugging_' . $id . '_expanded\').style.display=\'none\';document.getElementById(\'sourcerer_debugging_' . $id . '_collapsed\').style.display=\'block\';">' . JText::_('SRC_HIDE') . '</div>'
-				. "\n\t\t" . '<div style="float:left;font-size:1.2em;padding: 2px 5px;"><strong>' . JText::_('SRC_PHP_DEBUGGING') . '</strong></div>'
-				. "\n\t\t" . '<div style="background-color: #339933;color: #FFFFFF;padding: 2px 5px;"><strong>' . JText::_('SRC_PHP_CODE') . '</strong></div>'
-				. "\n\t\t" . '<div style="clear:both;max-height:200px;overflow:auto;position:relative;">' . $script . '</div>'
-				. "\n\t\t" . '<div style="background-color: #CC3333;color: #FFFFFF;padding: 2px 5px;"><strong>' . JText::_('SRC_PHP_ERROR') . '</strong></div>'
-				. "\n\t\t" . '<div style="background-color: #FFDDDD;padding: 2px 5px;">' . $str . '</div>'
-				. "\n\t\t" . '<div style="font-size:0.8em;font-style:italic;padding: 2px 5px;">'
-				. "\n\t\t\t" . '<div style="float:right;"><a href="http://www.nonumber.nl/sourcerer" target="_blank">' . JText::_('SRC_MORE_ABOUT') . '</a></div>'
-				. "\n\t\t\t" . '<div style="float:left;">' . JText::_('SRC_TO_HIDE_THIS_ERROR_TURN_OFF_PHP_DEBUGGING') . '</div>'
-				. "\n\t\t" . '</div>'
-				. "\n\t" . '</div>'
-				. "\n\t" . '<div style="clear: both;"></div>'
-				. "\n" . '</div>';
-	}
-
-	function createNumberedTable(&$scriptLines, $errorlinenr)
-	{
-		$output = '';
-		foreach ($scriptLines as $linenr => $scriptLine) {
-			$linenr++;
-			$scriptLine = str_replace('    ', '&nbsp;&nbsp;&nbsp;&nbsp;', $scriptLine);
-			$bgcolor = '#FFFFFF';
-			if (fmod($linenr, 2) == 1) {
-				$bgcolor = '#F7F7F7';
-			}
-			if ($errorlinenr == $linenr) {
-				$bgcolor = '#FFDDDD';
-			}
-			$output .=
-				"\n\t\t" . '<div style="background-color: ' . $bgcolor . ';position:relative;">'
-					. "\n\t\t\t" . '<div style="font-family:monospace;color:#999999;text-align:right;padding: 1px 5px;width: 24px;position: absolute;left:0;">' . $linenr . '</div>'
-					. "\n\t\t\t" . '<div style="margin-left: 34px;border-left: 1px solid #DDDDDD;font-family:monospace;padding: 1px 5px;">' . $scriptLine . '</div>'
-					. "\n\t\t" . '</div>';
-		}
-		return $output;
-	}
-
-	function trimBr(&$str)
-	{
-		while (substr($str, 0, 6) == '<br />') {
-			$str = trim(substr($str, 6, strlen($str)));
-		}
-		while (substr($str, strlen($str) - 6, 6) == '<br />') {
-			$str = trim(substr($str, 0, strlen($str) - 6));
-		}
-		$str = trim($str);
-	}
-
-	/*
+	/**
 	 * Protect input and text area's
 	 */
 	function protect(&$str)
@@ -732,6 +641,9 @@ class plgSystemSourcererHelper
 		NNProtect::unprotectForm($str, array($this->src_params->syntax_start, $this->src_params->syntax_start_0, $this->src_params->syntax_end));
 	}
 
+	/**
+	 * Just in case you can't figure the method name out: this cleans the left-over junk
+	 */
 	function cleanLeftoverJunk(&$str)
 	{
 		$str = preg_replace('#<\!-- (START|END): SRC_[^>]* -->#', '', $str);

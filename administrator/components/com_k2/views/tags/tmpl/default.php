@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: default.php 1928 2013-02-12 12:13:18Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -46,7 +46,7 @@ $document->addScriptDeclaration("
         <th class="center"><input id="jToggler" type="checkbox" name="toggle" value="" /></th>
         <th><?php echo JHTML::_('grid.sort', 'K2_NAME', 'name', @$this->lists['order_Dir'], @$this->lists['order'] ); ?></th>
         <th class="center"><?php echo JHTML::_('grid.sort', 'K2_PUBLISHED', 'published', @$this->lists['order_Dir'], @$this->lists['order'] ); ?></th>
-        <th class="center hidden-phone"><?php echo JText::_('K2_ITEMS'); ?></th>
+        <th class="center hidden-phone"><?php echo JHTML::_('grid.sort', 'K2_ITEMS', 'numOfItems', @$this->lists['order_Dir'], @$this->lists['order'] ); ?></th>
         <th class="center hidden-phone"><?php echo JHTML::_('grid.sort', 'K2_ID', 'id', @$this->lists['order_Dir'], @$this->lists['order'] ); ?></th>
       </tr>
     </thead>
