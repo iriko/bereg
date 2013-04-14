@@ -73,3 +73,10 @@ $this->_urlCache['44539d43a0fbedf5f0390e8f74a135a6']='index.php?option=com_k2&am
 $this->_urlCache['8c16c7c04465beedf53897432bff4a58']='index.php?option=com_k2&amp;Itemid=103&amp;id=52&amp;lang=uk&amp;view=item#about/teachers/administratsiia/kozulia-v-m#0';
 $this->_urlCache['0e8b601c4f9e295a7123ecf6b0f1b42c']='index.php?option=com_k2&amp;Itemid=103&amp;format=feed&amp;id=18&amp;lang=uk&amp;task=category&amp;view=itemlist#about/teachers/administratsiia/feed#0';
 $shURLCacheCreationDate=1365936112;
+$this->_urlCache['76c4c174c07d78ee95d335335325e639']='index.php?option=com_k2&amp;Itemid=113&amp;id=64&amp;lang=uk&amp;view=item#galereya/photos/halereia5#0';
+$shURLCacheCreationDate=1365937146;
+$this->_urlCache['6758a500d4bc68259269bc65585458ef']='index.php?option=com_jcomments&amp;lang=uk&amp;tmpl=component#jcomments#0';
+$this->_urlCache['a6b6674e2ed570b3359bd5eb7950b0ff']='index.php?option=com_jcomments&amp;ac=87235&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/87235#0';
+$shURLCacheCreationDate=1365937153;
+$this->_urlCache['3c2802bacf85d4e970e1311733f0e56e']='index.php?option=com_jcomments&amp;ac=86295&amp;format=raw&amp;lang=uk&amp;task=captcha#captcha/86295#0';
+$shURLCacheCreationDate=1365938450;

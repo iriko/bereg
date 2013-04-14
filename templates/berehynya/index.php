@@ -29,7 +29,7 @@ $this->setGenerator('Beregynya site');
             <div class="header-holder">
                 <div class="header">
 
-                    <div class="logo"><a href="<?php echo $this->baseurl ?>/"><img src="<?php echo $this->baseurl.'/templates/'.$this->template.'/images/logo.jpg'?>" alt="Бегериня"></a></div>
+                    <div class="logo"><a href="<?php echo $this->baseurl ?>/"><img src="<?php echo $this->baseurl.'/templates/'.$this->template.'/images/logo.png'?>" alt="Бегериня"></a></div>
 
                     <jdoc:include type="modules" name="position-1" />
 
