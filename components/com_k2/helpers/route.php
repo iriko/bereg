@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: route.php 1910 2013-02-08 21:43:39Z lefteris.kavadas $
+ * @version		$Id: route.php 1948 2013-03-11 16:47:00Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -24,10 +24,10 @@ class K2HelperRoute
 			'item' => (int)$id,
 			'category' => (int)$catid,
 		);
-		$link = 'index.php?option=com_k2&view=item&id=' . $id;
+		$link = 'index.php?option=com_k2&view=item&id='.$id;
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
-			$link .= '&Itemid=' . $item->id;
+			$link .= '&Itemid='.$item->id;
 		}
 		return $link;
 	}
@@ -35,10 +35,10 @@ class K2HelperRoute
 	public static function getCategoryRoute($catid)
 	{
 		$needles = array('category' => (int)$catid);
-		$link = 'index.php?option=com_k2&view=itemlist&task=category&id=' . $catid;
+		$link = 'index.php?option=com_k2&view=itemlist&task=category&id='.$catid;
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
-			$link .= '&Itemid=' . $item->id;
+			$link .= '&Itemid='.$item->id;
 		}
 		return $link;
 	}
@@ -100,10 +100,10 @@ class K2HelperRoute
 				$alias = K2_JVERSION == '15' ? $datenow->toFormat("%Y-%m-%d-%H-%M-%S") : $datenow->format("Y-m-d-H-i-s");
 			}
 		}
-		$link = 'index.php?option=com_k2&view=itemlist&task=user&id=' . $userID . ':' . $alias;
+		$link = 'index.php?option=com_k2&view=itemlist&task=user&id='.$userID.':'.$alias;
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
-			$link .= '&Itemid=' . $item->id;
+			$link .= '&Itemid='.$item->id;
 		}
 		return $link;
 	}
@@ -111,10 +111,10 @@ class K2HelperRoute
 	public static function getTagRoute($tag)
 	{
 		$needles = array('tag' => $tag);
-		$link = 'index.php?option=com_k2&view=itemlist&task=tag&tag=' . urlencode($tag);
+		$link = 'index.php?option=com_k2&view=itemlist&task=tag&tag='.urlencode($tag);
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
-			$link .= '&Itemid=' . $item->id;
+			$link .= '&Itemid='.$item->id;
 		}
 		return $link;
 	}
@@ -122,18 +122,18 @@ class K2HelperRoute
 	public static function getDateRoute($year, $month, $day = null, $catid = null)
 	{
 		$needles = array('year' => $year);
-		$link = 'index.php?option=com_k2&view=itemlist&task=date&year=' . $year . '&month=' . $month;
+		$link = 'index.php?option=com_k2&view=itemlist&task=date&year='.$year.'&month='.$month;
 		if ($day)
 		{
-			$link .= '&day=' . $day;
+			$link .= '&day='.$day;
 		}
 		if ($catid)
 		{
-			$link .= '&catid=' . $catid;
+			$link .= '&catid='.$catid;
 		}
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
-			$link .= '&Itemid=' . $item->id;
+			$link .= '&Itemid='.$item->id;
 		}
 		return $link;
 	}
@@ -144,7 +144,7 @@ class K2HelperRoute
 		$link = 'index.php?option=com_k2&view=itemlist&task=search';
 		if ($item = K2HelperRoute::_findItem($needles))
 		{
-			$link .= '&Itemid=' . $item->id;
+			$link .= '&Itemid='.$item->id;
 		}
 		return $link;
 	}
@@ -171,7 +171,7 @@ class K2HelperRoute
 				{
 
 					// Detect multiple K2 categories link and set the generic K2 link ( if any )
-					if ($item->query['view'] == 'itemlist' && $item->query['task'] == '')
+					if (@$item->query['view'] == 'itemlist' && @$item->query['task'] == '')
 					{
 
 						if (!isset(self::$multipleCategoriesMapping[$item->id]))
@@ -242,24 +242,27 @@ class K2HelperRoute
 				}
 				// Second pass [START]
 				// Only for multiple categories links. Triggered only if we do not have find any match (link to direct category)
-				if (is_null($match) && @$item->query['view'] == 'itemlist' && @$item->query['task'] == '' && $needle == 'category')
+				if (is_null($match) && $needle == 'category')
 				{
 					foreach ($items as $item)
 					{
-						if (isset(self::$multipleCategoriesMapping[$item->id]) && is_array(self::$multipleCategoriesMapping[$item->id]))
+						if (@$item->query['view'] == 'itemlist' && @$item->query['task'] == '')
 						{
-							foreach (self::$multipleCategoriesMapping[$item->id] as $catid)
+							if (isset(self::$multipleCategoriesMapping[$item->id]) && is_array(self::$multipleCategoriesMapping[$item->id]))
 							{
-								if ((int)$catid == $id)
+								foreach (self::$multipleCategoriesMapping[$item->id] as $catid)
 								{
-									$match = $item;
-									break;
+									if ((int)$catid == $id)
+									{
+										$match = $item;
+										break;
+									}
 								}
 							}
-						}
-						if (!is_null($match))
-						{
-							break;
+							if (!is_null($match))
+							{
+								break;
+							}
 						}
 					}
 				}

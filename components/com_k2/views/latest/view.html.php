@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: view.html.php 1924 2013-02-11 20:05:37Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -226,7 +226,7 @@ class K2ViewLatest extends K2View
             $this->assignRef('blocks', $users);
         }
 
-        // Set menu metadata for Joomla! 1.6/1.7
+        // Set menu metadata for Joomla! 2.5+
         if (K2_JVERSION != '15')
         {
             if ($params->get('menu-meta_description'))
@@ -257,7 +257,7 @@ class K2ViewLatest extends K2View
         $uri = JURI::getInstance();
         $document->setMetaData('og:url', $uri->toString());
         $document->setMetaData('og:title', htmlspecialchars($document->getTitle(), ENT_QUOTES, 'UTF-8'));
-        $document->setMetaData('og:type', 'Article');
+        $document->setMetaData('og:type', 'website');
         $document->setMetaData('og:description', htmlspecialchars(strip_tags($document->getDescription()), ENT_QUOTES, 'UTF-8'));
 
         //Look for template files in component folders

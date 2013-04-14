@@ -1,5 +1,5 @@
 /**
- * @version		$Id: k2.js 1817 2013-01-17 17:57:20Z lefteris.kavadas $
+ * @version		$Id: k2.js 1919 2013-02-11 19:02:02Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -9,6 +9,26 @@
 var $K2 = jQuery.noConflict();
 
 $K2(document).ready(function(){
+
+  // Generic function to get URL params passed in .js script include
+	function getUrlParams(targetScript, varName) {
+		var scripts = document.getElementsByTagName('script');
+		var scriptCount = scripts.length;
+		for (var a = 0; a < scriptCount; a++) {
+			var scriptSrc = scripts[a].src;
+			if (scriptSrc.indexOf(targetScript) >= 0) {
+				varName = varName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+				var re = new RegExp("[\\?&]" + varName + "=([^&#]*)");
+				var parsedVariables = re.exec(scriptSrc);
+				if (parsedVariables !== null) {
+					return parsedVariables[1];
+				}
+			}
+		}
+	}
+
+	// Set the site root path
+	var K2SitePath = getUrlParams('k2.js', 'sitepath');
 
 	// Comments
 	$K2('#comment-form').submit(function(event){
@@ -30,7 +50,7 @@ $K2(document).ready(function(){
 			}
 		});
 	});
-	
+
 	$K2('.commentRemoveLink').click(function(event){
 		event.preventDefault();
 		var element = $K2(this);
@@ -47,7 +67,7 @@ $K2(document).ready(function(){
 			}
 		});
 	});
-	
+
 	$K2('.commentApproveLink').click(function(event){
 		event.preventDefault();
 		var element = $K2(this);
@@ -64,7 +84,7 @@ $K2(document).ready(function(){
 			}
 		});
 	});
-	
+
 	$K2('.k2ReportUserButton').click(function(event){
 		event.preventDefault();
 		if (confirm(K2Language[0])) {
@@ -81,7 +101,7 @@ $K2(document).ready(function(){
 		}
 
 	});
-	
+
 	$K2('#k2ReportCommentForm').submit(function(event){
 		event.preventDefault();
 		$K2('#formLog').empty().addClass('formLogLoading');
@@ -163,7 +183,7 @@ $K2(document).ready(function(){
 		}
 		window.open($K2(this).attr('href'),'K2PopUpWindow','width='+options.x+',height='+options.y+',menubar=yes,resizable=yes');
 	});
-	
+
 	// Live search
 	$K2('div.k2LiveSearchBlock form input[name=searchword]').keyup(function(event){
 		var parentElement = $K2(this).parent().parent();
@@ -221,7 +241,7 @@ $K2(document).ready(function(){
 			});
 		});
 	}
-	
+
 	// Generic Element Scroller (use .k2Scroller in the container and .k2ScrollerElement for each contained element)
 	$K2('.k2Scroller').css('width',($K2('.k2Scroller').find('.k2ScrollerElement:first').outerWidth(true))*$K2('.k2Scroller').children('.k2ScrollerElement').length);
 

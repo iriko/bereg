@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.html.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: view.html.php 1950 2013-03-11 17:22:33Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -46,6 +46,19 @@ class K2ViewCategories extends K2View
 
 		$params = JComponentHelper::getParams('com_k2');
 		$this->assignRef('params', $params);
+		
+		if (K2_JVERSION != '15')
+		{
+			$langs = JLanguageHelper::getLanguages();
+			$langsMapping = array();
+			$langsMapping['*'] = JText::_('K2_ALL');
+			foreach ($langs as $lang)
+			{
+				$langsMapping[$lang->lang_code] = $lang->title;
+			}
+		}
+		
+		
 		for ($i = 0; $i < sizeof($categories); $i++)
 		{
 			$categories[$i]->status = K2_JVERSION == '15' ? JHTML::_('grid.published', $categories[$i], $i) : JHtml::_('jgrid.published', $categories[$i]->published, $i, '', $filter_trash == 0 && $task != 'element');
@@ -63,6 +76,11 @@ class K2ViewCategories extends K2View
 			{
 				$categoryParams = json_decode($categories[$i]->params);
 				$categories[$i]->template = $categoryParams->theme;
+				$categories[$i]->language = $categories[$i]->language ? $categories[$i]->language : '*';
+				if (isset($langsMapping))
+				{
+					$categories[$i]->language = $langsMapping[$categories[$i]->language];
+				}
 			}
 			else
 			{

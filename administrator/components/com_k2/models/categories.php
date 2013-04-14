@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: categories.php 1815 2013-01-16 17:56:08Z lefteris.kavadas $
+ * @version		$Id: categories.php 1937 2013-03-07 15:19:16Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -209,9 +209,9 @@ class K2ModelCategories extends K2Model
 
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2Category', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2Category', 'Table');
             $row->load($id);
             $row->publish($id, 1);
         }
@@ -228,9 +228,9 @@ class K2ModelCategories extends K2Model
 
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2Category', 'Table');
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2Category', 'Table');
             $row->load($id);
             $row->publish($id, 0);
         }
@@ -416,11 +416,11 @@ class K2ModelCategories extends K2Model
         $mainframe = JFactory::getApplication();
         $db = JFactory::getDBO();
         $cid = JRequest::getVar('cid');
-        $row = JTable::getInstance('K2Category', 'Table');
         $warning = false;
         $restored = array();
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2Category', 'Table');
             $row->load($id);
             if ((int)$row->parent == 0)
             {
@@ -470,7 +470,6 @@ class K2ModelCategories extends K2Model
         $db = JFactory::getDBO();
         $cid = JRequest::getVar('cid');
         JArrayHelper::toInteger($cid);
-        $row = JTable::getInstance('K2Category', 'Table');
         JPluginHelper::importPlugin('finder');
         $dispatcher = JDispatcher::getInstance();
         $warningItems = false;
@@ -478,6 +477,7 @@ class K2ModelCategories extends K2Model
         $cid = array_reverse($cid);
         for ($i = 0; $i < sizeof($cid); $i++)
         {
+        	$row = JTable::getInstance('K2Category', 'Table');
             $row->load($cid[$i]);
 
             $query = "SELECT COUNT(*) FROM #__k2_items WHERE catid={$cid[$i]}";
@@ -629,9 +629,10 @@ class K2ModelCategories extends K2Model
         $mainframe = JFactory::getApplication();
         $cid = JRequest::getVar('cid');
         $catid = JRequest::getInt('category');
-        $row = JTable::getInstance('K2Category', 'Table');
+        
         foreach ($cid as $id)
         {
+        	$row = JTable::getInstance('K2Category', 'Table');
             $row->load($id);
             $row->parent = $catid;
             $row->ordering = $row->getNextOrder('parent = '.$row->parent.' AND published = 1');

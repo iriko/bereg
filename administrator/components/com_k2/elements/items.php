@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: items.php 1883 2013-02-07 18:18:15Z joomlaworks $
+ * @version		$Id: items.php 1920 2013-02-11 19:07:41Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -55,9 +55,9 @@ class K2ElementItems extends K2Element
 			});
 			if(!exists){
 				var container = \$K2('<li/>').appendTo(\$K2('#itemsList'));
-				var img = \$K2('<img/>',{class:'remove', src:'".$image."'}).appendTo(container);
+				var img = \$K2('<img/>',{'class':'remove', src:'".$image."'}).appendTo(container);
 				img.click(function(){\$K2(this).parent().remove();});
-				var span = \$K2('<span/>',{class:'handle'}).html(title).appendTo(container);
+				var span = \$K2('<span/>',{'class':'handle'}).html(title).appendTo(container);
 				var input = \$K2('<input/>',{value:id, type:'hidden', name:'".$fieldName."'}).appendTo(container);
 				var div = \$K2('<div/>',{style:'clear:both;'}).appendTo(container);
 				\$K2('#itemsList').sortable('refresh');
@@ -79,7 +79,7 @@ class K2ElementItems extends K2Element
 		";
 
         $document->addScriptDeclaration($js);
-        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.6.5');
+        $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.modules.css?v=2.6.6');
 
         $current = array();
         if (is_string($value) && !empty($value))

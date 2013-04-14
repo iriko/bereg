@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: k2.php 1911 2013-02-08 22:05:00Z joomlaworks $
+ * @version		$Id: k2.php 1922 2013-02-11 19:50:16Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -24,8 +24,11 @@ class plgSystemK2 extends JPlugin
 	{
 
 		$mainframe = JFactory::getApplication();
+		$user = JFactory::getUser();
 		$basepath = ($mainframe->isSite()) ? JPATH_SITE : JPATH_ADMINISTRATOR;
+
 		JPlugin::loadLanguage('com_k2', $basepath);
+
 		if (K2_JVERSION != '15')
 		{
 			JPlugin::loadLanguage('com_k2.j16', JPATH_ADMINISTRATOR, null, true);
@@ -38,16 +41,21 @@ class plgSystemK2 extends JPlugin
 		{
 			return;
 		}
-		JHTML::_('behavior.modal');
+
+		// Joomla! modal trigger
+		if ( !$user->guest || (JRequest::getCmd('option') == 'com_k2' && JRequest::getCmd('view') == 'item') || defined('K2_JOOMLA_MODAL_REQUIRED') ){
+			JHTML::_('behavior.modal');
+		}
+
 		$params = JComponentHelper::getParams('com_k2');
 
 		$document = JFactory::getDocument();
 
-		// JS
+		// jQuery and K2 JS loading
 		K2HelperHTML::loadjQuery();
 
-		$document->addScript(JURI::root(true).'/components/com_k2/js/k2.js');
-		$document->addScriptDeclaration("var K2SitePath = '".JURI::root(true)."/';");
+		$document->addScript(JURI::root(true).'/components/com_k2/js/k2.js?v2.6.6&amp;sitepath='.JURI::root(true).'/');
+		//$document->addScriptDeclaration("var K2SitePath = '".JURI::root(true)."/';");
 
 		if (JRequest::getCmd('task') == 'search' && $params->get('googleSearch'))
 		{
@@ -267,18 +275,18 @@ class plgSystemK2 extends JPlugin
 			}
 
 			/*
-			 // TO DO - We open the profile editing page in a modal, so let's define some CSS
-			 $document = JFactory::getDocument();
-			 $document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.5');
-			 $document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
-			 $document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
-			 if(K2_JVERSION != '15') {
-			 $document->addStyleSheet(JURI::root(true).'/administrator/templates/bluestork/css/template.css');
-			 $document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
-			 } else {
-			 $document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
-			 }
-			 */
+			// TO DO - We open the profile editing page in a modal, so let's define some CSS
+			$document = JFactory::getDocument();
+			$document->addStyleSheet(JURI::root(true).'/media/k2/assets/css/k2.frontend.css?v=2.6.6');
+			$document->addStyleSheet(JURI::root(true).'/templates/system/css/general.css');
+			$document->addStyleSheet(JURI::root(true).'/templates/system/css/system.css');
+			if(K2_JVERSION != '15') {
+			$document->addStyleSheet(JURI::root(true).'/administrator/templates/bluestork/css/template.css');
+			$document->addStyleSheet(JURI::root(true).'/media/system/css/system.css');
+			} else {
+			$document->addStyleSheet(JURI::root(true).'/administrator/templates/khepri/css/general.css');
+			}
+			*/
 
 			$view = $controller->getView($view, 'html');
 			$view->addTemplatePath(JPATH_SITE.DS.'components'.DS.'com_k2'.DS.'templates');
@@ -437,11 +445,11 @@ class plgSystemK2 extends JPlugin
 		}
 
 		// Define the default Itemid for users and tags. Defined here instead of the K2HelperRoute for performance reasons.
-		// UPDATE : Removed in K2 2.6.5. All K2 links without Itemid now use the anyK2Link defined in the router helper.
-		//define('K2_USERS_ITEMID', $componentParams->get('defaultUsersItemid'));
-		//define('K2_TAGS_ITEMID', $componentParams->get('defaultTagsItemid'));
+		// UPDATE : Removed in K2 2.6.6. All K2 links without Itemid now use the anyK2Link defined in the router helper.
+		// define('K2_USERS_ITEMID', $componentParams->get('defaultUsersItemid'));
+		// define('K2_TAGS_ITEMID', $componentParams->get('defaultTagsItemid'));
 
-		// Define JoomFish compatibillity version.
+		// Define JoomFish compatibility version.
 		if (JFile::exists(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_joomfish'.DS.'joomfish.php'))
 		{
 			if (K2_JVERSION == '15')
@@ -465,15 +473,15 @@ class plgSystemK2 extends JPlugin
 			}
 		}
 		/*
-		 if(JRequest::getCmd('option')=='com_k2' && JRequest::getCmd('task')=='save' && !$mainframe->isAdmin()){
-		 $dispatcher = JDispatcher::getInstance();
-		 foreach($dispatcher->_observers as $observer){
-		 if($observer->_name=='jfdatabase' || $observer->_name=='jfrouter' || $observer->_name=='missing_translation'){
-		 $dispatcher->detach($observer);
-		 }
-		 }
-		 }
-		 */
+		if(JRequest::getCmd('option')=='com_k2' && JRequest::getCmd('task')=='save' && !$mainframe->isAdmin()){
+			$dispatcher = JDispatcher::getInstance();
+			foreach($dispatcher->_observers as $observer){
+				if($observer->_name=='jfdatabase' || $observer->_name=='jfrouter' || $observer->_name=='missing_translation'){
+					$dispatcher->detach($observer);
+				}
+			}
+		}
+		*/
 
 		// Use K2 to make Joomla! Varnish-friendly
 		// For more checkout: https://snipt.net/fevangelou/the-perfect-varnish-configuration-for-joomla-websites/
@@ -640,6 +648,8 @@ class plgSystemK2 extends JPlugin
 			}
 
 			$pattern = '/\r\n|\r|\n/';
+
+			// *** Mootools Snippet ***
 			$js = "
 			window.addEvent('domready', function(){
 				var target = $$('table.adminform');
@@ -660,6 +670,8 @@ class plgSystemK2 extends JPlugin
 
 			$document = JFactory::getDocument();
 			$document->addScriptDeclaration($js);
+
+			// *** Embedded CSS Snippet ***
 			$document->addCustomTag('
 			<style type="text/css" media="all">
 				#K2ExtraFields { color:#000; font-size:11px; padding:6px 2px 4px 4px; text-align:left; }
@@ -813,6 +825,8 @@ class plgSystemK2 extends JPlugin
 			}
 
 			$pattern = '/\r\n|\r|\n/';
+
+			// *** Mootools Snippet ***
 			$js = "
 			window.addEvent('domready', function(){
 				var target = $$('table.adminform');
@@ -939,7 +953,6 @@ class plgSystemK2 extends JPlugin
 
 		switch ($extraField->type)
 		{
-
 			case 'textfield' :
 				$output = '<div><strong>'.$extraField->name.'</strong><br /><input type="text" disabled="disabled" name="OriginalK2ExtraField_'.$extraField->id.'" value="'.$active.'"/></div><br /><br />';
 				break;

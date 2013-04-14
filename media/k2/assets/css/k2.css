@@ -1,5 +1,5 @@
 /**
- * @version		$Id: k2.css 1903 2013-02-08 19:42:15Z joomlaworks $
+ * @version		$Id: k2.css 1941 2013-03-08 19:07:00Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -134,6 +134,7 @@ div#k2ToggleSidebarContainer {text-align:right;clear:both;margin-bottom:4px;}
 table.adminFormK2 tr td label {}
 div.isJ30 table div.controls label {display:inline-block;margin-right:8px;}
 div.isJ30 table div.controls label input {margin-right:4px;}
+span.k2GalleryNotice {cursor:pointer;text-indent:-99px;width:16px;height:16px;line-height:16px;background:url(../images/system/question-frame.png) no-repeat 50% 50%;padding:0;margin:0 0 -4px 0;display:inline-block;overflow-x:hidden;}
 
 /* Admin - Item - Free tagging */
 ul.tags {background:#fff;border:1px solid #c0c0c0;padding:0;cursor:default;margin:0;padding:0;width:99%;min-height:26px;}

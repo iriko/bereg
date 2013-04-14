@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: router.php 1898 2013-02-08 17:22:04Z lefteris.kavadas $
+ * @version		$Id: router.php 1935 2013-03-04 16:09:34Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -184,13 +184,17 @@ if ($params->get('k2Sef'))
 			}
 			else
 			{
-				// Try to split the slud
-				$temp = @explode(':', $segments[1]);
-
-				// If the slug contained an item id do not use it
-				if (count($temp) > 1)
+				if (isset($segments[1]) && $segments[1] != 'download')
 				{
-					$segments[1] = $temp[1];
+					// Try to split the slud
+					$temp = @explode(':', $segments[1]);
+
+					// If the slug contained an item id do not use it
+					if (count($temp) > 1)
+					{
+						$segments[1] = $temp[1];
+					}
+
 				}
 			}
 		}
@@ -227,7 +231,7 @@ if ($params->get('k2Sef'))
 						// If the slug contained an item id do not use it
 						if (count($temp) > 1)
 						{
-							$segments[1] = $temp[2];
+							@$segments[1] = $temp[2];
 						}
 					}
 
@@ -254,7 +258,6 @@ if ($params->get('k2Sef'))
 			}
 
 		}
-
 		// Return reordered segments array
 		return array_values($segments);
 	}
@@ -268,12 +271,14 @@ if ($params->get('k2Sef'))
 	 */
 	function k2ParseRoute($segments)
 	{
+
 		// Initialize
 		$vars = array();
 
 		$params = JComponentHelper::getParams('com_k2');
 
 		$reservedViews = array(
+			'item',
 			'itemlist',
 			'media',
 			'users',
@@ -328,7 +333,7 @@ if ($params->get('k2Sef'))
 				}
 
 				// Reinsert item id to the item alias
-				if (!$params->get('k2SefInsertItemId'))
+				if (!$params->get('k2SefInsertItemId') && @$segments[1] != 'download' &&  @$segments[1] != 'edit')
 				{
 					$segments[1] = str_replace(':', '-', $segments[1]);
 					$ItemId = getItemId($segments[1]);
@@ -345,7 +350,6 @@ if ($params->get('k2Sef'))
 			$segments[1] = '';
 		}
 		$vars['task'] = $segments[1];
-
 		if ($segments[0] == 'itemlist')
 		{
 			switch ($segments[1])

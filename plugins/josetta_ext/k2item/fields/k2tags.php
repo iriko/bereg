@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     $Id: k2tags.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version     $Id: k2tags.php 1920 2013-02-11 19:07:41Z joomlaworks $
  * @package     K2
  * @author      JoomlaWorks http://www.joomlaworks.net
  * @copyright   Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -17,9 +17,9 @@ class JFormFieldK2Tags extends JFormField
     protected function getInput()
     {
         $document = JFactory::getDocument();
-        $document->addStyleSheet(JURI::root(true).'/plugins/josetta_ext/k2item/fields/k2tags.css');
+        $document->addStyleSheet(JURI::root(true).'/plugins/josetta_ext/k2item/fields/k2tags.css?v=2.6.6');
         $document->addScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js');
-        $document->addScript(JURI::root(true).'/plugins/josetta_ext/k2item/fields/k2tags.js');
+        $document->addScript(JURI::root(true).'/plugins/josetta_ext/k2item/fields/k2tags.js?v=2.6.6&amp;sitepath='.JURI::root(true).'/');
 
         $html = '<ul class="tags">';
         $tags = explode(',', $this->value);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: view.feed.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: view.feed.php 1930 2013-02-13 14:11:07Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -23,8 +23,8 @@ class K2ViewItemlist extends K2View
         $document = JFactory::getDocument();
         $model = $this->getModel('itemlist');
         $limitstart = JRequest::getInt('limitstart');
-
         $moduleID = JRequest::getInt('moduleID');
+
         if ($moduleID)
         {
 
@@ -150,10 +150,7 @@ class K2ViewItemlist extends K2View
                 case 'tag' :
                     //set title
                     $title = JText::_('K2_DISPLAYING_ITEMS_BY_TAG').' '.JRequest::getVar('tag');
-                    if (JRequest::getCmd('type') != 'atom')
-                    {
-                        $title = JFilterOutput::ampReplace($title);
-                    }
+
                     // Set ordering
                     $ordering = $params->get('tagOrdering');
                     break;
@@ -195,7 +192,10 @@ class K2ViewItemlist extends K2View
                     break;
             }
 
-            //Get items
+            // Various Feed Validations
+            $title = JFilterOutput::ampReplace($title);
+
+            // Get items
             if (!isset($ordering))
             {
                 $items = $model->getData();
@@ -207,7 +207,7 @@ class K2ViewItemlist extends K2View
 
         }
 
-        //Prepare feed items
+        // Prepare feed items
         $model = &$this->getModel('item');
         foreach ($items as $item)
         {
@@ -238,11 +238,11 @@ class K2ViewItemlist extends K2View
                 }
             }
 
-            //Add item
+            // Add item
             $document->addItem($feedItem);
         }
 
-        //Set title
+        // Set title
         $document = JFactory::getDocument();
         $menus = JSite::getMenu();
         $menu = $menus->getActive();
@@ -270,7 +270,7 @@ class K2ViewItemlist extends K2View
             }
         }
         $document->setTitle($params->get('page_title'));
-        
+
         // Prevent spammers from using the tag view
         if ($task == 'tag' && !count($items))
         {

@@ -3,7 +3,7 @@
  * Plugin Helper File
  *
  * @package         Sourcerer
- * @version         4.0.1
+ * @version         4.1.4
  *
  * @author          Peter van Westen <peter@nonumber.nl>
  * @link            http://www.nonumber.nl
@@ -44,13 +44,12 @@ class plgButtonSourcererHelper
 		require_once JPATH_PLUGINS . '/system/nnframework/helpers/versions.php';
 		$sversion = NoNumberVersions::getXMLVersion('sourcerer', 'editors-xtd', null, 1);
 
-		$document = JFactory::getDocument();
+		JHtml::stylesheet('sourcerer/button.min.css', false, true);
 
-		$button_style = 'sourcerer';
+		$icon = 'sourcerer';
 		if (!$this->params->button_icon) {
-			$button_style = 'blank blank_sourcerer';
+			$icon = 'blank blank_sourcerer';
 		}
-		$document->addStyleSheet(JURI::root(true) . '/plugins/editors-xtd/sourcerer/css/style.css' . $sversion);
 
 		$link = 'index.php?nn_qp=1'
 			. '&folder=plugins.editors-xtd.sourcerer'
@@ -65,8 +64,8 @@ class plgButtonSourcererHelper
 
 		$button->set('modal', true);
 		$button->set('link', $link);
-		$button->set('text', $text);
-		$button->set('name', $button_style);
+		$button->set('text', trim($text));
+		$button->set('name', $icon);
 		$button->set('options', "{handler: 'iframe', size: {x:window.getSize().x-100, y: window.getSize().y-100}}");
 
 		return $button;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: item.php 1812 2013-01-14 18:45:06Z lefteris.kavadas $
+ * @version		$Id: item.php 1933 2013-02-21 14:27:37Z lefteris.kavadas $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -518,7 +518,6 @@ class K2ModelItem extends K2Model
 		jimport('joomla.filesystem.folder');
 		$params = K2HelperUtilities::getParams('com_k2');
 		$limitstart = JRequest::getInt('limitstart');
-		$view = JRequest::getCmd('view');
 		//Import plugins
 		$dispatcher = JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
@@ -1257,9 +1256,9 @@ class K2ModelItem extends K2Model
 		$db = JFactory::getDBO();
 
 		$query = "SELECT tag.*
-		FROM #__k2_tags AS tag 
-		JOIN #__k2_tags_xref AS xref ON tag.id = xref.tagID 
-		WHERE tag.published=1 
+		FROM #__k2_tags AS tag
+		JOIN #__k2_tags_xref AS xref ON tag.id = xref.tagID
+		WHERE tag.published=1
 		AND xref.itemID = ".(int)$itemID." ORDER BY xref.id ASC";
 
 		$db->setQuery($query);
@@ -1426,6 +1425,10 @@ class K2ModelItem extends K2Model
 								break;
 
 							case 'lightbox' :
+
+								// Joomla! modal required
+								if (!defined('K2_JOOMLA_MODAL_REQUIRED')) define('K2_JOOMLA_MODAL_REQUIRED', true);
+
 								$filename = @basename($object->value[1]);
 								$extension = JFile::getExt($filename);
 								if (!empty($extension) && in_array($extension, $imgExtensions))

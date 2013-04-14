@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: default.php 1900 2013-02-08 19:28:51Z joomlaworks $
+ * @version		$Id: default.php 1944 2013-03-08 19:14:17Z joomlaworks $
  * @package		K2
  * @author		JoomlaWorks http://www.joomlaworks.net
  * @copyright	Copyright (c) 2006 - 2013 JoomlaWorks Ltd. All rights reserved.
@@ -242,6 +242,9 @@ $document->addScriptDeclaration("
 												<i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i>
 												<br />
 												<br />
+												<?php echo JText::_('K2_OR'); ?>
+												<br />
+												<br />
 												<input type="text" name="existingImage" id="existingImageValue" class="text_area" readonly />
 												<input type="button" value="<?php echo JText::_('K2_BROWSE_SERVER'); ?>" id="k2ImageBrowseServer"  />
 												<br />
@@ -300,20 +303,24 @@ $document->addScriptDeclaration("
 									<table class="admintable table" id="item_gallery_content">
 										<tr>
 											<td align="right" valign="top" class="key">
-												<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_WITH_IMAGES'); ?>
+												<?php echo JText::_('K2_COM_BE_ITEM_ITEM_IMAGE_GALLERY'); ?>
 											</td>
 											<td valign="top">
-												<input type="file" name="gallery" class="fileUpload" />
-												<i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i>
-												<br />
 												<?php if($this->sigPro): ?>
-												<a class="modal" rel="{handler: 'iframe', size: {x: 940, y: 560}}" href="index.php?option=com_sigpro&view=galleries&task=create&newFolder=<?php echo $this->sigProFolder; ?>&type=k2&tmpl=component">SIGPRO</a>
-                                                <input name="sigProFolder" type="hidden" value="<?php echo $this->sigProFolder; ?>" />
-												<?php endif; ?>
+												<a class="modal" rel="{handler: 'iframe', size: {x: 940, y: 560}}" href="index.php?option=com_sigpro&view=galleries&task=create&newFolder=<?php echo $this->sigProFolder; ?>&type=k2&tmpl=component"><?php echo JText::_('K2_COM_BE_ITEM_SIGPRO_UPLOAD'); ?></a> <i>(<?php echo JText::_('K2_COM_BE_ITEM_SIGPRO_UPLOAD_NOTE'); ?>)</i>
+												<input name="sigProFolder" type="hidden" value="<?php echo $this->sigProFolder; ?>" />
 												<br />
-												<?php echo JText::_('K2_OR_ENTER_A_FLICKR_SET_URL'); ?>
-												<input type="text" name="flickrGallery" size="50" value="<?php echo ($this->row->galleryType == 'flickr') ? $this->row->galleryValue : ''; ?>" />
+												<br />
+												<?php echo JText::_('K2_OR'); ?>
+												<?php endif; ?>
+												<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_WITH_IMAGES'); ?> <input type="file" name="gallery" class="fileUpload" /> <span class="hasTip k2GalleryNotice" title="<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP_HEADER'); ?>::<?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP_TEXT'); ?>"><?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP'); ?></span> <i>(<?php echo JText::_('K2_MAX_UPLOAD_SIZE'); ?>: <?php echo ini_get('upload_max_filesize'); ?>)</i>
+												<br />
+												<br />
+												<?php echo JText::_('K2_OR_ENTER_A_FLICKR_SET_URL'); ?><?php echo JText::_('K2_OR_ENTER_A_FLICKR_SET_URL'); ?>
+												<input type="text" name="flickrGallery" size="50" value="<?php echo ($this->row->galleryType == 'flickr') ? $this->row->galleryValue : ''; ?>" /> <span class="hasTip k2GalleryNotice" title="<?php echo JText::_('K2_VALID_FLICK_API_KEY_HELP_HEADER'); ?>::<?php echo JText::_('K2_VALID_FLICK_API_KEY_HELP_TEXT'); ?>"><?php echo JText::_('K2_UPLOAD_A_ZIP_FILE_HELP'); ?></span>
+
 												<?php if (!empty($this->row->gallery)): ?>
+												<!-- Preview -->
 												<div id="itemGallery">
 													<?php echo $this->row->gallery; ?>
 													<br />
