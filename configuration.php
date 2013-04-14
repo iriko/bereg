@@ -12,9 +12,12 @@ class JConfig {
 	public $debug = '0';
 	public $debug_lang = '0';
 	public $dbtype = 'mysql';
-	public $host = 'bereg.andboson.info';
-	public $user = 'bereg';
-	public $password = 'GTDAsqTjDQ5QA9bQ';
+	/*public $host = 'bereg.andboson.info';*/
+    public $host = 'localhost';
+/*	public $user = 'bereg';*/
+    public $user = 'root';
+	/*public $password = 'GTDAsqTjDQ5QA9bQ';*/
+    public $password = '';
 	public $db = 'bereg';
 	public $dbprefix = 'a67gp_';
 	public $live_site = '';
