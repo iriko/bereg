@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset name="search_configuration"
+		label="SEARCHING_CONFIGURATION_TAB"
+		description="" addfieldpath="/administrator/components/com_jak2filter/elements">
+		<field name="minium_keyword"
+			type="text"
+			default="3"
+			filter="int"
+			label="JAK2FILTER_MINIUM_KEYWORD"
+			description="JAK2FILTER_MINIUM_KEYWORD_DESC" />
+		<field name="maximum_keyword"
+			type="text"
+			default="20"
+			filter="int"
+			label="JAK2FILTER_MAXIMUM_KEYWORD"
+			description="JAK2FILTER_MAXIMUM_KEYWORD_DESC" />
+		<field			 
+			name="Ordering" 
+			type="list" 
+			default="" 
+			label="JAK2FILTER_ORDER" 
+			description="JAK2FILTER_ORDER_DESC">
+			<option value="">JAK2FILTER_DEFAULT</option>
+			<option value="date">JAK2FILTER_OLDEST_FIRST</option>
+			<option value="rdate">JAK2FILTER_MOST_RECENT_FIRST</option>
+			<option value="publishUp">JAK2FILTER_RECENTLY_PUBLISHED</option>
+			<option value="alpha">JAK2FILTER_TITLE_ALPHABETICAL</option>
+			<option value="ralpha">JAK2FILTER_TITLE_REVERSEALPHABETICAL</option>
+			<option value="order">JAK2FILTER_ORDERING</option>
+			<option value="rorder">JAK2FILTER_ORDERING_REVERSE</option>
+			<option value="hits">JAK2FILTER_MOST_POPULAR</option>
+			<option value="best">JAK2FILTER_HIGHEST_RATED</option>
+			<option value="rand">JAK2FILTER_RANDOM_ORDERING</option>
+		</field>
+		<field 
+			name="theme" 
+			type="template" 
+			default="default" 
+			label="JAK2FILTER_SELECT_A_TEMPLATE"
+			description="JAK2FILTER_SELECT_A_TEMPLATE_DESC" />
+	</fieldset>
+	<fieldset name="component"
+		label="INDEXING_DATA_TAB"
+		description="">		
+		<field
+			name="indexing_onsave"
+			type="radio"
+			default="1"
+			label="UPDATE_INDEXING_EVENT"
+			description="UPDATE_INDEXING_EVENT_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		
+		<field name="indexing_cron_key" type="text"
+			default="indexing"
+			label="CRON_JOB_KEY"
+			description="CRON_JOB_KEY_DESC" />
+		
+		<field
+			name="indexing_cron"
+			type="radio"
+			default="1"
+			label="UPDATE_INDEXING_CRON"
+			description="UPDATE_INDEXING_CRON_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		
+		<field name="indexing_interval" type="text"
+			default="900"
+			label="INDEXING_DATA_INTERVAL"
+			description="INDEXING_DATA_INTERVAL_DESC" />
+
+	</fieldset>
+</config>

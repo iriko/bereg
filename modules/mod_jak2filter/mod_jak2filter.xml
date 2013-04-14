@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>JAK2 Extra fields Filter and Search</name>
+	<author>JoomlArt.com</author>
+	<creationDate>Feb 22 2013</creationDate>
+	<copyright>Copyright (C), J.O.O.M Solutions Co., Ltd. All Rights Reserved.</copyright>
+	<license>license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
+	<authorEmail>webmaster@joomlart.com</authorEmail>
+	<authorUrl>www.joomlart.com</authorUrl>
+	<version>1.0.4</version>
+	<description><![CDATA[
+		<h1>JA K2 Filter Module for Joomla 2.5 and Joomla 3.0</h1>
+		<div style='font-weight: normal'>
+		<p><span style='color: #ff6600;'><strong>Features:</strong></span>
+		Configuration in this module is reflected in the JA K2 Filter Component. 
+		It is required to install JA K2 Search Component to use JA K2 Filter Module</p>
+		
+		<strong><span style='color: #ff0000;'>Usage Instruction:</span></strong><br />
+		<ul>
+		<li>Enable JA K2 Filter Module in Module Manager</li>
+		</ul>
+		<strong><span style='color: #ff0000;'>Upgrade Method:</span><br /></strong>
+		<ul>
+		  <li>You can install new version directly over this version. Uninstallation is not required. </li>
+		  </ul>
+	
+		<span style='color: #008000;'><strong>Links:</strong></span><br />
+		<ul>
+		<li><a target="_blank" href="http://www.joomlart.com/joomla/extensions/ja-k2-search">Wiki Userguide</a></li>
+		 <li><a target='_blank' href='http://www.joomlart.com/forums/downloads.php?do=cat&id=20372'>Updates &amp; Versions</a></li>
+		</ul>
+		<p>Copyright 2004 - 2013 <a href='http://www.joomlart.com/' title='Visit Joomlart.com!'>JoomlArt.com</a>.</p>
+		</div>
+		]]>	</description>
+	<files>
+		<filename module="mod_jak2filter">mod_jak2filter.php</filename>
+		<folder>assets</folder>
+		<folder>tmpl</folder>
+		<folder>elements</folder>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>		
+		<filename>mod_jak2filter.xml</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">en-GB.mod_jak2filter.ini</language>
+		<language tag="en-GB">en-GB.mod_jak2filter.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params" addfieldpath="/modules/mod_jak2filter/elements">
+			<fieldset name="basic">
+				<field name="group" type="jadepend" function="@group">
+					<option for="ja_stylesheet" value="horizontal-layout" hideRow="true">ja_column
+					</option>
+					<option for ="filter_by_category" value="1" hideRow="true">
+					k2catsid
+					</option>
+					<option for="filter_by_author" value="1" hideRow="true">filter_author_display</option>
+				</field>
+				<field name="moduleclass_sfx" type="text" default="" label="MOD_JAK2FILTER_MODULE_CLASS_SUFFIX" description="MOD_JAK2FILTER_MODULE_CLASS_SUFFIX_DESCRIPTION" />
+				<field 
+					name="set_itemid"
+					type="text"
+					default=""
+					class="validate-numeric" 
+					label="MOD_JAK2FILTER_SETITEMIDS"
+					description="MOD_JAK2FILTER_SETITEMIDS_DESC"
+				/>
+					
+				<field name="ja_stylesheet" type="list" default="vertical-layout" label="JA_STYLE_SHEET" description="JA_STYLE_SHEET_DESCRIPTION">
+					<option value="vertical-layout">JA_VERTICAL</option>
+					<option value="horizontal-layout">JA_HORIZONTAL</option>
+				</field>
+				<field name="ja_column" label="FIELD_FILTER_BY_COLUMN" description="FIELD_FILTER_BY_COLUMN_DESC" type="integer" first="1" last="10" step="1" />
+				<field name="display_counter" type="radio" default="0" label="DISPLAY_ITEM_COUNTER" description="DISPLAY_ITEM_COUNTER_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				
+				<field name="filter_by_keyword" type="radio" default="1" label="FIELD_FILTER_BY_KEYWORD" description="FIELD_FILTER_BY_KEYWORD_DESC">
+					<option value="1">JENABLED</option>
+					<option value="0">JDISABLED</option>
+				</field>
+				<field name="filter_by_category" type="radio" default="1" label="FIELD_FILTER_BY_CATEGORY" description="FIELD_FILTER_BY_CATEGORY_DESC">
+					<option value="1">JENABLED</option>
+					<option value="0">JDISABLED</option>
+				</field>
+				<field 
+					name="k2catsid" 
+					type="categoryk2" 
+					subtype="getCategory"
+					default="" 
+					level="3"
+					label="SELECT_K2_CATEGORIES" 
+					description="SELECT_K2_CATEGORIES_DESC" />
+				<field name="filter_by_author" type="radio" default="1" label="FIELD_FILTER_BY_AUTHOR" description="FIELD_FILTER_BY_AUTHOR_DESC">
+					<option value="1">JENABLED</option>
+					<option value="0">JDISABLED</option>
+				</field>
+				<field 
+					name="filter_author_display" 
+					type="list"
+					default="author_display_name"
+					label="FIELD_AUTHOR_DISPLAY"
+					description="FIELD_AUTHOR_DISPLAY_DESCRIPTION">
+					<option value="author_display_name">FIELD_AUTHOR_NAME</option>
+					<option value="author_display_username">FIELD_AUTHOR_USERNAME</option>
+				</field>
+				<field name="auto_filter" type="radio" default="0" label="AUTO_FILTER" description="AUTO_FILTER_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="filter_by_extrafield" type="k2extrafield" default="" multiple="multiple" label="FIELD_FILTER_BY_EXTRAFIELDS" description="FIELD_FILTER_BY_EXTRAFIELDS_DESC" />
+				<field name="filter_by_fieldtype" type="hiddenfield" default="" multiple="multiple" hidden="true" label="FIELD_FILTER_BY_FIELDTYPE" description="FIELD_FILTER_BY_FIELDTYPE_DESC" />
+				<field name="filter_by_fieldrange" type="hiddenfield" default="" multiple="multiple" hidden="true" label="FIELD_FILTER_BY_FIELDRANGE" description="FIELD_FILTER_BY_FIELDRANGE_DESC" />
+				
+			</fieldset>
+			<fieldset name="advanced">
+				<!--<field name="indexing_interval" type="text"
+					default="900"
+					label="Indexing data interval"
+					description="the time before the module updates indexing data. If the module has multiple instances, the smallest interval will be used.
+In case of cache is enabled and cache time is larger than update data time, you might need clean cache to get data is updated." />-->
+					
+				<field name="cache" type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC"
+				>
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field name="cache_time" type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static">
+					<option
+						value="static"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
