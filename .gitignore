@@ -1,0 +1,14 @@
+.idea/*
+configuration.php
+
+cache/*
+
+*/cache/*
+
+administrator/components/com_sh404sef/security/sh404SEF_AntiFlood_Data.dat
+
+administrator/components/com_sh404sef/security/sh404SEF_AntiFlood_Data.dat.orig
+
+#Tmp
+*.php~
+*.orig
