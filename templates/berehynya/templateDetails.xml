@@ -29,5 +29,7 @@
         <position>position-2</position>
         <position>position-3</position>
         <position>position-4</position>
-	</positions>
+        <position>position-5</position>
+        <position>position-6</position>
+    </positions>
 </extension>

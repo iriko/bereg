@@ -36,14 +36,20 @@ $this->setGenerator('Beregynya site');
                 </div>
             </div><!--header-holder-->
 
-            <div class="page-holder">
-                <div class="content-holder">
-
+            <div class="after-header-holder">
+                <div class="after-header">
                     <?php if (JURI::current() == JURI::base()) : ?>
                         <jdoc:include type="modules" name="position-2" style="home"/>
                     <?php endif; ?>
 
                     <jdoc:include type="modules" name="position-4" style="submenu"/>
+                </div>
+            </div>
+
+            <div class="page-holder">
+                <div class="content-holder">
+
+                    <jdoc:include type="modules" name="position-5" style="home"/>
 
                     <div class="content-area">
                         <jdoc:include type="message" />
@@ -51,7 +57,18 @@ $this->setGenerator('Beregynya site');
                     </div>
 
                 </div>
+
+                <?php if (JURI::current() == JURI::base()) : ?>
+                    <div class="home-footer-holder">
+                        <div class="home-footer">
+                            <jdoc:include type="modules" name="position-6" style="home"/>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
             </div><!--page-holder-->
+
+
 
             <div class="footer-holder">
                 <div class="footer">

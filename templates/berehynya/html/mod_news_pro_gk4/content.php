@@ -22,7 +22,10 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
 ?>
 <?php if($news_amount > 0) : ?>
 	<div class="nspMain<?php if($this->config['autoanim'] == TRUE) echo ' autoanim'; ?><?php if($this->config['hover_anim'] == TRUE) echo ' hover'; ?> nspFs<?php echo $this->config['module_font_size']; ?>" id="nsp-<?php echo $this->config['module_id']; ?>" style="width:<?php echo $this->config['module_width']; ?>%;">
-		<?php if(($this->config['news_column'] * $this->config['news_rows']) > 0) : ?>
+
+        <a class="news-archive" href="/tsikavo-znati/news">Всі новини</a>
+
+        <?php if(($this->config['news_column'] * $this->config['news_rows']) > 0) : ?>
 			<div class="nspArts<?php echo ' '.$this->config['links_position']; ?>" style="width:<?php echo $arts_width; ?>%;">
 				<?php if(
 						count($news_html_tab) > ($this->config['news_column'] * $this->config['news_rows']) && 
@@ -60,7 +63,7 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
 					</div>
 				</div>
 				<?php endif; ?>
-				
+
 				<?php for($i = 0; $i < count($news_html_tab); $i++) : ?>
 					<?php 
 						$class = ''; 
@@ -68,14 +71,13 @@ if($this->config['links_position'] != 'bottom' && $this->config['news_short_page
 						if($i >= ($this->config['news_column'] * $this->config['news_rows'])) $class .= ' unvisible';
 						if(($i+1) % ($this->config['news_column']) == 1) $style .= 'clear:both;';
 					?>
-					<div class="nspArt<?php echo $class; ?>" style="width:<?php echo 100 / $this->config['news_column']; ?>%!important;<?php echo $style; ?>"><div style="padding:<?php echo $this->config['art_padding']; ?>"><?php echo $news_html_tab[$i];?></div></div>
+					<div class="nspArt<?php echo $class; ?>" style="width:<?php echo 100 / $this->config['news_column']; ?>%;<?php echo $style; ?>"><div style="padding:<?php echo $this->config['art_padding']; ?>"><?php echo $news_html_tab[$i];?></div></div>
                     <?php
                         /*$info_category = '<a class="test" href="'.JRoute::_(ContentHelperRoute::getCategoryRoute($news_cid)).'" >'.$news_catname.'</a>';*/
                         /*$object = new NSP_GK4_Layout_Parts;
                         print_r($object->info($info_category));*/
                     ?>
 				<?php endfor; ?>
-                <a class="news-archive" href="/tsikavo-znati/news">Архів новин</a>
 			</div>
 		<?php endif; ?>
 		<?php if($this->config['news_short_pages'] > 0 && count($news_list_tab) > 0 ) : ?>

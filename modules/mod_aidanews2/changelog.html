@@ -1,0 +1,88 @@
+<HTML>
+<HEAD>
+    <TITLE>AiDaNews2 1.7 - Changelog</TITLE>
+</HEAD>
+<BODY>
+<b>Version 2.1.0 - J!2.5</b><br/>
+<br/>
+[+] New Image Library! (https://github.com/masterexploder/PHPThumb);<br/>
+[+] New Joomla! 2.5 article image fields are supported;<br/>
+[+] Sticky (Important) Articles Option: insert some article ids, and those articles will be displayed on top in the order you wrote them. If there's room for other articles, they will be selected as usual;<br/>
+[+] Javascript Pagination, at last! Select how many articles to display per page, where to show the navigation buttons and more. Please remember it's non AJAX, so all articles get loaded with the page;<br/>
+[+] CSS Field has been replaced with CSS FieldS: their behaviour is the same as the old AiDaNews"1" fields;<br/>
+[+] AiDaQuick: use more lighter queries. Designed for sites with a lot of articles, tell me if it makes your site faster!<br/>
+[+] Related Articles with Similar Title lets you show similar elements to users without using metakeys;<br/>
+[>] JComments and Udja Comments are now supported!<br/>
+[>] Some new CSS classes: today shows up only if the article's date is today's date;<br/>
+[>] The catid css class lets you style each article differently depending on the category it's in;<br/>
+[>] If you use a gallery plugin with non-default base gallery settings, now there's a field that allows you to make everything work without hacking the module;<br/>
+[>] Current Category Only now works properly both in category and article views. You can also select what to show in the other views;<br/>
+[>] A new field lets you input a custom grid column width if you don't like the automatically calculated one;<br/>
+[>] You can now use Language Files for some text - text in positions still can't be translated automatically though;<br/>
+[>] The module now checks if the Thumbnails class has already been loaded by some other extension before loading it (will be useful soon... :D);<br/>
+[*] Corrected problem with double quotes in text;<br/>
+[*] Kunena Avatars are now displayed correctly;<br/>
+[*] If the module cannot reach the Server to check for updates, a notice will appear in the module's backend;<br/>
+[*] The shorten function has been edited so that it works correctly even with oriental languages (thanks toemon!);<br/>
+[*] The module now works with newer PHP versions too (the eregi function isn't used any more);<br/>
+[*] [image] tag in positions is now correctly detected even if it's the first tag in the head position;<br/>
+[*] Minor CSS and Language File corrections, and maybe something else I may have forgotten!<br/>
+<br/>
+<b>Version 2.0.8 - Monthly Update</b><br/>
+<br/>
+[+] "Created in the Last X Days" was changed to "Created Between X and Y days ago". These new options can be used together or separately!<br/>
+[+] New CSS Stylesheet, suffix_help.css, that shows how to use module class suffixes with AiDaNews2;<br/>
+[+] Some new Tags for the Layout Setup are available: [num] will display the number the article is in the module;<br/>
+[+] Another Tag: [categories] will display the category tree for the article from root to leaf;<br/>
+[+] New "Toggle Login" option lets you choose wheter to display the "Access Denied" Joomla! Page or redirect visitors to the login page.<br/>
+<br/>
+<b>Version 2.0.7 - The result of 30 days of coding</b><br/>
+<br/>
+[+] Frontpage Offset: you can now exclude the first X frontpaged articles. It can be combined with the normal offset, but Offset will be used first!<br/>
+[+] Override Itemid - this allows to change the itemid to a custom one chosen from the menu items. Warning: only works on article urls ATM. Let me know if you need something more complicated!<br/>
+[+] Each article now gets a CSS class with the catid of the category it's in;<br/>
+[+] Using the '[st]' tag in the date output field will make the module automagically show 'st', 'nd', 'rd' or 'th' depending on the number of the day (%d[st] gets changed to 1st, 2nd, 3rd, 4th...);<br/>
+[+] New options for ratings: round and stars.<br/>
+[+] You can now choose wheter to display Trashed articles or not (just like frontpage articles);<br/>
+[+] The [br] tag can now be used in Layout Positions - it corresponds to the < br / > HTML tag;<br/>
+[>] New ordering: frontpage ordering (the order you put the articles in the featured state; <br/>
+[>] Text and Images now have their own CSS classes;<br/>
+[*] Added margin below tables CSS and removed font-size: 80% from date in default.css;<br/>
+[*] Category URLs are now correct<br/>
+[*] Bugfixes: Kunena Discuss plugin can now be used as a Commenting System, and the Read More Text can be changed in the options. I'm sorry I wrote these options were available in 2.0.6 when it wasn't the case ;) ;<br/>
+[*] 'Use Style' option was rephrased to make it clearer;<br/>
+[*] Every reference to 'Frontpaged Articles' has been changed to 'Featured Articles';<br/>
+[*] Related Articles now work.<br/>
+<br/>
+<b>Version 2.0.6 - Include Laguages</b><br/>
+<br/>
+[+] New Language Files: Italian (by me);<br/>
+[+] Automatic Update Notifier: if an update is available, the module will automatically notice it and display a link to download the new version in the module's backend;<br/>
+[+] Added an option to include subcategories - avoid using it with too many categories selected as it may increment loading times;<br/>
+[>] New supported commenting system: Kunena Discuss Plugin;<br/>
+[*] Added the "alt" tag in images (W3C reasons);<br/>
+[*] Corrected some lines in the language file.<br/>
+<br/>
+<b>Version 2.0.5 - Quick Updates!</b><br/>
+<br/>
+[+] AiDaNews2 now supports automatic updates using Joomla!'s automatic Updater! Of course, you'll need to update manually this time... but next time you'll be able to use the updater;<br/>
+[*] The symbol $ is now displayed correctly in both title and text;<br/>
+[*] Solved problems that came out when mixing up categories, "Start from X" and other options;<br/>
+[*] Fixed "Articles from the same Author" not working - you can now mix it with the author selection.<br/>
+<br/>
+<b>Version 2.0.4 - Some bugfixes</b><br/>
+<br/>
+[*] Custom Link at the bottom wouldn't go away even if the option was set to no;<br/>
+[*] Category Images are now retrieved correctly;<br/>
+[*] Using "auto" in images won't cause errors any more in Internet Explorer.<br/>
+<br/>
+<b>Version 2.0.3 - First AiDaNews2 1.7 release</b><br/>
+<br/>
+______________________________<br/>
+<br/>
+[*] = Bug correction<br/>
+[>] = Minor addition<br/>
+[+] = New feature</br>
+[-] = Removal / Other
+</BODY>
+</HTML>

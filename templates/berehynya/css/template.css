@@ -51,17 +51,20 @@ body {
     padding-bottom: 10px;
 }
 .header-menu li a {
-   /* color: #3F3F3F;*/
     text-decoration: none;
     color: #fff;
     font: 16px arial;
+    -webkit-transition: color 0.2s linear;
+    -moz-transition: color 0.2s linear;
+    -o-transition: color 0.2s linear;
+    -ms-transition: color 0.2s linear;
 }
 .header-menu .current a {
     color: #383838;
 }
-/*.header-menu li a:hover {
-     color: #000;
-}*/
+.header-menu li a:hover {
+     color: #4DD2FF;
+}
 
 .header-menu .deeper {
     position: relative;
@@ -87,6 +90,17 @@ body {
 
 
 /********************************* CONTENT ******************************/
+.after-header-holder {
+    width: 100%;
+    overflow: hidden;
+    background: url("../images/after_header_holder_bg.png") 0 0 repeat;
+    border-bottom: 1px solid #DBDBDB;
+}
+.after-header {
+    width: 990px;
+    padding: 0 5px;
+    margin: 0 auto;
+}
 .page-holder {
     overflow: hidden;
     width: 100%;
@@ -97,9 +111,74 @@ body {
     width: 990px;
     margin: 0 auto;
 }
-.announcement {
+.home-module.announcement {
     overflow: hidden;
-    margin: 20px auto;
+    margin: 53px auto 0;
+    border: 1px solid #E8E6E7;
+    background-color: #FFF;
+}
+.announcement-text {
+    background: url("../images/announcement_alert.png") 0 26px no-repeat;
+    padding: 20px 20px 20px 60px;
+    width: 690px;
+    line-height: 24px;
+    margin-left: 25px;
+    float: left;
+}
+.soc-networks {
+    margin: 10px 0;
+    padding: 24px 0 24px 24px;
+    list-style-type: none;
+    overflow: hidden;
+    float: left;
+    border-left: 1px solid #F2F2F2;
+}
+.soc-networks li {
+    display: inline-block;
+    float: left;
+    margin-left: 12px;
+}
+.soc-networks li:first-child {
+    margin-left: 0;
+}
+.soc-networks li a {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+.soc-networks .fb a {
+    background: url("../images/fb_icon.png") 0 0 no-repeat;
+}
+.soc-networks .vk a {
+    background: url("../images/vk_icon.png") 0 0 no-repeat;
+}
+.soc-networks .tw a {
+    background: url("../images/tw_icon.png") 0 0 no-repeat;
+}
+.soc-networks .ok a {
+    background: url("../images/ok_icon.png") 0 0 no-repeat;
+}
+.home-module.home-last-news {
+    margin-top: 35px;
+    position: relative;
+    margin-bottom: 50px;
+}
+.home-module-title {
+    font-family: Segoe UI;
+    font-size: 20px;
+    color: #5B5B5B;
+    margin-bottom: 15px;
+}
+.news-archive {
+    position: absolute;
+    top: 15px;
+    right: 2px;
+    color: #3F71FD;
+    text-decoration: none;
+    font-size: 12px;
+}
+.news-archive:hover {
+    text-decoration: underline;
 }
 .three-reasons {
     overflow: hidden;
@@ -111,12 +190,37 @@ body {
 }
 .home-last-news {
     overflow: hidden;
+    padding: 1px;
 }
 .home-last-news .nspArt {
-    clear: none;
     float: left;
+    width: 200px !important;
+    height: 227px;
+    border: 1px solid #E5E4E4;
+    box-shadow: 0 0 2px #DDD;
+    margin-left: 33px;
+    padding: 10px;
+    background-color: #FFF;
 }
-
+.home-last-news .nspArt:first-child {
+    margin-left: 0;
+}
+.content-holder .home-last-news .nspImage {
+    display: block;
+}
+.home-last-news .nspHeader {
+    margin: 5px 0;
+    border-bottom: 1px solid #3B89C0;
+    padding-bottom: 5px;
+}
+.home-last-news .nspText {
+    font-size: 12px;
+    color: #878787;
+}
+.home-last-news .nspArt > div {
+    height: 227px;
+    overflow: hidden;
+}
 .content-area .itemListCategory,
 .content-area .subCategory {
     background: #FFF;
@@ -172,28 +276,132 @@ body {
     float: right;
     margin: 20px;
 }
-
 .news-archive {
     float: right;
+}
+
+.home-module.home-materials {
+    overflow: hidden;
+    margin: 35px 0 50px;
+}
+div.k2ItemsBlock .even,
+div.k2ItemsBlock .odd {
+    background: #FFF;
+    padding: 0;
+    border: none;
+}
+div.k2ItemsBlock ul li {
+    float: left;
+    width: 220px;
+    margin-right: 31px;
+}
+div.k2ItemsBlock ul li.lastItem {
+    margin-right: 0;
+}
+div.k2ItemsBlock .moduleItemImage {
+    display: block;
+    width: 100px;
+    height: 120px;
+    float: left;
+    margin-right: 15px;
+}
+div.k2ItemsBlock .moduleItemImage img {
+    display: block;
+    width: 100px;
+    height: 120px;
+}
+div.k2ItemsBlock .moduleItemTitle {
+    color: #000;
+    text-decoration: none;
+    font-size: 12px;
+}
+div.k2ItemsBlock .moduleItemTitle:hover {
+    text-decoration: underline;
+}
+div.k2ItemsBlock ul li div.moduleItemIntrotext {
+    display: block;
+    font-size: 12px;
+    color: #878787;
+    margin: 5px 0;
+}
+div.k2ItemsBlock ul li .moduleAttachments a {
+    display: block;
+    color: transparent;
+    width: 123px;
+    height: 23px;
+    background: url("../images/book_download.png") 0 0 no-repeat;
 }
 /***********************************************************************/
 
 
 /********************************* FOOTER ******************************/
+.home-footer-holder {
+    overflow: hidden;
+    width: 100%;
+    height: 360px;
+    background-color: #1570A6;
+}
+.home-footer {
+    overflow: hidden;
+    width: 990px;
+    height: 320px;
+    padding-top: 40px;
+    margin: 0 auto;
+}
+.home-footer-left {
+    float: left;
+}
+.home-footer-left ul li {
+    color: #FFF;
+    font-weight: 100;
+    line-height: 24px;
+}
+.follow-us {
+    margin: 35px;
+}
+.follow-us > p {
+    float: left;
+    line-height: 28px;
+    margin-right: 15px;
+    font-size: 15px;
+    color: #FFF;
+}
+.follow-us ul li {
+    display: inline-block;
+    float: left;
+    margin-right: 11px;
+}
+.home-footer-right {
+    float: right;
+    width: 502px;
+}
+.home-footer-right > p,
+.home-footer-left > p {
+    font-family: Segoe UI;
+    font-size: 20px;
+    color: #FFF;
+    margin-bottom: 16px;
+}
+.home-footer-right ul li {
+    float: left;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+.home-footer-right ul li img {
+    display: block;
+}
 .footer-holder {
     position: absolute;
     position: absolute;
     bottom: 0;
     width: 100%;
-    /*height: 50px;*/
-    height: 38px;
+    height: 44px;
     background-color: #383838;
 }
 .footer {
-    padding-top: 10px;
+    padding-top: 14px;
     overflow: hidden;
     width: 990px;
-   /* height: 50px;*/
     margin: 0 auto;
 }
 .copyright {
