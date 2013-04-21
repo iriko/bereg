@@ -57,7 +57,7 @@ body {
     font: 16px arial;
 }
 .header-menu .current a {
-    color: #000;
+    color: #383838;
 }
 /*.header-menu li a:hover {
      color: #000;
@@ -181,6 +181,7 @@ body {
 
 /********************************* FOOTER ******************************/
 .footer-holder {
+    position: absolute;
     position: absolute;
     bottom: 0;
     width: 100%;
